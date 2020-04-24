@@ -7,16 +7,20 @@
 #' @param Secure True or False (default) indicating whether the file should be acquired using data services available to NPS internal staff only.
 #'
 #' @examples
-#' getDataPackage(126749,Secure=TRUE)
+#' getDataPackage(2272461,Secure=TRUE)
 
 getDataPackage<-function(HoldingID,Secure=FALSE){
 
   # Create directory to hold the data package if it does not already exist.
-  if (!file.exists("dataPackages")) {
-    dir.create("dataPackages")
+  if (!file.exists("data")) {
+    dir.create("data")
+  }
+  
+  if (!file.exists("data/raw")) {
+    dir.create("data/raw")
   }
 
-  DestinationDirectory<-paste("dataPackages/",HoldingID,sep="")
+  DestinationDirectory<-paste("data/raw/",HoldingID,sep="")
   if (!file.exists(DestinationDirectory)) {
     dir.create(DestinationDirectory)
   }

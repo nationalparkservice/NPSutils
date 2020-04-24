@@ -17,11 +17,11 @@
 #'
 #' @examples
 #'
-#' data_list<-loadDataPackageList(2266200,dataFormat="gdb",metadataFormat="fgdc")
+#' DataPackageFiles<-loadDataPackageList(2272461,dataFormat="csv",metadataFormat="eml")
 
 
 loadDataPackageList <-function(HoldingID,dataFormat,metadataFormat){
-  DataPackageDirectory<-paste("dataPackages/",HoldingID,sep="")
+  DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {

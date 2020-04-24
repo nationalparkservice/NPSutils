@@ -17,11 +17,11 @@
 #'
 #' @examples
 #'
-#' datasetList<-loadDataPackage(2266200,dataFormat="gdb",metadataFormat="fgdc",features=NULL)
+#' ParkTandETaxa<-loadDataPackage(2272461,dataFormat="csv",metadataFormat="eml")
 
 
 loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
-  DataPackageDirectory<-paste("dataPackages/",HoldingID,sep="")
+  DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {
@@ -71,8 +71,8 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     assign(paste0(HoldingID,"_data"),workingdatafile, envir=.GlobalEnv)
     # assign(paste0(HoldingID,"_emlMetadata"), EML::read_eml(emlFilename, from = "xml"), envir=.GlobalEnv)
 
-    return(fileList)
-
+    return(workingdatafile)
+    
   } else if (dataFormat=="gdb" & metadataFormat=="fgdc") {
 
     # Working with the metadata file first...
