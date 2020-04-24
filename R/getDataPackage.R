@@ -1,6 +1,6 @@
 #' Retrieve public digital data package holding from Data Store.
 #'
-#' \code{getDataPackage} downloads a data package from data store, copies it to the /data directory, and unzips it into a subdirectory with the "HoldingID" name.
+#' \code{getDataPackage} downloads a data package from data store, copies it to the /data/raw directory, and unzips it into a subdirectory with the "HoldingID" name.
 #'
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
