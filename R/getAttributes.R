@@ -20,7 +20,7 @@
 
 
 getAttributes <-function(HoldingID,dataFormat,metadataFormat){
-  DataPackageDirectory<-paste("dataPackages/",HoldingID,sep="")
+  DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {
@@ -114,7 +114,7 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
 #' domainTable<-getDomains(2266200,dataFormat="gdb",metadataFormat="fgdc")
 
 getDomains <-function(HoldingID,dataFormat,metadataFormat){
-  DataPackageDirectory<-paste("dataPackages/",HoldingID,sep="")
+  DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {
