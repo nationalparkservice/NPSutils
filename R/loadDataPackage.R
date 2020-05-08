@@ -38,7 +38,7 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     attributes<-attributeList$attributes
     factors<-attributeList$factors
 
-    # Figure out column clases based on attribute table (character, numeric, integer, logical, or complex)
+    # Figure out column clases based on attribute table (character, date, numeric, integer, logical, or complex)
     attributes$columnclass<-"character"
     if("attributes$numberType" %in% colnames(attributes)){
       attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="natural","integer",attributes$columnclass)
@@ -46,9 +46,9 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
       attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="integer","integer",attributes$columnclass)
       attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="real","numeric",attributes$columnclass)
     }
-    if("attributes$formatString" %in% colnames(attributes)) {
-      attributes$columnclass<-ifelse(attributes$storageType=="date" & attributes$formatString=="YYYY-MM-DD" ,"Date",attributes$columnclass)
-    }
+    
+    attributes$columnclass<-ifelse(attributes$storageType=="date" & attributes$formatString=="YYYY-MM-DD" ,"Date",attributes$columnclass)
+    
     workingdatafile<-read.csv(csvFilename, col.names= attributes$attributeName,colClasses=attributes$columnclass)
 
     # Assign levels for fields with enumerated domains and convert those columns to factors
