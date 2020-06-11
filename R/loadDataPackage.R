@@ -47,7 +47,9 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
       attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="real","numeric",attributes$columnclass)
     }
     
-    attributes$columnclass<-ifelse(attributes$storageType=="date" & attributes$formatString=="YYYY-MM-DD" ,"Date",attributes$columnclass)
+    if (nrow(subset(attributes,storageType=="date")) !=0) {
+      attributes$columnclass<-ifelse(attributes$storageType=="date" & attributes$formatString=="YYYY-MM-DD" ,"Date",attributes$columnclass)
+    }
     
     workingdatafile<-read.csv(csvFilename, col.names= attributes$attributeName,colClasses=attributes$columnclass)
 
