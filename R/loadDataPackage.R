@@ -106,6 +106,7 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     attributes$columnclass<-ifelse(attributes$attributeType=="OID","integer",attributes$columnclass)
     attributes$columnclass<-ifelse(attributes$attributeType=="Date","Date",attributes$columnclass)
     attributes$columnclass<-ifelse(attributes$attributeType=="Double","numeric",attributes$columnclass)
+    attributes$columnclass<-ifelse(attributes$attributeType=="FLOAT","numeric",attributes$columnclass)
 
     # Get the factor definitions for class variables
     attributeLevels<-data.frame(attribute=character(),factor=character(),factorDefinition=character(),stringsAsFactors=FALSE)
@@ -147,17 +148,20 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
         columnnames<-as.data.frame(colnames(temp2))
         colnames(columnnames)[1]<-"attribute"
         columnclasses<-dplyr::inner_join(columnnames,attributes)
-
-        for (j in 1:nrow(columnclasses)){
-          if (columnclasses[j,6]=="Date"){temp2[,j]<-as.Date(temp2[,j])}
-          if (columnclasses[j,6]=="character"){temp2[,j]<-as.character(temp2[,j])}
-          if (columnclasses[j,6]=="numeric"){temp2[,j]<-as.numeric(temp2[,j])}
-          if (columnclasses[j,6]=="character" & columnclasses[j,5]> 1){
-            factorLevels<-subset(attributeLevels,attribute==columnclasses[j,1])
-            temp2[,j]<-factor(temp2[,j],factorLevels$factor,ordered=FALSE)
+        
+        for (k in 1:length(colnames(temp2))) {
+          for (j in 1:nrow(columnclasses)){
+            if (colnames(temp2[k])==columnclasses[j,1]){
+              if (columnclasses[j,6]=="Date"){temp2[,k]<-as.Date(temp2[,k])}
+              if (columnclasses[j,6]=="character"){temp2[,k]<-as.character(temp2[,k])}
+              if (columnclasses[j,6]=="numeric"){temp2[,k]<-as.numeric(temp2[,k])}
+              if (columnclasses[j,6]=="character" & columnclasses[j,5]> 1){
+                factorLevels<-subset(attributeLevels,attribute==columnclasses[j,1])
+                temp2[,k]<-factor(temp2[,k],factorLevels$factor,ordered=FALSE)
+              }
+            }
           }
         }
-
         temp4<-sf::st_sf(cbind(temp2,temp3))
 
         # return data to the workspace as a spatial data frame.
