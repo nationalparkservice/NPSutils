@@ -183,9 +183,3 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     print ("data/metadata format combination not supported")
   }
 }
-
-
-
-
-
-
