@@ -175,8 +175,7 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     
     # Load the raster data
     tiffile <- subset(fileList, grepl(".tif$",Name))
-    tifFilename <- paste(DataPackageDirectory,"/",tiffile[1],sep="")
-    print(tiffile[1])
+    tifFilename <- paste0(DataPackageDirectory,"/",tiffile[1])
     rasterdata <- raster::raster(tiffile[1])
     return(rasterdata)
     
