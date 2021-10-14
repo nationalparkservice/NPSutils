@@ -174,9 +174,10 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
   } else if (dataFormat=="tif" & metadataFormat=="fgdc") {
     
     # Load the raster data
-    tiffile <- subset(fileList, grepl(".tif",Name))
+    tiffile <- subset(fileList, grepl(".tif$",Name))
     tifFilename <- paste(DataPackageDirectory,"/",tiffile[1],sep="")
-    rasterdata <- raster(tifFilename)
+    print(tiffile[1])
+    rasterdata <- raster::raster(tiffile[1])
     return(rasterdata)
     
   } else {
