@@ -7,13 +7,14 @@
 #' allowable options are:
 #' * "csv" for comma seperated value text files
 #' * "gdb" for file geodatabases
+#' * "tif" for raster files
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package.
 #' Currently allowable options are:
 #' * "eml" for eml-compliant xml metadata files
 #' * "fgdc" for FGDC-compliant xml metadata files
 #' @param features is a character value indicating the name of the feature class / data set (only used with file geodatabases)
 #'
-#' @return one or more data frames contained within the data package to the global enviroment.
+#' @return one or more data frames contained within the data package to the global environment.
 #'
 #' @examples
 #'
