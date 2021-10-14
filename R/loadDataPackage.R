@@ -25,6 +25,8 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {
+    #JP 10/14/21 - need to investigate this function as the getDataPackage should have already unzipped
+    #if this is only returning a file list there should be a more efficient function than unzipping a second time
     fileList<-unzip(DataPackageFilename,list=TRUE)
 
     csvfile <- subset(fileList, grepl(".csv",Name))
