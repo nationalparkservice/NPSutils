@@ -43,9 +43,8 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
 
   # download the data package from Data Store into its own directory
   DestinationFilename<-paste(DestinationDirectory,"/",HoldingID,".zip",sep="")
-  download.file(RestDownladURL,DestinationFilename,quiet=TRUE, mode="wb")
+  download.file(RestDownladURL,DestinationFilename,quiet=FALSE, mode="wb")
 
   # unzip data package
   unzip(DestinationFilename, exdir = DestinationDirectory)
-
 }
