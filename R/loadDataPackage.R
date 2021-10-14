@@ -25,7 +25,6 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {
-
     fileList<-unzip(DataPackageFilename,list=TRUE)
 
     csvfile <- subset(fileList, grepl(".csv",Name))
@@ -72,13 +71,10 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
 
     assign(paste0(HoldingID,"_data"),workingdatafile, envir=.GlobalEnv)
     # assign(paste0(HoldingID,"_emlMetadata"), EML::read_eml(emlFilename, from = "xml"), envir=.GlobalEnv)
-
     return(workingdatafile)
     
   } else if (dataFormat=="gdb" & metadataFormat=="fgdc") {
-
     # Working with the metadata file first...
-
     xmlfile <-list.files(path=DataPackageDirectory,pattern = ".xml")
     xmlFilename <- paste0(DataPackageDirectory,"/",xmlfile)
     workingXMLfile<-EML::read_eml(xmlFilename, from = "xml")
@@ -125,7 +121,6 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     attributeLevels$factorDefinition<-as.character(attributeLevels$factorDefinition)
 
     # And now working with the file geodatabase
-
     gdbfile <- list.dirs(path = DataPackageDirectory, full.names = TRUE, recursive = FALSE)
     fGDB <- paste0(getwd(),"/",gdbfile)
 
@@ -170,10 +165,17 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
         assign(paste0(datasets[i]), temp4, envir=.GlobalEnv)
         }
     }
-
     datasetList<-datasetList$dataset
     return(datasetList)
 
+  } else if (dataFormat=="tif" & metadataFormat=="fgdc") {
+    
+    # Load the raster data
+    tiffile <- subset(fileList, grepl(".tif",Name))
+    tifFilename <- paste(DataPackageDirectory,"/",tiffile[1],sep="")
+    rasterdata <- raster(tifFilename)
+    return(rasterdata)
+    
   } else {
     print ("data/metadata format combination not supported")
   }
