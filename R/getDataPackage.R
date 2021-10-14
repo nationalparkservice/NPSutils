@@ -31,14 +31,12 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',DigitalFileID)
-
   } else if (Secure=="FALSE") {
     # get fileID from the reference number
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',DigitalFileID)
-
   }
 
   # download the data package from Data Store into its own directory
@@ -47,4 +45,12 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
 
   # unzip data package
   unzip(DestinationFilename, exdir = DestinationDirectory)
+  
+  #check to see that the zip was downloaded and unzipped
+  #this might be worth improving in the future, but looks for >2 files in the folder
+  if (length(list.files(DestinationDirectory, include.dirs = FALSE)) > 2) {
+    rlang::inform(paste0("Download and unzipping of reference ",HoldingID," succeeded"))
+  } else {
+    rlang::inform(paste0("Download and unzipping of reference ",HoldingID," failed"))
+  }
 }
