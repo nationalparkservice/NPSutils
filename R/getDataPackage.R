@@ -27,15 +27,16 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
 
   if (Secure=="TRUE") {
     # get fileID from the reference number
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',HoldingID,'/DigitalFiles')
+    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
+    message(RestHoldingInfoURL)
     xml<-httr::GET(RestHoldingInfoURL)
     # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
-    if (xml$status_code == 201) {
+    if (xml$status_code == 200) {
       xml<-httr::content(xml)
     } else {
       stop("An error occurred. Are you connected to the NPS network/VPN?")
     }
-    DigitalFileID<-xml[[1]]$ResourceId
+    DigitalFileID<-xml[[1]]$resourceId
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',DigitalFileID)
     
   } else if (Secure=="FALSE") {
@@ -48,6 +49,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
 
   # download the data package from Data Store into its own directory
   DestinationFilename<-paste(DestinationDirectory,"/",HoldingID,".zip",sep="")
+  message(RestDownladURL)
   download.file(RestDownladURL,DestinationFilename,quiet=FALSE, mode="wb")
 
   # unzip data package
