@@ -26,7 +26,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
   }
 
   if (Secure=="TRUE") {
-    # get fileID from the reference number
+    # get resourceID from the reference number
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
     xml<-httr::GET(RestHoldingInfoURL)
     # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
@@ -43,7 +43,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
     }
     
   } else if (Secure=="FALSE") {
-    # get fileID from the reference number
+    # get resourceID from the reference number
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
@@ -55,6 +55,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
   download.file(RestDownladURL,DestinationFilename,quiet=FALSE, mode="wb")
 
   # unzip data package
+  # need to check if this is even a zip file
   unzip(DestinationFilename, exdir = DestinationDirectory)
   
   #check to see that the zip was downloaded and unzipped
