@@ -28,9 +28,16 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
   if (Secure=="TRUE") {
     # get fileID from the reference number
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',HoldingID,'/DigitalFiles')
-    xml<-httr::content(httr::GET(RestHoldingInfoURL))
+    xml<-httr::GET(RestHoldingInfoURL)
+    # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
+    if (xml$status_code == 201) {
+      xml<-httr::content(xml)
+    } else {
+      stop("An error occurred. Are you connected to the NPS network/VPN?")
+    }
     DigitalFileID<-xml[[1]]$ResourceId
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',DigitalFileID)
+    
   } else if (Secure=="FALSE") {
     # get fileID from the reference number
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
