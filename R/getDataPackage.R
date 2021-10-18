@@ -26,10 +26,11 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
   }
 
   if (Secure=="TRUE") {
-    # get fileID from the reference number
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
+    # get fileID from the reference number from the secure API
+    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',HoldingID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
+    # download the file from the secure API
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',DigitalFileID)
   } else if (Secure=="FALSE") {
     # get fileID from the reference number
