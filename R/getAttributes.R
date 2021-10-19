@@ -1,4 +1,4 @@
-#' Read contents of data packge file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
+#' Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
 #'
 #' \code{getAttributes} reads the data file from a package and loads a list of fields and their attributes into a data frame.
 #'
