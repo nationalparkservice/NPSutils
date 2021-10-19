@@ -5,14 +5,14 @@
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
 #' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently
 #' allowable options are:
-#' * "csv" for comma seperated value text files
+#' * "csv" for comma separated value text files
 #' * "gdb" for file geodatabases
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package.
 #' Currently allowable options are:
 #' * "eml" for eml-compliant xml metadata files
 #' * "fgdc" for FGDC-compliant xml metadata files
 #'
-#' @return one data frame to the global enviroment.
+#' @return one data frame to the global environment.
 #'
 #' @examples
 #'
