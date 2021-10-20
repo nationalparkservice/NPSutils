@@ -1,16 +1,16 @@
-#' Read contents of data packge file and construct a data frame based on the data file(s) and associated metadata.
+#' Read contents of data package file and construct a data frame based on the data file(s) and associated metadata.
 #'
 #' \code{loadDataPackage} reads the data file from a package and loads it into one or more data frames.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
 #' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently
 #' allowable options are:
-#' * "csv" for comma seperated value text files
+#' * "csv" for comma separated value text files
 #' * "gdb" for file geodatabases
 #' * "tif" for raster files
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package.
 #' Currently allowable options are:
-#' * "eml" for eml-compliant xml metadata files
+#' * "eml" for EML-compliant xml metadata files
 #' * "fgdc" for FGDC-compliant xml metadata files
 #' @param features is a character value indicating the name of the feature class / data set (only used with file geodatabases)
 #'
@@ -25,8 +25,8 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
   DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
-  #JP 10/14/21 - need to investigate this function as the getDataPackage should have already unzipped
-  #if this is only returning a file list there should be a more efficient function than unzipping a second time
+  #JP 10/14/21 - need to investigate this function as the getDataPackage has already been unzipped
+  #probably safer to confirm what is on the file system than to look inside the zip again
   fileList<-unzip(DataPackageFilename,list=TRUE)
   
   if (dataFormat=="csv" & metadataFormat=="eml") {

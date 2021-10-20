@@ -90,6 +90,8 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
     #attributes$columnclass<-ifelse(attributes$attributeType=="Date","Date",attributes$columnclass)
     #attributes$columnclass<-ifelse(attributes$attributeType=="Double","numeric",attributes$columnclass)
 
+    message(paste0("Found ",nrow(attributes)," fields"))
+    
     # return the field table to the workspace.
     return(attributes)
 
