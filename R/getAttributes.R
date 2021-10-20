@@ -1,12 +1,8 @@
 #' Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
 #'
-#' \code{getAttributes} reads the data file from a package and loads a list of fields and their attributes into a data frame.
+#' \code{getAttributes} reads the metadata file from a package and loads a list of fields and their attributes into a data frame.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
-#' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently
-#' allowable options are:
-#' * "csv" for comma separated value text files
-#' * "gdb" for file geodatabases
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package.
 #' Currently allowable options are:
 #' * "eml" for eml-compliant xml metadata files
@@ -16,14 +12,14 @@
 #'
 #' @examples
 #'
-#' attributeTable<-getAttributes(2266200,dataFormat="gdb",metadataFormat="fgdc")
+#' attributeTable<-getAttributes(2266200,metadataFormat="fgdc")
 
 
 getAttributes <-function(HoldingID,dataFormat,metadataFormat){
   DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
-  if (dataFormat=="csv" & metadataFormat=="eml") {
+  if (metadataFormat=="eml") {
 
     fileList<-unzip(DataPackageFilename,list=TRUE)
 
@@ -54,7 +50,7 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
     # return the field table to the workspace.
     return(attributes)
 
-  } else if (dataFormat=="gdb" & metadataFormat=="fgdc") {
+  } else if (metadataFormat=="fgdc") {
 
     # Working with the metadata file first...
     xmlfile <-list.files(path=DataPackageDirectory,pattern = ".xml")
