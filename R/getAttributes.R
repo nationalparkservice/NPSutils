@@ -68,8 +68,8 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
         #if none of them include "_metadata" in the name then just work with the first one
         xmlfile <- xmlfile[1]
       }
-      message(paste0("Choosing this one: ",xmlfile))
     }
+    message(paste0("Processing ",xmlfile))
     xmlFilename <- paste0(DataPackageDirectory,"/",xmlfile)
     workingXMLfile<-EML::read_eml(xmlFilename, from = "xml")
     
@@ -86,13 +86,13 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
     attributes$id<-as.integer(as.character(attributes$id))
     attributes$attribute<-as.character(attributes$attribute)
     attributes$attributeDefinition<-as.character(attributes$attributeDefinition)
-    attributes$attributeType<-as.character(attributes$attributeType)
+    #attributes$attributeType<-as.character(attributes$attributeType)
     attributes$attributeFactors<-as.integer(as.character(attributes$attributeFactors))
 
     attributes$columnclass<-"character"
-    attributes$columnclass<-ifelse(attributes$attributeType=="OID","integer",attributes$columnclass)
-    attributes$columnclass<-ifelse(attributes$attributeType=="Date","Date",attributes$columnclass)
-    attributes$columnclass<-ifelse(attributes$attributeType=="Double","numeric",attributes$columnclass)
+    #attributes$columnclass<-ifelse(attributes$attributeType=="OID","integer",attributes$columnclass)
+    #attributes$columnclass<-ifelse(attributes$attributeType=="Date","Date",attributes$columnclass)
+    #attributes$columnclass<-ifelse(attributes$attributeType=="Double","numeric",attributes$columnclass)
 
     # return the field table to the workspace.
     return(attributes)
