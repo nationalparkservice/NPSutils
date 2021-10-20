@@ -25,7 +25,7 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
   DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
-  #JP 10/14/21 - need to investigate this function as the getDataPackage has already been unzipped
+  #JP 10/14/21 - need to investigate this function as getDataPackage() function has already unzipped the file
   #probably safer to confirm what is on the file system than to look inside the zip again
   fileList<-unzip(DataPackageFilename,list=TRUE)
   
