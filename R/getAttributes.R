@@ -57,11 +57,22 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
   } else if (dataFormat=="gdb" & metadataFormat=="fgdc") {
 
     # Working with the metadata file first...
-
     xmlfile <-list.files(path=DataPackageDirectory,pattern = ".xml")
+    # if more than one XML is found then attempt to use the one that includes "_metadata" in the name
+    if (length(xmlfile) > 1) {
+      message("More than 1 XML files found in this data package.")
+      temp <- grep("_metadata", xmlfile)
+      if (length(temp) >= 1) {
+        xmlfile <- xmlfile[temp[1]]
+      } else {
+        #if none of them include "_metadata" in the name then just work with the first one
+        xmlfile <- xmlfile[1]
+      }
+      message(paste0("Choosing this one: ",xmlfile))
+    }
     xmlFilename <- paste0(DataPackageDirectory,"/",xmlfile)
     workingXMLfile<-EML::read_eml(xmlFilename, from = "xml")
-
+    
     # Build attributes table from the xml file
     attributes<-data.frame(id=numeric(),attribute=character(),attributeDefinition=character(),attributeType=character(),attributeFactors=numeric(),stringsAsFactors = FALSE)
     for (i in 1:length(workingXMLfile$ea$detailed$attr)){
