@@ -27,7 +27,13 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
 
   #JP 10/14/21 - need to investigate this function as getDataPackage() function has already unzipped the file
   #probably safer to confirm what is on the file system than to look inside the zip again
-  fileList<-unzip(DataPackageFilename,list=TRUE)
+  # add a try-catch here to bail out elegantly if the zip can't be unzipped
+  tryCatch(expr = {fileList<-unzip(DataPackageFilename,list=TRUE)},
+    error = function(e){
+      message("The zip file cannot be unzipped.")
+      stop()
+    }
+  )
   
   if (dataFormat=="csv" & metadataFormat=="eml") {
     csvfile <- subset(fileList, grepl(".csv",Name))
