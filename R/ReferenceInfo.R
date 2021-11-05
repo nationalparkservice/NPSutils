@@ -71,6 +71,10 @@ DSReferenceInfo<-function(HoldingID,field){
   url<-paste0("https://irmaservices.nps.gov/datastore/v4/rest/Profile/",HoldingID)
   DSReference<-jsonlite::read_json(url,simplifyVector = TRUE)
 
+  if (field=="ReferenceType") {
+    DSValue<-DSReference$referenceType
+  }
+  
   if (field=="Title") {
     DSValue<-DSReference$bibliography$title
   }
@@ -87,5 +91,9 @@ DSReferenceInfo<-function(HoldingID,field){
     DSValue<-DSReference$keywords
   }
 
+  if (field=="IssuedYear") {
+    DSValue<-DSReference$bibliography$issued$year
+  }
+  
   return(DSValue)
 }
