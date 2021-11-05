@@ -86,6 +86,12 @@ DSReferenceInfo<-function(HoldingID,field){
   else if (field=="Keywords") {
     DSValue<-DSReference$keywords
   }
+  else if (field=="Visibility") {
+    DSValue<-DSReference$visibility
+  }
+  else if (field=="Lifecycle") {
+    DSValue<-DSReference$lifecycle
+  }
   else if (field=="IssuedYear") {
     DSValue<-DSReference$bibliography$issued$year
   }
