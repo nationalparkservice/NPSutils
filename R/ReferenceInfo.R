@@ -66,7 +66,7 @@ DSgetParkTaxonURLs<-function(ParkCode,TaxonCode){
 #' all keywords as character values.
 #'
 #' @examples
-#' DSRefernceInfo(2266196,"Title")
+#' DSReferenceInfo(2266196,"Title")
 DSReferenceInfo<-function(HoldingID,field){
   url<-paste0("https://irmaservices.nps.gov/datastore/v4/rest/Profile/",HoldingID)
   DSReference<-jsonlite::read_json(url,simplifyVector = TRUE)
