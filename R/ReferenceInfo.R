@@ -74,25 +74,23 @@ DSReferenceInfo<-function(HoldingID,field){
   if (field=="ReferenceType") {
     DSValue<-DSReference$referenceType
   }
-  
-  if (field=="Title") {
+  else if (field=="Title") {
     DSValue<-DSReference$bibliography$title
   }
-
-  if (field=="Abstract") {
+  else if (field=="Abstract") {
     DSValue<-DSReference$bibliography$abstract
   }
-
-  if (field=="Citation") {
+  else if (field=="Citation") {
     DSValue<-DSReference$citation
   }
-
-  if (field=="Keywords") {
+  else if (field=="Keywords") {
     DSValue<-DSReference$keywords
   }
-
-  if (field=="IssuedYear") {
+  else if (field=="IssuedYear") {
     DSValue<-DSReference$bibliography$issued$year
+  }
+  else {
+    message(paste0("The requested parameter (",field,") could not be found."))
   }
   
   return(DSValue)
