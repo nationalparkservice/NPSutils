@@ -104,6 +104,15 @@ DSReferenceInfo<-function(HoldingID,field){
     Version.Date<-DSReference$versions$dateOfIssue
     DSValue <- data.frame(Version.Number,Version.Reference,Version.Date)
   }
+  else if (field=="CreatedBy") {
+    DSValue<-DSReference$history$createdBy
+  }
+  else if (field=="ContentBeginYear") {
+    DSValue<-DSReference$bibliography$contentBegin$year
+  }
+  else if (field=="ContentEndYear") {
+    DSValue<-DSReference$bibliography$contentEnd$year
+  }
   else {
     message(paste0("The requested parameter (",field,") could not be found."))
   }
