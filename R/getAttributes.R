@@ -1,3 +1,11 @@
+
+###### RLB 03/15/2022 #####
+# This file is now obsolete and can be removed/ignored.
+# For "getAttributes" functionality, see "loadAttributes.R"
+# For "getDomains" functionality, see "loadDomains.R"
+######
+
+
 #' Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
 #'
 #' \code{getAttributes} reads the metadata file from a package and loads a list of fields and their attributes into a data frame.
@@ -99,13 +107,6 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
     print ("data/metadata format combination not supported")
   }
 }
-
-
-###### RLB 03/15/2022 #####
-# This file is now obsolete and can be removed/ignored.
-# For "getAttributes" functionality, see "loadAttributes.R"
-# For "getDomains" functionality, see "loadDomains.R"
-######
 
 
 #' Read contents of data packge file and construct a data frame based on the metadata file summarizing the enumerated domains for
