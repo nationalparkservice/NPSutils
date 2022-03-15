@@ -101,6 +101,13 @@ getAttributes <-function(HoldingID,dataFormat,metadataFormat){
 }
 
 
+###### RLB 03/15/2022 #####
+# This file is now obsolete and can be removed/ignored.
+# For "getAttributes" functionality, see "loadAttributes.R"
+# For "getDomains" functionality, see "loadDomains.R"
+######
+
+
 #' Read contents of data packge file and construct a data frame based on the metadata file summarizing the enumerated domains for
 #' categorical fields and their types/definitions.
 #'
