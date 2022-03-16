@@ -20,14 +20,14 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
     dir.create("data/raw")
   }
 
-  DestinationDirectory<-paste("data/raw/",HoldingID,sep="")
+  DestinationDirectory<-paste("data/raw/",ReferenceID,sep="")
   if (!file.exists(DestinationDirectory)) {
     dir.create(DestinationDirectory)
   }
 
   if (Secure=="TRUE") {
-    # get resourceID from the reference number
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',HoldingID,'/DigitalFiles')
+    # get HoldingID from the reference number
+    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml<-httr::GET(RestHoldingInfoURL)
     # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
     if (xml$status_code == 200) {
@@ -43,8 +43,8 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
     }
     
   } else if (Secure=="FALSE") {
-    # get resourceID from the reference number
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
+    # get the HoldingID from the reference number
+    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',DigitalFileID)
