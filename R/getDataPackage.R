@@ -56,7 +56,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
   download.file(RestDownladURL,DestinationFilename,quiet=FALSE, mode="wb")
 
   # unzip data package
-  # need to check if this is even a zip file
+  # check to see if the downloaded file is a zip
   if (tools::file_ext(DestinationFilename) == "zip") {
     unzip(DestinationFilename, exdir = DestinationDirectory)
   }
@@ -64,8 +64,8 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
     rlang::inform("File was not a zip file and could not be unzipped")
   }
   
-  #check to see that the zip was downloaded and unzipped
-  #this might be worth improving in the future, but looks for >2 files in the folder
+  # check to see that the zip was downloaded and unzipped
+  # this might be worth improving in the future, but looks for >2 files in the folder
   if (length(list.files(DestinationDirectory, include.dirs = FALSE)) > 2) {
     rlang::inform(paste0("Download and unzipping of reference ",ReferenceID," succeeded"))
   } else {
