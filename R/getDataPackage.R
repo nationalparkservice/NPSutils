@@ -35,9 +35,9 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
     } else {
       stop("An error occurred. Are you connected to the NPS network/VPN?")
     }
-    DigitalFileID<-xml[[1]]$resourceId
+    HoldingID<-xml[[1]]$resourceId
     if (DigitalFileID > 0) {
-      RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',DigitalFileID)
+      RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',HoldingID)
     } else {
       stop("An error occurred. A resource ID could not be found for this reference.")
     }
@@ -46,9 +46,9 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
     # get the HoldingID from the ReferenceID - defaults to the first holding
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
-    DigitalFileID<-xml[[1]]$resourceId
+    HoldingID<-xml[[1]]$resourceId
     DigitalFileType<-xml[[1]]$extension
-    RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',DigitalFileID)
+    RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',HoldingID)
   }
 
   # download the data package from Data Store into its own directory
