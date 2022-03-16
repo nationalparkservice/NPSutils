@@ -9,7 +9,7 @@
 #' @examples
 #' getDataPackage(2272461,Secure=TRUE)
 
-getDataPackage<-function(HoldingID,Secure=FALSE){
+getDataPackage<-function(ReferenceID,Secure=FALSE){
 
   # Create directory to hold the data package if it does not already exist.
   if (!file.exists("data")) {
@@ -47,22 +47,28 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
+    DigitalFileType<-xml[[1]]$extension
     RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',DigitalFileID)
   }
 
   # download the data package from Data Store into its own directory
-  DestinationFilename<-paste(DestinationDirectory,"/",HoldingID,".zip",sep="")
+  DestinationFilename<-paste(DestinationDirectory,"/",ReferenceID,".", DigitalFileType ,sep="")
   download.file(RestDownladURL,DestinationFilename,quiet=FALSE, mode="wb")
 
   # unzip data package
   # need to check if this is even a zip file
-  unzip(DestinationFilename, exdir = DestinationDirectory)
+  if (tools::file_ext(DestinationFilename) == "zip") {
+    unzip(DestinationFilename, exdir = DestinationDirectory)
+  }
+  else {
+    rlang::inform("File was not a zip file and could not be unzipped")
+  }
   
   #check to see that the zip was downloaded and unzipped
   #this might be worth improving in the future, but looks for >2 files in the folder
   if (length(list.files(DestinationDirectory, include.dirs = FALSE)) > 2) {
-    rlang::inform(paste0("Download and unzipping of reference ",HoldingID," succeeded"))
+    rlang::inform(paste0("Download and unzipping of reference ",ReferenceID," succeeded"))
   } else {
-    rlang::inform(paste0("Download and unzipping of reference ",HoldingID," failed"))
+    rlang::inform(paste0("Download and unzipping of reference ",ReferenceID," failed"))
   }
 }
