@@ -46,7 +46,7 @@ loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
     attributes<-attributeList$attributes
     factors<-attributeList$factors
 
-    # Figure out column clases based on attribute table (character, date, numeric, integer, logical, or complex)
+    # Figure out column classes based on attribute table (character, date, numeric, integer, logical, or complex)
     attributes$columnclass<-"character"
     if("attributes$numberType" %in% colnames(attributes)){
       attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="natural","integer",attributes$columnclass)
