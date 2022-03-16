@@ -3,7 +3,7 @@
 #' \code{getDataPackage} downloads a data package from data store, copies it to the /data/raw directory, and unzips it into a subdirectory with the "HoldingID" name.
 #'
 #'
-#' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
+#' @param ReferenceID is a 6-7 digit number corresponding to the reference ID of the data package.
 #' @param Secure True or False (default) indicating whether the file should be acquired using data services available to NPS internal staff only.
 #'
 #' @examples
@@ -27,7 +27,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
 
   if (Secure=="TRUE") {
     # get resourceID from the reference number
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',HoldingID,'/DigitalFiles')
+    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',HoldingID,'/DigitalFiles')
     xml<-httr::GET(RestHoldingInfoURL)
     # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
     if (xml$status_code == 200) {
