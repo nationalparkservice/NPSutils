@@ -26,7 +26,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
   }
 
   if (Secure=="TRUE") {
-    # get HoldingID from the reference number
+    # get HoldingID from the ReferenceID - defaults to the first holding
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml<-httr::GET(RestHoldingInfoURL)
     # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
@@ -43,7 +43,7 @@ getDataPackage<-function(HoldingID,Secure=FALSE){
     }
     
   } else if (Secure=="FALSE") {
-    # get the HoldingID from the reference number
+    # get the HoldingID from the ReferenceID - defaults to the first holding
     RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml<-httr::content(httr::GET(RestHoldingInfoURL))
     DigitalFileID<-xml[[1]]$resourceId
