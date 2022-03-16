@@ -6,9 +6,9 @@
 # Regions do NOT use the region numbering system because the underlying data this code draws on from irma does not include the region numbers.
 
 #' #' To do:
-#' Warnings and checks on parameter inputs are not yet implemented.
-#' The output dataframe is a little unwieldy and could be cleaned up.
-#' Currently each search requires an independent download. It's a fast download, but this process could be sped up considerably by checking to see if the file exists before downloading it.
+  #' Warnings and checks on parameter inputs are not yet implemented.
+  #' The output dataframe is a little unwieldy and could be cleaned up.
+
 
 #It is worth figuring out how stable the URL is: when were the data last updated? How frequently are they updated? Are field codes ever changed, or just data added? Do updates entail a new URL?
 
