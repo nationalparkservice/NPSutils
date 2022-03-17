@@ -45,7 +45,7 @@ getUnitCode<-function(Unit){ #input must have quotes to indicate strings
 getUnitCode<-function(Unit){ #input must have quotes to indicate strings
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file 
+    curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/",Unit, f)) #access all park codes from NPS xml file 
    } 
   result<- XML::xmlParse(file=f) #parse xml
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
