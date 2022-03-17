@@ -27,9 +27,10 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
 
   if (Secure=="TRUE") {
     # get HoldingID from the ReferenceID - defaults to the first holding
-    RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
-    xml <- httr::GET(RestHoldingInfoURL)
+    RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
+    xml <- httr::content(httr::GET(RestHoldingInfoURL))
     HoldingID <- xml[[1]]$resourceId
+    DigitalFileType <- xml[[1]]$extension
     if (HoldingID > 0) {
       RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',HoldingID)
     } else {
@@ -42,7 +43,6 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
     xml <- httr::content(httr::GET(RestHoldingInfoURL))
     HoldingID <- xml[[1]]$resourceId
     DigitalFileType <- xml[[1]]$extension
-    HoldingID<-xml[[1]]$resourceId
     if (HoldingID > 0) {
       RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',HoldingID)
     } else {
