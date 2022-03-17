@@ -27,28 +27,28 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
 
   if (Secure=="TRUE") {
     # get HoldingID from the ReferenceID - defaults to the first holding
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
-    xml<-httr::GET(RestHoldingInfoURL)
-    # check to see the response type; 200 is good; 401 is bad (are there others to consider?)
-    if (xml$status_code == 200) {
-      xml<-httr::content(xml)
-    } else {
-      stop("An error occurred. Are you connected to the NPS network/VPN?")
-    }
-    HoldingID<-xml[[1]]$resourceId
-    if (DigitalFileID > 0) {
+    RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
+    xml <- httr::GET(RestHoldingInfoURL)
+    HoldingID <- xml[[1]]$resourceId
+    if (HoldingID > 0) {
       RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',HoldingID)
     } else {
-      stop("An error occurred. A resource ID could not be found for this reference.")
+      stop("An error occurred. A HoldingID could not be found for this reference.")
     }
     
   } else if (Secure=="FALSE") {
     # get the HoldingID from the ReferenceID - defaults to the first holding
-    RestHoldingInfoURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
-    xml<-httr::content(httr::GET(RestHoldingInfoURL))
+    RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
+    xml <- httr::content(httr::GET(RestHoldingInfoURL))
+    HoldingID <- xml[[1]]$resourceId
+    DigitalFileType <- xml[[1]]$extension
     HoldingID<-xml[[1]]$resourceId
-    DigitalFileType<-xml[[1]]$extension
-    RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',HoldingID)
+    if (HoldingID > 0) {
+      RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',HoldingID)
+    } else {
+      stop("An error occurred. A HoldingID could not be found for this reference.")
+    }
+    
   }
 
   # download the data package from Data Store into its own directory
@@ -65,8 +65,8 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
   }
   
   # check to see that the zip was downloaded and unzipped
-  # this might be worth improving in the future, but looks for >2 files in the folder
-  if (length(list.files(DestinationDirectory, include.dirs = FALSE)) > 2) {
+  # this might be worth improving in the future, but looks for >1 files in the folder
+  if (length(list.files(DestinationDirectory, include.dirs = FALSE)) > 1) {
     rlang::inform(paste0("Download and unzipping of reference ",ReferenceID," succeeded"))
   } else {
     rlang::inform(paste0("Download and unzipping of reference ",ReferenceID," failed"))
