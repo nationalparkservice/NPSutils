@@ -17,36 +17,22 @@ library(XML) #format xml files
 library(tidyverse) #enable piping, filter
 library(curl)
 
-
-###########
-# Working on checking if downloaded file exists before downloading to speed things up
-##########
-
-getUnitCode<-function(Unit){ #input must have quotes to indicate strings
-  f <- file.path(tempdir(), "irmadownload.xml")
-    if (!file.exists(f)) {
-      curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file 
-     } 
-    result<- XML::xmlParse(file=f) #parse xml (is this necessary?)
-    dat<-XML::xmlToDataFrame(result) #xml to dataframe
-    dat<-dat[,c(1,3, 5,7,8,9,11,13 )] #pare down the output some
-    alpha<-dat %>% dplyr::filter(grepl(Unit, FullName, ignore.case=TRUE)) #filter FullName for input
-  return(alpha) #return unit code
-}
-
-
 #' \code{getUnitCode} accesses info from irmaservices.nps.gov. Search for park or park unit with any string and return all applicable UnitCodes. Handy for use with GetDataPackage if you don't know a Park's UnitCode. 
 #' 
 #' @param Unit is a case-insensitive string containing some part of the unit's FullName. 
 #' 
-#' @return one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to choose the appropriate UnitCode for use with other DSTools functions such as DSGetParkTaxonReferences (in ReferenceInfo.R).
+#' @return one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to choose the appropriate UnitCode for use with other DSTools functions such as getParkTaxonReferences (in getReferenceInfo.R).
+
 
 #Dynamically access nps xml data on park unit codes:
 getUnitCode<-function(Unit){ #input must have quotes to indicate strings
-  f <- file.path(tempdir(), "irmadownload.xml")
+  f <- file.path(tempdir(), "irmadownload_unit.xml")
   if (!file.exists(f)){
-    curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/",Unit, f)) #access all park codes from NPS xml file 
-   } 
+    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file
+    #curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/",Unit, f)) #doesn't work
+    #curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/", Unit,""), f) #works but requires removing preceeding if(!file.exists(f)) 
+    print("file downloaded") #check for download; remove when dev phase over
+    } 
   result<- XML::xmlParse(file=f) #parse xml
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
   dat<-dat[,c(1,3, 5,7,8,9,11,13 )] #pare down the output some
@@ -60,12 +46,12 @@ getUnitCode<-function(Unit){ #input must have quotes to indicate strings
 #' 
 #' @return one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to choose the appropriate UnitCode for use with other DSTools functions such as DSGetParkTaxonRefernces (in ReferenceInfo.R). Dataframe contains UnitCode, FullName, UnitLifeCycle, Network, Region, and StateCodes.
 
-getParkCode<-function(Park){ #input must have quotes to indicate string
+getParkCode<-function(Park){ #case-insensitive string (in quotes) containing some part of the unit's FullName
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file 
+    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", Park, f) #access all park codes from NPS xml file 
    } 
-  result<- XML::xmlParse(file=f)
+  result<- XML::xmlParse(file=g)
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
   dat<-dat %>% filter(grepl('National Park', UnitDesignationName)) #limit search to just National Parks
   dat<-dat[,c(1,3,8,9,11,13 )] #cleanup the output some
@@ -83,7 +69,7 @@ getParkCode<-function(Park){ #input must have quotes to indicate string
 getUnitCodeInfo<-function(Code){ #input must have quotes to indicate strings
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file 
+    curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/", Code, f)) #access all park codes from NPS xml file 
    } 
   result<- XML::xmlParse(file=f)
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
