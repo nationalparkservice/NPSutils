@@ -26,7 +26,7 @@ library(curl)
 
 #Dynamically access nps xml data on park unit codes:
 getUnitCode<-function(Unit){ #input must have quotes to indicate strings
-  f <- file.path(tempdir(), "irmadownload_unit.xml")
+  f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
     curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file
     #curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/",Unit, f)) #doesn't work
@@ -49,9 +49,9 @@ getUnitCode<-function(Unit){ #input must have quotes to indicate strings
 getParkCode<-function(Park){ #case-insensitive string (in quotes) containing some part of the unit's FullName
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", Park, f) #access all park codes from NPS xml file 
+    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) #access all park codes from NPS xml file 
    } 
-  result<- XML::xmlParse(file=g)
+  result<- XML::xmlParse(file=f)
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
   dat<-dat %>% filter(grepl('National Park', UnitDesignationName)) #limit search to just National Parks
   dat<-dat[,c(1,3,8,9,11,13 )] #cleanup the output some
@@ -69,7 +69,7 @@ getParkCode<-function(Park){ #case-insensitive string (in quotes) containing som
 getUnitCodeInfo<-function(Code){ #input must have quotes to indicate strings
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
-    curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/", Code, f)) #access all park codes from NPS xml file 
+    curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/", f)) #access all park codes from NPS xml file 
    } 
   result<- XML::xmlParse(file=f)
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
