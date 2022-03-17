@@ -33,7 +33,7 @@ loadMetadata <-function(HoldingID,dataFormat,metadataFormat){
     attributes<-attributeList$attributes
     factors<-attributeList$factors
 
-    # Figure out column clases based on attribute table (character, numeric, integer, logical, or complex)
+    # Figure out column classes based on attribute table (character, numeric, integer, logical, or complex)
     attributes$columnclass<-"character"
     if(!"numberType" %in% colnames(attributes)){
       attributes$numberType<-as.character(NA)
