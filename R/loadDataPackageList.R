@@ -21,7 +21,7 @@
 
 
 loadDataPackageList <-function(HoldingID,dataFormat,metadataFormat){
-  DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
+  DataPackageDirectory<-paste("data/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {

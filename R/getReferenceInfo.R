@@ -1,6 +1,6 @@
 #' Get DS References for a park-species combination
 #'
-#' \code{DSgetParkTaxonReferences} returns a data frame of metadata for references in Data Store corresponding to a particular taxon at a park.
+#' \code{getParkTaxonReferences} returns a data frame of metadata for references in Data Store corresponding to a particular taxon at a park.
 #' The resultant data frame is then usable by other functions to extract metadata from the records.
 #'
 #' Note that this function only returns references that have been "tagged" with a taxon code and may represent only a
@@ -10,7 +10,7 @@
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
 #'
 #' @examples
-#' DSgetParkTaxonReferences("APIS", 126749)
+#' getParkTaxonReferences("APIS", 126749)
 getParkTaxonReferences<-function(ParkCode,TaxonCode){
   url<-paste("https://irmaservices.nps.gov/datastore-secure/v4/rest/UnitSpeciesSearch/",ParkCode,"/",TaxonCode,sep="")
   DSReference<-read_json(url,simplifyVector = TRUE)
@@ -27,7 +27,7 @@ getParkTaxonReferences<-function(ParkCode,TaxonCode){
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
 #'
 #' @examples
-#' DSgetParkTaxonCitations("APIS", 126749)
+#' getParkTaxonCitations("APIS", 126749)
 getParkTaxonCitations<-function(ParkCode,TaxonCode){
   References<-getParkTaxonReferences(ParkCode,TaxonCode)
   DSCitations<-DSReference$citation
@@ -45,7 +45,7 @@ getParkTaxonCitations<-function(ParkCode,TaxonCode){
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
 #'
 #' @examples
-#' DSgetParkTaxonURLs("APIS", 126749)
+#' getParkTaxonURLs("APIS", 126749)
 getParkTaxonURLs<-function(ParkCode,TaxonCode){
   References<-getParkTaxonReferences(ParkCode,TaxonCode)
   DSReferenceCodes<-DSReference$referenceId
@@ -65,7 +65,7 @@ getParkTaxonURLs<-function(ParkCode,TaxonCode){
 #' all keywords as character values.
 #'
 #' @examples
-#' DSReferenceInfo(2266196,"Title")
+#' ReferenceInfo(2266196,"Title")
 getReferenceInfo<-function(HoldingID,field){
   url<-paste0("https://irmaservices.nps.gov/datastore/v4/rest/Profile/",HoldingID)
   DSReference<-jsonlite::read_json(url,simplifyVector = TRUE)
