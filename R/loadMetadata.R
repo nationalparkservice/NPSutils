@@ -15,9 +15,9 @@
 #' attributeTable<-loadMetadata(2266200,metadataFormat="fgdc")
 
 
-loadMetadata <-function(HoldingID,dataFormat,metadataFormat){
-  DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
-  DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
+loadMetadata <-function(HoldingID,metadataFormat){
+  DataPackageDirectory<-paste("data/",HoldingID,sep="")
+  DataPackageFilename<-paste(DataPackageDirectory,".zip",sep="")
 
   if (metadataFormat=="eml") {
 
@@ -73,10 +73,10 @@ loadMetadata <-function(HoldingID,dataFormat,metadataFormat){
     attributes<-data.frame(id=numeric(),attribute=character(),attributeDefinition=character(),attributeType=character(),attributeFactors=numeric(),stringsAsFactors = FALSE)
     for (i in 1:length(workingXMLfile$ea$detailed$attr)){
       attributes<-rbind(attributes,cbind(id=i,
-                                                 attribute=workingXMLfile$ea$detailed$attr[[i]]$attrlabl,
-                                                 attributeDefinition=workingXMLfile$ea$detailed$attr[[i]]$attrdef,
-                                                 attributeType=workingXMLfile$ea$detailed$attr[[i]]$attrtype,
-                                                 attributeFactors=length(workingXMLfile$ea$detailed$attr[[i]]$attrdomv)))
+        attribute=workingXMLfile$ea$detailed$attr[[i]]$attrlabl,
+        attributeDefinition=workingXMLfile$ea$detailed$attr[[i]]$attrdef,
+        attributeType=workingXMLfile$ea$detailed$attr[[i]]$attrtype,
+        attributeFactors=length(workingXMLfile$ea$detailed$attr[[i]]$attrdomv)))
     }
 
     attributes$id<-as.integer(as.character(attributes$id))
