@@ -1,191 +1,85 @@
-#' Read contents of data package file and construct a data frame based on the data file(s) and associated metadata.
+#' Read contents of data package file and constructs a list of tibbles based on the data file(s)
 #'
-#' \code{loadDataPackage} reads the data file from a package and loads it into one or more data frames.
+#' \code{loadDataPackage} reads the data file(s) from a package and loads it into a list oftibbles. Current implementation only supports .csv data files. Planned future iterations will support .json and .xml data files.
 #'
-#' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
-#' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently
-#' allowable options are:
-#' * "csv" for comma separated value text files
-#' * "gdb" for file geodatabases
-#' * "tif" for raster files
-#' @param metadataFormat is a character value indicating the format of the metadata file within the data package.
-#' Currently allowable options are:
-#' * "eml" for EML-compliant xml metadata files
-#' * "fgdc" for FGDC-compliant xml metadata files
-#' @param features is a character value indicating the name of the feature class / data set (only used with file geodatabases)
+#' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package.
 #'
-#' @return one or more data frames contained within the data package to the global environment.
+#' @return one a list of one or more tibbles contained within the data package to the global environment.
 #'
 #' @examples
 #'
-#' ParkTandETaxa<-loadDataPackage(2272461,dataFormat="csv",metadataFormat="eml")
+#' ParkTandETaxa<-loadDataPackage(2272461)
 
 
-loadDataPackage <-function(HoldingID,dataFormat,metadataFormat,features=NULL){
+loadDataPackage <-function(HoldingID){
+
   DataPackageDirectory<-paste("data/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,".zip",sep="")
-
-  #JP 10/14/21 - need to investigate this function as getDataPackage() function has already unzipped the file
-  #probably safer to confirm what is on the file system than to look inside the zip again
-  # add a try-catch here to bail out elegantly if the zip can't be unzipped
-  tryCatch(expr = {fileList<-unzip(DataPackageFilename,list=TRUE)},
-    error = function(e){
-      message("The zip file cannot be unzipped.")
-      stop()
-    }
-  )
   
-  if (dataFormat=="csv" & metadataFormat=="eml") {
-    csvfile <- subset(fileList, grepl(".csv",Name))
-    emlfile <- subset(fileList, grepl(".xml",Name))
-    csvFilename <- paste(DataPackageDirectory,"/",csvfile[1],sep="")
-    emlFilename <- paste(DataPackageDirectory,"/",emlfile[1],sep="")
-
-    workingEMLfile<-EML::read_eml(emlFilename, from = "xml")
-    attributeList<-EML::get_attributes(workingEMLfile$dataset$dataTable$attributeList)
-    attributes<-attributeList$attributes
-    factors<-attributeList$factors
-
-    # Figure out column classes based on attribute table (character, date, numeric, integer, logical, or complex)
-    attributes$columnclass<-"character"
-    if("attributes$numberType" %in% colnames(attributes)){
-      attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="natural","integer",attributes$columnclass)
-      attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="whole","integer",attributes$columnclass)
-      attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="integer","integer",attributes$columnclass)
-      attributes$columnclass<-ifelse(attributes$storageType=="float" & attributes$numberType=="real","numeric",attributes$columnclass)
-    }
-    
-    if (nrow(subset(attributes,storageType=="date")) !=0) {
-      attributes$columnclass<-ifelse(attributes$storageType=="date" & attributes$formatString=="YYYY-MM-DD" ,"Date",attributes$columnclass)
-    }
-    
-    workingdatafile<-read.csv(csvFilename, col.names= attributes$attributeName,colClasses=attributes$columnclass)
-
-    # Assign levels for fields with enumerated domains and convert those columns to factors
-    attributes2<-subset(attributes, select=c(attributeName,measurementScale,domain))
-
-    for (i in 1:nrow(attributes2)) {
-      columnName<-attributes2[i,1]
-      factorsubset<-subset(factors,factors$attributeName==columnName)
-      if(attributes2[i,2]=="nominal" & attributes2[i,3]=="enumeratedDomain") {
-        workingdatafile[,i]<-factor(workingdatafile[,i],levels=factorsubset$code)
+  #Look for the zipped data package and attempt to unzip it. If the zipped file exists but cannot be unzipped, give the user a warning. If neither the unzipped nor zipped data packages exist, suggest the user check their working directory or use getDataPackage() to get the data package.
+  if(!file.exists(DataPackageDirectory)){
+    if(file.exists(DataPackageFilename)){
+      tryCatch(expr = {fileList<-unzip(DataPackageFilename,list=TRUE)}, error = function(e){
+        message("The zip file cannot be unzipped.")
+        stop()
       }
-      if(attributes2[i,2]=="ordinal" & attributes[i,3]=="enumeratedDomain") {
-        workingdatafile[,i]<-factor(workingdatafile[,i],levels=factorsubset$code)
-        levels(workingdatafile[,i]) <- factorsubset$code
-      }
+      )}
+    if(!file.exists(DataPackageFilename)){
+      print(paste0("The data package zip folder for Holding ", HoldingID, " was not found. Check to make sure you have the correct working directory or try using getDataPackage() to download the data package."))
     }
-
-    # return the metadata and data to the workspace as a list and data frame respectively
-
-    assign(paste0(HoldingID,"_data"),workingdatafile, envir=.GlobalEnv)
-    # assign(paste0(HoldingID,"_emlMetadata"), EML::read_eml(emlFilename, from = "xml"), envir=.GlobalEnv)
-    return(workingdatafile)
+  }
+  
+  #Older data packages may not have a "data" sub-folder. This if statement looks for that sub-folder and if it does not exist loads the first .csv file in the data package folder.
+  #if(!file.exists(paste0("data/",HoldingID,"/data"))){
+  #  csvfile<-subset(fileList, grepl(".csv",Name))
+  #   csvFilename <- paste(DataPackageDirectory,"/",csvfile[1],sep="")
+  #   workingdatafile<-read.csv(csvFilename)
+  #}
+  
+  
+  #if there is no "data" sub-folder, load all .csv files into tibbles and names each tibble based on the .csv file name (tibble to speed up processing). 
+  #### RLB: will need to be expanded to handle .xml and .json
+  if(!file.exists(paste0("/data/", HoldingID, "/data"))){
+    filenames <- list.files(path=DataPackageDirectory,
+                            pattern="*csv")
+    ##Create list of data frame names without the ".csv" part 
+    names <-gsub(pattern = "\\.csv$", "",filenames)
+    ###Load all files into tibbles
+    tibble_List<-list()
+    for(i in names){
+      filepath <- file.path(DataPackageDirectory,paste(i,".csv",sep=""))
+      tibble_List[[i]]<- assign(i, readr::read_csv(filepath, show_col_types = FALSE))
+    }
+    return(tibble_List)
+  }
+  
+  
+  #updated data package specs. As of 3/2022 all data will be in a sub-folder, "data". This if statement finds the first .csv file in that folder and opens it. Will need more tweaking to accommodate multiple .csv files.
+  #if(file.exists(paste0("data/",HoldingID,"/data"))){
+  #  FileList<-paste0("data/", HoldingID, "/data/")
+  #  csvFilename<-subset(fileList, grepl(".csv",Name))
+  #  csvFilename<-paste(DataPackageDirectory, "/", csvfile[1], sep="")
+  #  workingdatafile<-read.csv(csvFilename)
+  #}  
+  
+  #Looks for data within a "data" sub-folder for data packages (moslty generated after 3/2022). Loads all .csv files in the "data" sub-folder into tibbles (to speed up processing) and gives each tibble the filename of the .csv it came from (without .csv extension)
+  #### RLB: will need to be expanded to handle .xml and .json
+  if(file.exists(paste0("data/", HoldingID, "/data"))){
+    ##change directories to the /data sub-directory within the data package
+    DataPackageDirectory<-paste0(DataPackageDirectory, "/data")
     
-  } else if (dataFormat=="gdb" & metadataFormat=="fgdc") {
-    # Working with the metadata file first...
-    xmlfile <-list.files(path=DataPackageDirectory,pattern = ".xml")
-    xmlFilename <- paste0(DataPackageDirectory,"/",xmlfile)
-    workingXMLfile<-EML::read_eml(xmlFilename, from = "xml")
-
-    # return the metadata to the workspace as a list.
-    # assign(paste0(HoldingID,"_fgdcMetadata"), workingXMLfile, envir=.GlobalEnv)
-
-    # Build attributes table from the xml file
-    attributes<-data.frame(id=numeric(),attribute=character(),attributeDefinition=character(),attributeType=character(),attributeFactors=numeric(),stringsAsFactors = FALSE)
-    for (i in 1:length(workingXMLfile$ea$detailed$attr)){
-      attributes<-rbind(attributes,cbind(id=i,
-                                                 attribute=workingXMLfile$ea$detailed$attr[[i]]$attrlabl,
-                                                 attributeDefinition=workingXMLfile$ea$detailed$attr[[i]]$attrdef,
-                                                 attributeType=workingXMLfile$ea$detailed$attr[[i]]$attrtype,
-                                                 attributeFactors=length(workingXMLfile$ea$detailed$attr[[i]]$attrdomv)))
-    }
-
-    attributes$id<-as.integer(as.character(attributes$id))
-    attributes$attribute<-as.character(attributes$attribute)
-    attributes$attributeDefinition<-as.character(attributes$attributeDefinition)
-    attributes$attributeType<-as.character(attributes$attributeType)
-    attributes$attributeFactors<-as.integer(as.character(attributes$attributeFactors))
-
-    attributes$columnclass<-"character"
-    attributes$columnclass<-ifelse(attributes$attributeType=="OID","integer",attributes$columnclass)
-    attributes$columnclass<-ifelse(attributes$attributeType=="Date","Date",attributes$columnclass)
-    attributes$columnclass<-ifelse(attributes$attributeType=="Double","numeric",attributes$columnclass)
-    attributes$columnclass<-ifelse(attributes$attributeType=="FLOAT","numeric",attributes$columnclass)
-
-    # Get the factor definitions for class variables
-    attributeLevels<-data.frame(attribute=character(),factor=character(),factorDefinition=character(),stringsAsFactors=FALSE)
-    attributesWithFactors<-subset(attributes,attributeFactors >1)
-    for (i in 1:nrow(attributesWithFactors)){
-      for (j in 1:attributesWithFactors[i,5]){
-        attributeLevels<-rbind(attributeLevels,cbind(
-          attribute=attributesWithFactors[i,2],
-          factor=workingXMLfile$ea$detailed$attr[[attributesWithFactors[i,1]]]$attrdomv[[j]]$edom$edomv,
-          factorDefinition=workingXMLfile$ea$detailed$attr[[attributesWithFactors[i,1]]]$attrdomv[[j]]$edom$edomvd))
-      }
-    }
-
-    attributeLevels$attribute<-as.character(attributeLevels$attribute)
-    attributeLevels$factor<-as.character(attributeLevels$factor)
-    attributeLevels$factorDefinition<-as.character(attributeLevels$factorDefinition)
-
-    # And now working with the file geodatabase
-    gdbfile <- list.dirs(path = DataPackageDirectory, full.names = TRUE, recursive = FALSE)
-    fGDB <- paste0(getwd(),"/",gdbfile)
-
-    if(is.null(features)){
-      datasets<-loadDataPackageList(HoldingID,dataFormat,metadataFormat)
-      datasets<-datasets$dataset
-    } else {
-      datasets<-features
-    }
-
-    datasetList<-data.frame(dataset=character(),stringsAsFactors = FALSE)
-
-    for (i in 1:length(datasets)){
-      temp<-sf::st_read(dsn=fGDB,layer=datasets[i],stringsAsFactors = FALSE)
-
-      if (class(temp[1])=="sf"){
-        temp2<-sf::st_set_geometry(temp,NULL) # non-shape fields
-        temp3<-temp$Shape # spatial fields
-
-        columnnames<-as.data.frame(colnames(temp2))
-        colnames(columnnames)[1]<-"attribute"
-        columnclasses<-dplyr::inner_join(columnnames,attributes)
-        
-        for (k in 1:length(colnames(temp2))) {
-          for (j in 1:nrow(columnclasses)){
-            if (colnames(temp2[k])==columnclasses[j,1]){
-              if (columnclasses[j,6]=="Date"){temp2[,k]<-as.Date(temp2[,k])}
-              if (columnclasses[j,6]=="character"){temp2[,k]<-as.character(temp2[,k])}
-              if (columnclasses[j,6]=="numeric"){temp2[,k]<-as.numeric(temp2[,k])}
-              if (columnclasses[j,6]=="character" & columnclasses[j,5]> 1){
-                factorLevels<-subset(attributeLevels,attribute==columnclasses[j,1])
-                temp2[,k]<-factor(temp2[,k],factorLevels$factor,ordered=FALSE)
-              }
-            }
-          }
-        }
-        temp4<-sf::st_sf(cbind(temp2,temp3))
-
-        # return data to the workspace as a spatial data frame.
-        datasetList<-rbind(datasetList,paste0(datasets[i]),stringsAsFactors=FALSE)
-        colnames(datasetList)[1]<-"dataset"
-        assign(paste0(datasets[i]), temp4, envir=.GlobalEnv)
-        }
-    }
-    datasetList<-datasetList$dataset
-    return(datasetList)
-
-  } else if (dataFormat=="tif" & metadataFormat=="fgdc") {
+    filenames<-list.files(path=DataPackageDirectory, pattern="*csv")
     
-    # Load the raster data
-    tiffile <- subset(fileList, grepl(".tif$",Name))
-    tifFilename <- paste0(DataPackageDirectory,"/",tiffile[1])
-    rasterdata <- raster::raster(tifFilename)
-    return(rasterdata)
+    ##Create list of data frame names without the ".csv" part 
+    names <-gsub(pattern = "\\.csv$", "",filenames)
     
-  } else {
-    print ("data/metadata format combination not supported")
+    ###Load all files
+    tibble_List<-list()
+    for(i in names){
+      filepath <- file.path(DataPackageDirectory,paste(i,".csv",sep=""))
+      tibble_List[[i]]<-assign(i, readr::read_csv(filepath, show_col_types = FALSE))
+    }
+    return(tibble_List)
   }
 }
+  
