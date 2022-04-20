@@ -3,32 +3,58 @@
 #' \code{loadMetadata} reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
-#' @param metadataFormat is a character value indicating the format of the metadata file within the data package.
-#' Currently allowable options are:
-#' * "eml" for eml-compliant xml metadata files
-#' * "fgdc" for FGDC-compliant xml metadata files
 #'
 #' @return one data frame to the global environment.
 #'
 #' @examples
 #'
-#' attributeTable<-loadMetadata(2266200,metadataFormat="fgdc")
+#' attributeTable<-loadMetadata(2266200)
 
 
-loadMetadata <-function(HoldingID,metadataFormat){
+loadMetadata <-function(HoldingID){
   DataPackageDirectory<-paste("data/",HoldingID,sep="")
-  DataPackageFilename<-paste(DataPackageDirectory,".zip",sep="")
-
-  if (metadataFormat=="eml") {
-
-    fileList<-unzip(DataPackageFilename,list=TRUE)
-
-    csvfile <- subset(fileList, grepl(".csv",Name))
-    emlfile <- subset(fileList, grepl(".xml",Name))
-    csvFilename <- paste(DataPackageDirectory,"/",csvfile[1],sep="")
-    emlFilename <- paste(DataPackageDirectory,"/",emlfile[1],sep="")
-
-    workingEMLfile<-EML::read_eml(emlFilename, from = "xml")
+  
+  metadatafile <- list.files(path=DataPackageDirectory,
+                          pattern="metadata.xml")
+  metalocation<-paste0(DataPackageDirectory,"/",metadatafile)
+  
+#Look for a metadatafile and let the user know about the results of the search.
+  if(length(metadatafile)==0){
+    writeLines(paste0("No metadata file found in: ~", DataPackageDirectory, "\nThe filename must end in metadata.xml"))
+  }
+  if(length(metadatafile)>1){
+    writeLines('Multiple metadata files found. Please insure there is only one metadata file ending in "metadata.xml"')
+    ##### some sort of 'graceful' stop/exit function TBD.
+  }
+  if(length(metadatafile)==1){
+    writeLines(paste0("Metadata file found:\n", metadatafile))
+  }
+  if(!file.exists(metalocation)){
+    writeLines(paste0("The data package zip folder for Holding ", HoldingID, " was not found. Check to make sure you have the correct working directory or try using getDataPackage() to download the data package."))
+  }
+  
+#open the metadatafile and determine what format it is. Tell the user what format was detected, and or if the format is unsupported (or incorrectly formatted)
+  if(
+  sum(grepl("<metstdv>FGDC-STD-001-1998", readLines(metalocation)))>0){
+    metaformat<-"fgdc"
+    print(paste0("\nYou are working with ", metaformat, " metadata"))
+    }
+  if(sum(grepl("<eml:eml", readLines(metalocation)))>0){
+    metaformat<-"eml"
+    writeLines(paste0("\nYou are working with ", metaformat, " metadata"))
+  }
+  if(sum(grepl("ISO 19115", readLines(metalocation)))>0){
+    metaformat<-"ISO19915"
+    print(paste0("\nYou are working with ", metaformat, " metadata"))
+  }
+  if(!exists("metaformat")){
+    print("your metadata file format is not supported. Please make sure you are using correctly formatted eml, ISO 19115, or CSDGM (FGDC) metadata")
+  }
+  
+#Construct attribute tables:
+  if (metaformat=="eml") {
+    #emlFilename <- metalocation
+    workingEMLfile<-EML::read_eml(metalocation, from = "xml")
     attributeList<-EML::get_attributes(workingEMLfile$dataset$dataTable$attributeList)
     attributes<-attributeList$attributes
     factors<-attributeList$factors
@@ -50,24 +76,9 @@ loadMetadata <-function(HoldingID,metadataFormat){
     # return the field table to the workspace.
     return(attributes)
 
-  } else if (metadataFormat=="fgdc") {
-
-    # Working with the metadata file first...
-    xmlfile <-list.files(path=DataPackageDirectory,pattern = ".xml")
-    # if more than one XML is found then attempt to use the one that includes "_metadata" in the name
-    if (length(xmlfile) > 1) {
-      message("More than 1 XML files found in this data package.")
-      temp <- grep("_metadata", xmlfile)
-      if (length(temp) >= 1) {
-        xmlfile <- xmlfile[temp[1]]
-      } else {
-        #if none of them include "_metadata" in the name then just work with the first one
-        xmlfile <- xmlfile[1]
-      }
-    }
-    message(paste0("Processing ",xmlfile))
-    xmlFilename <- paste0(DataPackageDirectory,"/",xmlfile)
-    workingXMLfile<-EML::read_eml(xmlFilename, from = "xml")
+  } else if (metaformat=="fgdc") {
+    #xmlFilename <- metalocation
+    workingXMLfile<-EML::read_eml(metalocation, from = "xml")
     
     # Build attributes table from the xml file
     attributes<-data.frame(id=numeric(),attribute=character(),attributeDefinition=character(),attributeType=character(),attributeFactors=numeric(),stringsAsFactors = FALSE)
