@@ -24,7 +24,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
   if (Secure=="TRUE") {
     # get HoldingID from the ReferenceID - defaults to the first holding
     RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
-    xml <- httr::content(httr::GET(RestHoldingInfoURL, authenticate(":", ":", "ntlm")))
+    xml <- httr::content(httr::GET(RestHoldingInfoURL, httr::authenticate(":", ":", "ntlm")))
     RestDownloadURL<-xml[[1]]$downloadLink
     #HoldingID <- xml[[1]]$resourceId
     DigitalFileType <- xml[[1]]$extension
@@ -52,7 +52,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
   DestinationFilename<-paste("data/",ReferenceID,".", DigitalFileType ,sep="")
   #DestinationFilename<-paste(DestinationDirectory,"/",ReferenceID,".", DigitalFileType ,sep="")
   #download.file(RestDownloadURL,DestinationFilename,quiet=FALSE, mode="wb")
-  httr::content(httr::GET(RestDownloadURL, write_disk(DestinationFilename, overwrite=TRUE), authenticate(":", ":", "ntlm")))
+  httr::content(httr::GET(RestDownloadURL, httr::write_disk(DestinationFilename, overwrite=TRUE), httr::authenticate(":", ":", "ntlm")))
   
   # unzip data package
   # check to see if the downloaded file is a zip
