@@ -49,7 +49,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
   }
   
   # download the data package from Data Store into its own directory
-  DestinationFilename<-paste("data/",ReferenceID,".", DigitalFileType ,sep="")
+  DestinationFilename<-paste("data/",ReferenceID, "/",ReferenceID,".", DigitalFileType ,sep="")
   #DestinationFilename<-paste(DestinationDirectory,"/",ReferenceID,".", DigitalFileType ,sep="")
   #download.file(RestDownloadURL,DestinationFilename,quiet=FALSE, mode="wb")
   httr::content(httr::GET(RestDownloadURL, httr::write_disk(DestinationFilename, overwrite=TRUE), httr::authenticate(":", ":", "ntlm")))
