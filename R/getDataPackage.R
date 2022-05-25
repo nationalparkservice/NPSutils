@@ -51,8 +51,9 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
   # download the data package from Data Store into its own directory
   DestinationFilename<-paste("data/",ReferenceID,".", DigitalFileType ,sep="")
   #DestinationFilename<-paste(DestinationDirectory,"/",ReferenceID,".", DigitalFileType ,sep="")
-  download.file(RestDownloadURL,DestinationFilename,quiet=FALSE, mode="wb")
-
+  #download.file(RestDownloadURL,DestinationFilename,quiet=FALSE, mode="wb")
+  httr::content(httr::GET(RestDownloadURL, write_disk(DestinationFilename, overwrite=TRUE), authenticate(":", ":", "ntlm")))
+  
   # unzip data package
   # check to see if the downloaded file is a zip
   if(tools::file_ext(DestinationFilename) == "zip"){
