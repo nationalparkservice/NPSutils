@@ -23,7 +23,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
 
   if (Secure=="TRUE") {
     # get HoldingID from the ReferenceID - defaults to the first holding
-    RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
+    RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml <- httr::content(httr::GET(RestHoldingInfoURL))
     RestDownloadURL<-xml[[1]]$downloadLink
     #HoldingID <- xml[[1]]$resourceId
