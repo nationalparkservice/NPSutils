@@ -21,7 +21,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
     dir.create(DestinationDirectory)
   }
 
-  if (Secure=="TRUE") {
+  if (toupper(Secure)=="TRUE") {
     # get HoldingID from the ReferenceID - defaults to the first holding
     RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml <- httr::content(httr::GET(RestHoldingInfoURL, httr::authenticate(":", ":", "ntlm")))
@@ -34,7 +34,7 @@ getDataPackage<-function(ReferenceID,Secure=FALSE){
     #  stop("An error occurred. A HoldingID could not be found for this reference.")
     #}
   
-}   else if (Secure=="FALSE"){
+}   else if (toupper(Secure)=="FALSE"){
     # get the HoldingID from the ReferenceID - defaults to the first holding
     RestHoldingInfoURL <- paste0('https://irmaservices.nps.gov/datastore/v4/rest/reference/',ReferenceID,'/DigitalFiles')
     xml <- httr::content(httr::GET(RestHoldingInfoURL))
