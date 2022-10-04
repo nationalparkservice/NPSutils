@@ -27,15 +27,17 @@ get.parkTaxonRefs<-function(ParkCode,TaxonCode){
 #'
 #' @param ParkCode The four-letter unit code for the park of interest.
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
+#' 
+#' @return a dataframe
 #'
 #' @examples
 #' \dontrun{
-#' getParkTaxonCitations("APIS", 126749)
+#' get.parkTaxonCitations("APIS", 126749)
 #' }
 get.parkTaxonCitations<-function(ParkCode,TaxonCode){
-  References<-getParkTaxonReferences(ParkCode,TaxonCode)
-  DSCitations<-DSReference$citation
-  return(DSCitations)
+  references<-get.parkTaxonRefs(ParkCode,TaxonCode)
+  citations<-References$citation
+  return(citations)
 }
 
 #' Get URL for references for a park-species combination
@@ -53,10 +55,10 @@ get.parkTaxonCitations<-function(ParkCode,TaxonCode){
 #' get.parkTaxonURLs("APIS", 126749)
 #' }
 get.parkTaxonURLs<-function(ParkCode,TaxonCode){
-  References<-getParkTaxonReferences(ParkCode,TaxonCode)
-  DSReferenceCodes<-DSReference$referenceId
-  DSURLs<-paste("https://irma.nps.gov/DataStore/Reference/Profile/",DSReferenceCodes,sep="")
-  return(DSURLs)
+  references<-get.parkTaxonRefs(ParkCode,TaxonCode)
+  referenceCodes<-references$referenceId
+  URLs<-paste("https://irma.nps.gov/DataStore/Reference/Profile/", referenceCodes,sep="")
+  return(URLs)
 }
 
 #' Get citation for Data Store holding info by HoldingID

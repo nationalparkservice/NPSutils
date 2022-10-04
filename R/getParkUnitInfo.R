@@ -59,7 +59,7 @@ get.parkCode<-function(Park){ #case-insensitive string (in quotes) containing so
    } 
   result<- XML::xmlParse(file=f)
   dat<-XML::xmlToDataFrame(result) #xml to dataframe
-  dat<-dat %>% filter(grepl('National Park', UnitDesignationName)) #limit search to just National Parks
+  dat<-dat %>% dplyr::filter(grepl('National Park', UnitDesignationName)) #limit search to just National Parks
   dat<-dat[,c(1,3,8,9,11,13 )] #cleanup the output some
   alpha<-dat %>% dplyr::filter(grepl(Park, FullName, ignore.case=TRUE)) #filter FullName for input
   return(alpha) #return park code
@@ -96,7 +96,7 @@ get.unitCodeInfo<-function(Code){ #input must have quotes to indicate strings
 #' 
 #' @param Code defaults to NULL. Is a case-insensitive string. It typically is 4 letters long and typically does not include numbers but may be longer, shorter, or include special characters such as "-".
 #' @param Park defaults to NULL. Is a case-insensitive string. It will search for any subset of the FullName or parks or park units
-#' @param LifCycle is a case-insensitive string that will filter search results based on LifeCycle status. Currently acceptable values are:
+#' @param LifeCycle is a case-insensitive string that will filter search results based on LifeCycle status. Currently acceptable values are:
 #' * "Active", "Inactive" or "Pending" 
 #' @param NetworkCode defaults to NULL. Is a case-insensitive string for the network code (or some subset of it). Note: not all park units have Network designations. 
 #' @param NetName defaults to NULL. Is a case-insensitive string containing of the network name (or some subset of it). Note not all park units are associated with networks.

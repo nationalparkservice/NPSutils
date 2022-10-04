@@ -11,6 +11,9 @@ get.parkTaxonCitations(ParkCode, TaxonCode)
 
 \item{TaxonCode}{Taxonomic Serial Number for the taxon of interest.}
 }
+\value{
+a dataframe
+}
 \description{
 \code{get.parkTaxonCitations} returns a vector of citations in Data Store corresponding to a particular taxon at a park.
 
@@ -18,6 +21,6 @@ Note that this function only returns citations that have been "tagged" with a ta
 }
 \examples{
 \dontrun{
-getParkTaxonCitations("APIS", 126749)
+get.parkTaxonCitations("APIS", 126749)
 }
 }

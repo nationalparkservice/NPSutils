@@ -57,7 +57,7 @@ get.DataPackage<-function(ReferenceID,Secure=FALSE){
   # unzip data package
   # check to see if the downloaded file is a zip
   if(tools::file_ext(DestinationFilename) == "zip"){
-    unzip(DestinationFilename, exdir = DestinationDirectory)
+    utils::unzip(DestinationFilename, exdir = DestinationDirectory)
   }
   else {
     rlang::inform("File was not a zip file and could not be unzipped")

@@ -10,7 +10,7 @@ Author: c(person(given = "Robert",
            family = "DeVivo",
            role = c("aut", "cre")))
 Maintainer: Rob Baker <robert_baker@nps.gov>
-Description: A collection of functions for interacting with NPS DataStore repository
+Description: NPSutils is a collection of functions for interacting with NPS DataStore repository.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

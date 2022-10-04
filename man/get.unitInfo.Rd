@@ -20,6 +20,9 @@ get.unitInfo(
 
 \item{Park}{defaults to NULL. Is a case-insensitive string. It will search for any subset of the FullName or parks or park units}
 
+\item{LifeCycle}{is a case-insensitive string that will filter search results based on LifeCycle status. Currently acceptable values are:
+* "Active", "Inactive" or "Pending"}
+
 \item{NetworkCode}{defaults to NULL. Is a case-insensitive string for the network code (or some subset of it). Note: not all park units have Network designations.}
 
 \item{NetName}{defaults to NULL. Is a case-insensitive string containing of the network name (or some subset of it). Note not all park units are associated with networks.}
@@ -29,9 +32,6 @@ get.unitInfo(
 \item{Region}{defaults to NULL. Is a case-insensitive string of the region name (or some subset of it). Not all park units are associated with a region.}
 
 \item{State}{defaults to NULL. Is a case-insensitive search of the park unit's state. States are indicated using 2-letter abbreviations. Park units may span multiple states. Not all parks have state designations.}
-
-\item{LifCycle}{is a case-insensitive string that will filter search results based on LifeCycle status. Currently acceptable values are:
-* "Active", "Inactive" or "Pending"}
 }
 \value{
 one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to determine the intended  Park Unit's name.
