@@ -1,4 +1,4 @@
-Package: DSTools
+Package: NPSutils
 Type: Package
 Title: Collection of Functions to read/write information from the NPS Data Store
 Version: 0.1.0
@@ -21,8 +21,14 @@ Imports:
     reader,
     dplyr,
     plotKML,
-    httr
-RoxygenNote: 7.0.2
+    httr,
+    XML,
+    curl,
+    tools,
+    rlang,
+    readr,
+    magrittr
+RoxygenNote: 7.2.1
 Suggests: 
     knitr,
     rmarkdown

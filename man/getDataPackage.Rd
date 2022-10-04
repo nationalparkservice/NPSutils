@@ -4,16 +4,16 @@
 \alias{getDataPackage}
 \title{Retrieve public digital data package holding from Data Store.}
 \usage{
-getDataPackage(HoldingID, Secure = FALSE)
+getDataPackage(ReferenceID, Secure = FALSE)
 }
 \arguments{
-\item{HoldingID}{is a 6-7 digit number corresponding to the holding ID of the data package zip file.}
+\item{ReferenceID}{is a 6-7 digit number corresponding to the reference ID of the data package.}
 
 \item{Secure}{True or False (default) indicating whether the file should be acquired using data services available to NPS internal staff only.}
 }
 \description{
-\code{getDataPackage} downloads a data package from data store, copies it to the /data directory, and unzips it into a subdirectory with the "HoldingID" name.
+\code{getDataPackage} downloads a data package from data store, copies it to the /data directory, and unzips it into a sub-directory of /data with the "HoldingID" name.
 }
 \examples{
-getDataPackage(126749,Secure=TRUE)
+getDataPackage(2272461,Secure=TRUE)
 }

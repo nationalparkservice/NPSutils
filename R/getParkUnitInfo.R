@@ -12,19 +12,20 @@
 
 #It is worth figuring out how stable the URL is: when were the data last updated? How frequently are they updated? Are field codes ever changed, or just data added? Do updates entail a new URL?
 
-library(dplyr) #filter options
-library(XML) #format xml files
-library(tidyverse) #enable piping, filter
-library(curl)
-
+#' Dynamically access NPS park unit code data
+#' 
+#' @description allows the user to access information based on park codes 
+#'
 #' \code{getUnitCode} accesses info from irmaservices.nps.gov. Search for park or park unit with any string and return all applicable UnitCodes. Handy for use with GetDataPackage if you don't know a Park's UnitCode. 
 #' 
 #' @param Unit is a case-insensitive string containing some part of the unit's FullName. 
+#'
+#' @importFrom magrittr %>%
 #' 
 #' @return one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to choose the appropriate UnitCode for use with other DSTools functions such as getParkTaxonReferences (in getReferenceInfo.R).
-
-
-#Dynamically access nps xml data on park unit codes:
+#'
+#' @export
+#' 
 getUnitCode<-function(Unit){ #input must have quotes to indicate strings
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)){
@@ -88,7 +89,7 @@ getUnitCodeInfo<-function(Code){ #input must have quotes to indicate strings
 #' @param NetworkCode a case-insensitive string for the network code (or some subset of it). Note: not all park units have Network designations. 
 #' @param NetName a case-insensitive string containing of the network name (or some subset of it). Note not all park units are associated with networks.
 #' @param RegionAbb is a case-insensitive string containing the region abbreviation (or some subset of it), e.g.IMR for Intermountain Region. Not all park units are associated with a region.
-#' @Param Region is a case-insensitive string of the region name (or some subset of it). Not all park units are associated with a region.
+#' @param Region is a case-insensitive string of the region name (or some subset of it). Not all park units are associated with a region.
 #' @param State is a case-insensitive search of the park unit's state. States are indicated using 2-letter abbreviations. Park units may span multiple states. Not all parks have state designations. 
 
 #' @return one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to determine the intended  Park Unit's name.

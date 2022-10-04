@@ -2,32 +2,20 @@
 % Please edit documentation in R/loadDataPackage.R
 \name{loadDataPackage}
 \alias{loadDataPackage}
-\title{Read contents of data packge file and construct a data frame based on the data file(s) and associated metadata.}
+\title{Read contents of data package file and constructs a list of tibbles based on the data file(s)}
 \usage{
-loadDataPackage(HoldingID, dataFormat, metadataFormat, features = NULL)
+loadDataPackage(HoldingID)
 }
 \arguments{
-\item{HoldingID}{is a 6-7 digit number corresponding to the holding ID of the data package zip file.}
-
-\item{dataFormat}{is a character value indicating the format of the data set(s) within the data package. Currently
-allowable options are:
-* "csv" for comma seperated value text files
-* "gdb" for file geodatabases}
-
-\item{metadataFormat}{is a character value indicating the format of the metadata file within the data package.
-Currently allowable options are:
-* "eml" for eml-compliant xml metadata files
-* "fgdc" for FGDC-compliant xml metadata files}
-
-\item{features}{is a character value indicating the name of the feature class / data set (only used with file geodatabases)}
+\item{HoldingID}{is a 6-7 digit number corresponding to the holding ID of the data package.}
 }
 \value{
-one or more data frames contained within the data package to the global enviroment.
+one a list of one or more tibbles contained within the data package to the global environment.
 }
 \description{
-\code{loadDataPackage} reads the data file from a package and loads it into one or more data frames.
+\code{loadDataPackage} reads the data file(s) from a package and loads it into a list oftibbles. Current implementation only supports .csv data files. Planned future iterations will support .json and .xml data files.
 }
 \examples{
 
-datasetList<-loadDataPackage(2266200,dataFormat="gdb",metadataFormat="fgdc",features=NULL)
+ParkTandETaxa<-loadDataPackage(2272461)
 }
