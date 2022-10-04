@@ -24,9 +24,10 @@ Currently allowable options are:
 one or more data frames contained within the data package to the global environment.
 }
 \description{
-\code{loadDataPackageList} reads the data file from a package and loads it into a data frame.
+\code{load.dataPackageList} reads the data file from a package and loads it into a data frame.
 }
 \examples{
-
-DataPackageFiles<-loadDataPackageList(2272461,dataFormat="csv",metadataFormat="eml")
+\dontrun{
+load.dataPackageList(2272461, dataFormat="csv", metadataFormat="eml")
+}
 }
