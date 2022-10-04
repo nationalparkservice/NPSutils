@@ -1,7 +1,7 @@
 #' Read contents of data package file and construct a vector with the list of data frames to be created.
 #' For file geodatabases this will only extract spatial data features.
 #'
-#' \code{loadDataPackageList} reads the data file from a package and loads it into a data frame.
+#' @description \code{load.dataPackageList} reads the data file from a package and loads it into a data frame.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
 #' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently
@@ -16,9 +16,9 @@
 #' @return one or more data frames contained within the data package to the global environment.
 #'
 #' @examples
-#'
-#' DataPackageFiles<-loadDataPackageList(2272461,dataFormat="csv",metadataFormat="eml")
-
+#' \dontrun{
+#' load.dataPackageList(2272461, dataFormat="csv", metadataFormat="eml")
+#' }
 
 loadDataPackageList <-function(HoldingID,dataFormat,metadataFormat){
   DataPackageDirectory<-paste("data/",HoldingID,sep="")

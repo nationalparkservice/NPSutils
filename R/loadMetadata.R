@@ -1,17 +1,16 @@
 #' Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
 #'
-#' \code{loadMetadata} reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
+#' @description \code{load.metadata} reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
 #'
 #' @return one data frame to the global environment.
 #'
 #' @examples
-#'
-#' attributeTable<-loadMetadata(2266200)
-
-
-loadMetadata <-function(HoldingID){
+#' \dontrun{
+#' load.metadata(2266200)
+#' }
+load.metadata <-function(HoldingID){
   DataPackageDirectory<-paste("data/",HoldingID,sep="")
   
   metadatafile <- list.files(path=DataPackageDirectory,

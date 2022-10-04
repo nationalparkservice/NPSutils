@@ -1,15 +1,15 @@
 #' Retrieve public digital data package holding from Data Store.
 #'
-#' \code{getDataPackage} downloads a data package from data store, copies it to the /data directory, and unzips it into a sub-directory of /data with the "HoldingID" name.
-#'
+#' @description getDataPackage downloads a data package from data store, copies it to the /data directory, and unzips it into a sub-directory of /data with the "HoldingID" name.
 #'
 #' @param ReferenceID is a 6-7 digit number corresponding to the reference ID of the data package.
-#' @param Secure True or False (default) indicating whether the file should be acquired using data services available to NPS internal staff only.
+#' @param Secure logical TRUE (default) or FALSE indicating whether the file should be acquired using data services available to NPS internal staff only.
 #'
 #' @examples
-#' getDataPackage(2272461,Secure=TRUE)
-
-getDataPackage<-function(ReferenceID,Secure=FALSE){
+#' \dontrun{
+#' get.dataPackage(2272461,Secure=TRUE)
+#' }
+get.DataPackage<-function(ReferenceID,Secure=FALSE){
 
   # Create directory to hold the data package if it does not already exist.
   if (!file.exists("data")) {
