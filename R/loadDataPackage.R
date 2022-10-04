@@ -1,17 +1,16 @@
 #' Read contents of data package file and constructs a list of tibbles based on the data file(s)
 #'
-#' \code{loadDataPackage} reads the data file(s) from a package and loads it into a list oftibbles. Current implementation only supports .csv data files. Planned future iterations will support .json and .xml data files.
+#' @description \code{load.dataPackage} reads the data file(s) from a package and loads it into a list of tibbles. Current implementation only supports .csv data files. Planned future iterations will support .json and .xml data files.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package.
 #'
-#' @return one a list of one or more tibbles contained within the data package to the global environment.
+#' @return a list of one or more tibbles contained within the data package to the global environment.
 #'
 #' @examples
-#'
-#' ParkTandETaxa<-loadDataPackage(2272461)
-
-
-loadDataPackage <-function(HoldingID){
+#' \dontrun{
+#' load.dataPackage(2272461)
+#' }
+load.dataPackage <-function(HoldingID){
 
   DataPackageDirectory<-paste("data/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,".zip",sep="")

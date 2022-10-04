@@ -1,6 +1,6 @@
 #' Get DS References for a park-species combination
 #'
-#' \code{getParkTaxonReferences} returns a data frame of metadata for references in Data Store corresponding to a particular taxon at a park.
+#' @description \code{get.parkTaxonRefs} returns a data frame of metadata for references in Data Store corresponding to a particular taxon at a park.
 #' The resultant data frame is then usable by other functions to extract metadata from the records.
 #'
 #' Note that this function only returns references that have been "tagged" with a taxon code and may represent only a
@@ -10,33 +10,39 @@
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
 #'
 #' @examples
-#' getParkTaxonReferences("APIS", 126749)
-getParkTaxonReferences<-function(ParkCode,TaxonCode){
+#' \dontrun{
+#' get.parkTaxonRefs("APIS", 126749)
+#' }
+get.parkTaxonRefs<-function(ParkCode,TaxonCode){
   url<-paste("https://irmaservices.nps.gov/datastore-secure/v4/rest/UnitSpeciesSearch/",ParkCode,"/",TaxonCode,sep="")
   DSReference<-read_json(url,simplifyVector = TRUE)
   return(DSReference)
 }
 
-#' Get DS Citations for a park-species combination
+#' Get DataStore Citations for a park-species combination
 #'
-#' \code{getParkTaxonCitations} returns a vector of citations in Data Store corresponding to a particular taxon at a park.
+#' @description \code{get.parkTaxonCitations} returns a vector of citations in Data Store corresponding to a particular taxon at a park.
 #'
 #' Note that this function only returns citations that have been "tagged" with a taxon code and may represent only a subset of references that have information about a taxon.
 #'
 #' @param ParkCode The four-letter unit code for the park of interest.
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
+#' 
+#' @return a dataframe
 #'
 #' @examples
-#' getParkTaxonCitations("APIS", 126749)
-getParkTaxonCitations<-function(ParkCode,TaxonCode){
-  References<-getParkTaxonReferences(ParkCode,TaxonCode)
-  DSCitations<-DSReference$citation
-  return(DSCitations)
+#' \dontrun{
+#' get.parkTaxonCitations("APIS", 126749)
+#' }
+get.parkTaxonCitations<-function(ParkCode,TaxonCode){
+  references<-get.parkTaxonRefs(ParkCode,TaxonCode)
+  citations<-References$citation
+  return(citations)
 }
 
 #' Get URL for references for a park-species combination
 #'
-#' \code{DSgetParkTaxonReferenceURL} returns a vector of URLs for references in Data Store corresponding to a particular taxon at a park.
+#' \code{get.parkTaxonURL} returns a vector of URLs for references in Data Store corresponding to a particular taxon at a park.
 #'
 #' Note that this function only returns URLs for references that have been "tagged" with a taxon code and may represent only a
 #' subset of references that have information about a taxon.
@@ -45,17 +51,19 @@ getParkTaxonCitations<-function(ParkCode,TaxonCode){
 #' @param TaxonCode Taxonomic Serial Number for the taxon of interest.
 #'
 #' @examples
-#' getParkTaxonURLs("APIS", 126749)
-getParkTaxonURLs<-function(ParkCode,TaxonCode){
-  References<-getParkTaxonReferences(ParkCode,TaxonCode)
-  DSReferenceCodes<-DSReference$referenceId
-  DSURLs<-paste("https://irma.nps.gov/DataStore/Reference/Profile/",DSReferenceCodes,sep="")
-  return(DSURLs)
+#' \dontrun{
+#' get.parkTaxonURLs("APIS", 126749)
+#' }
+get.parkTaxonURLs<-function(ParkCode,TaxonCode){
+  references<-get.parkTaxonRefs(ParkCode,TaxonCode)
+  referenceCodes<-references$referenceId
+  URLs<-paste("https://irma.nps.gov/DataStore/Reference/Profile/", referenceCodes,sep="")
+  return(URLs)
 }
 
 #' Get citation for Data Store holding info by HoldingID
 #'
-#' \code{DSReferenceInfo(HoldingID,field)} returns a character string or a vector with information from one of the
+#' @description \code{get.refInfo(HoldingID,field)} returns a character string or a vector with information from one of the
 #' metadata fields in a Data Store reference's associated xml file.
 #'
 #'
@@ -65,8 +73,10 @@ getParkTaxonURLs<-function(ParkCode,TaxonCode){
 #' all keywords as character values.
 #'
 #' @examples
-#' ReferenceInfo(2266196,"Title")
-getReferenceInfo<-function(HoldingID,field){
+#' \dontrun{
+#' get.refInfo(2266196,"Title")
+#' }
+get.RefInfo<-function(HoldingID,field){
   url<-paste0("https://irmaservices.nps.gov/datastore/v4/rest/Profile/",HoldingID)
   DSReference<-jsonlite::read_json(url,simplifyVector = TRUE)
 

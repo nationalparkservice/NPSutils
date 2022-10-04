@@ -1,7 +1,7 @@
 #' Read contents of data package file and construct a data frame based on the metadata file summarizing the enumerated domains for
 #' categorical fields and their types/definitions.
 #'
-#' \code{loadDomains} reads the data file from a package and loads a list of fields and their attributes into a data frame.
+#' @description \code{load.domains} reads the data file from a package and loads a list of fields and their attributes into a data frame.
 #'
 #' @param HoldingID is a 6-7 digit number corresponding to the holding ID of the data package zip file.
 #' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently
@@ -16,11 +16,10 @@
 #' @return one data frame to the global environment.
 #'
 #' @examples
-#'
-#' domainTable<-loadDomains(2266200,dataFormat="gdb",metadataFormat="fgdc")
-
-
-loadDomains <-function(HoldingID,dataFormat,metadataFormat){
+#' \dontrun{
+#' load.domains(2266200,dataFormat="gdb",metadataFormat="fgdc")
+#' }
+load.domains <-function(HoldingID,dataFormat,metadataFormat){
   DataPackageDirectory<-paste("data/raw/",HoldingID,sep="")
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
   

@@ -2,11 +2,16 @@ Package: NPSutils
 Type: Package
 Title: Collection of Functions to read/write information from the NPS Data Store
 Version: 0.1.0
-Author: Joe DeVivo
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: c(person(given = "Robert",
+           family = "Baker",
+           role = c("aut"),
+           comment = c(ORCID = "0000-0001-7591-5035")),
+          person(given = "Joe",
+           family = "DeVivo",
+           role = c("aut", "cre")))
+Maintainer: Rob Baker <robert_baker@nps.gov>
+Description: NPSutils is a collection of functions for interacting with NPS DataStore repository.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
