@@ -18,7 +18,7 @@ load.dataPackage <-function(HoldingID){
   #Look for the zipped data package and attempt to unzip it. If the zipped file exists but cannot be unzipped, give the user a warning. If neither the unzipped nor zipped data packages exist, suggest the user check their working directory or use getDataPackage() to get the data package.
   if(!file.exists(DataPackageDirectory)){
     if(file.exists(DataPackageFilename)){
-      tryCatch(expr = {fileList<-unzip(DataPackageFilename,list=TRUE)}, error = function(e){
+      tryCatch(expr = {fileList<-utils::unzip(DataPackageFilename,list=TRUE)}, error = function(e){
         message("The zip file cannot be unzipped.")
         stop()
       }
