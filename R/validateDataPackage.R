@@ -1,6 +1,6 @@
 #' Validate a Tabular Data Package
 #'
-#' @description \code{validateDataPackage} checks a zipped data package for required files and structure.
+#' @description \code{validateDataPackage} checks a zipped data package for required files and structure. This function is still under construction.
 #'
 #' @param File is a path to a zipped data package
 #'
@@ -15,5 +15,5 @@ validate.dataPackage<-function(File){
   #look for data files - provide a count
   #look for a readme - optional
   #look for additional files
-  rlang::inform("This data package has validated successfully!")
+  rlang::inform("This function is still under construction")
 }

@@ -25,7 +25,7 @@ loadDataPackageList <-function(HoldingID,dataFormat,metadataFormat){
   DataPackageFilename<-paste(DataPackageDirectory,"/",HoldingID,".zip",sep="")
 
   if (dataFormat=="csv" & metadataFormat=="eml") {
-    fileList<-unzip(DataPackageFilename,list=TRUE)
+    fileList<-utils::unzip(DataPackageFilename,list=TRUE)
     return(fileList)
     
   } else if (dataFormat=="gdb" & metadataFormat=="fgdc") {

@@ -25,7 +25,7 @@ load.domains <-function(HoldingID,dataFormat,metadataFormat){
   
   if (dataFormat=="csv" & metadataFormat=="eml") {
     
-    fileList<-unzip(DataPackageFilename,list=TRUE)
+    fileList<-utils::unzip(DataPackageFilename,list=TRUE)
     
     csvfile <- subset(fileList, grepl(".csv",Name))
     emlfile <- subset(fileList, grepl(".xml",Name))
