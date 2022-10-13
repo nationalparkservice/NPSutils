@@ -15,7 +15,8 @@
 #' }
 get.parkTaxonRefs<-function(ParkCode,TaxonCode){
   url<-paste("https://irmaservices.nps.gov/datastore-secure/v4/rest/UnitSpeciesSearch/",ParkCode,"/",TaxonCode,sep="")
-  DSReference<-read_json(url,simplifyVector = TRUE)
+  DSReference <- httr::content(httr::GET(url, httr::authenticate(":", ":", "ntlm"))) %>%
+    dplyr::bind_rows()
   return(DSReference)
 }
 
@@ -36,7 +37,7 @@ get.parkTaxonRefs<-function(ParkCode,TaxonCode){
 #' }
 get.parkTaxonCitations<-function(ParkCode,TaxonCode){
   references<-get.parkTaxonRefs(ParkCode,TaxonCode)
-  citations<-References$citation
+  citations<-references$citation
   return(citations)
 }
 
@@ -78,7 +79,7 @@ get.parkTaxonURLs<-function(ParkCode,TaxonCode){
 #' }
 get.RefInfo<-function(HoldingID,field){
   url<-paste0("https://irmaservices.nps.gov/datastore/v4/rest/Profile/",HoldingID)
-  DSReference<-jsonlite::read_json(url,simplifyVector = TRUE)
+  DSReference <- httr::content(httr::GET(url, httr::authenticate(":", ":", "ntlm")))
 
   if (field=="ReferenceType") {
     DSValue<-DSReference$referenceType
@@ -93,7 +94,8 @@ get.RefInfo<-function(HoldingID,field){
     DSValue<-DSReference$citation
   }
   else if (field=="Keywords") {
-    DSValue<-DSReference$keywords
+    DSValue<-DSReference$keywords %>%
+      unlist()
   }
   else if (field=="Visibility") {
     DSValue<-DSReference$visibility
