@@ -34,3 +34,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/RobLBaker/NPSutils
+BugReports: https://github.com/RobLBaker/NPSutils/issues
