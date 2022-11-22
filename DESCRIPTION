@@ -1,21 +1,23 @@
 Package: NPSutils
 Type: Package
 Title: Collection of Functions to read/write information from the NPS Data Store
-Version: 0.1.0
-Author: c(person(given = "Robert",
-           family = "Baker",
-           role = c("aut"),
+Version: 0.2.0.0
+Authors@R: c(
+    person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
+           role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7591-5035")),
-          person(given = "Joe",
-           family = "DeVivo",
-           role = c("aut", "cre")))
+    person(given = "Joe", family = "DeVivo",
+           role = c("aut")),
+    person(given="Judd", family="Patterson", email="Judd_Patterson@nps.gov",
+           role= "aut",
+           comment = c(ORCID = "0000-0002-0951-7917"))
+           )
 Maintainer: Rob Baker <robert_baker@nps.gov>
 Description: NPSutils is a collection of functions for interacting with NPS DataStore repository.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    jsonlite,
     EML,
     sf,
     dplyr,
@@ -25,9 +27,12 @@ Imports:
     tools,
     rlang,
     readr,
-    magrittr
+    magrittr,
+    crayon
 RoxygenNote: 7.2.1
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/RobLBaker/NPSutils
+BugReports: https://github.com/RobLBaker/NPSutils/issues
