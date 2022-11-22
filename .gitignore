@@ -5,3 +5,4 @@
 dataPackages/*
 data/raw/*
 data/raw/*/*
+inst/doc
