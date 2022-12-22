@@ -1,99 +1,73 @@
-#' Retrieve public digital data package holding from Data Store.
+#' Retrieve digital data package holding from DataStore.
 #'
-#' @description get_data_package downloads a data package from data store, copies it to the /data directory, and unzips it into a sub-directory of /data with the "HoldingID" name.
+#' @description get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory. 
 #'
 #' @param reference_id is a 6-7 digit number corresponding to the reference ID of the data package.
-#' @param secure logical TRUE (default) or FALSE indicating whether the file should be acquired using data services available to NPS internal staff only.
+#' @param secure logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' get_data_package(2272461, Secure = TRUE)
+#' get_data_package(2272461, secure = TRUE)
 #' }
 get_data_package <- function(reference_id, secure = FALSE) {
   # Create directory to hold the data package if it does not already exist.
   if (!file.exists("data")) {
     dir.create("data")
   }
-
-  DestinationDirectory <- paste("data/", reference_id, sep = "")
-  if (!file.exists(DestinationDirectory)) {
-    dir.create(DestinationDirectory)
+  #create a package-specific directory within the data directory, if necessary:
+  destination_dir <- paste("data/", reference_id, sep = "")
+  if (!file.exists(destination_dir)) {
+    dir.create(destination_dir)
   }
-
+  
+  #Secure route needs testing.
   if (toupper(secure) == "TRUE") {
     # get HoldingID from the ReferenceID - defaults to the first holding
-    RestHoldingInfoURL <- paste0(
+    rest_holding_info_url <- paste0(
       "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
-      reference_id, "/DigitalFiles"
-    )
-    xml <- httr::content(httr::GET(
-      RestHoldingInfoURL,
-      httr::authenticate(":", ":", "ntlm")
-    ))
-    RestDownloadURL <- paste0(
-      "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
-      xml[[1]]$resourceId
-    )
-    # HoldingID <- xml[[1]]$resourceId
-    DigitalFileType <- xml[[1]]$extension
-    # if (HoldingID > 0) {
-    #  RestDownladURL<-paste0('https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/',HoldingID)
-    # } else {
-    #  stop("An error occurred. A HoldingID could not be found for this reference.")
-    # }
-  } else if (toupper(secure) == "FALSE") {
-    # get the HoldingID from the ReferenceID - defaults to the first holding
-    RestHoldingInfoURL <- paste0(
-      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
-      reference_id, "/DigitalFiles"
-    )
-    xml <- httr::content(httr::GET(RestHoldingInfoURL))
-    RestDownloadURL <- xml[[1]]$downloadLink
-    # HoldingID <- xml[[1]]$resourceId
-    DigitalFileType <- xml[[1]]$extension
-    # if (HoldingID > 0) {
-    #  RestDownloadURL<-paste0('https://irmaservices.nps.gov/datastore/v4/rest/DownloadFile/',HoldingID)
-    # else {
-    #  stop("An error occurred. A HoldingID could not be found for this reference.")
-    # }
+      reference_id, "/DigitalFiles")
+    xml <- httr::content(httr::GET(rest_holding_info_url,
+                                   httr::authenticate(":", ":", "ntlm")))
+    for(i in seq_along(xml)){
+      rest_download_url <- paste0(
+        "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
+        xml[[i]]$resourceId)
+      
+      download_filename <- xml[[i]]$fileName
+      download_file_path <- paste0("data/",
+                                   reference_id, "/",
+                                   download_filename)
+      #download the file:
+      invisible(capture.output(
+          httr::content(
+            httr::GET(
+              rest_download_url,
+              httr::write_disk(download_file_path,
+                               overwrite = TRUE),
+              httr::authenticate(":", ":", "ntlm")))))
+    }
   }
-
-  # download the data package from Data Store into its own directory
-  DestinationFilename <- paste("data/", reference_id, "/", reference_id, ".",
-    DigitalFileType,
-    sep = ""
-  )
-  # DestinationFilename<-paste(DestinationDirectory,"/",ReferenceID,".", DigitalFileType ,sep="")
-  # download.file(RestDownloadURL,DestinationFilename,quiet=FALSE, mode="wb")
-  httr::content(httr::GET(
-    RestDownloadURL,
-    httr::write_disk(DestinationFilename,
-      overwrite = TRUE
-    ),
-    httr::authenticate(":", ":", "ntlm")
-  ))
+  if (toupper(secure) == "FALSE") {
+    # get the HoldingID from the ReferenceID - defaults to the first holding
+    rest_holding_info_url <- paste0(
+      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
+      reference_id, "/DigitalFiles")
+    xml <- httr::content(httr::GET(rest_holding_info_url))
+    
+    for(i in seq_along(xml)){
+      rest_download_url <- xml[[i]]$downloadLink
+      download_filename <- xml[[i]]$fileName
+      download_file_path <- paste0("data/", reference_id, "/", download_filename)
+      download.file(rest_download_url, download_file_path, quiet=TRUE, mode="wb")
+      #independent tests show download.file is faster than httr::GET or curl.
+    }
+  }
 
   # unzip data package
   # check to see if the downloaded file is a zip
-  if (tools::file_ext(DestinationFilename) == "zip") {
-    utils::unzip(DestinationFilename, exdir = DestinationDirectory)
-  } else {
-    rlang::inform("File was not a zip file and could not be unzipped")
-  }
-
-  # check to see that the zip was downloaded and unzipped
-  # this might be worth improving in the future, but looks for >1 files in the folder
-  if (length(list.files(DestinationDirectory, include.dirs = FALSE)) > 1) {
-    rlang::inform(paste0(
-      "Download and unzipping of reference ", reference_id,
-      " succeeded"
-    ))
-  } else {
-    rlang::inform(paste0(
-      "Download and unzipping of reference ", reference_Id,
-      " failed"
-    ))
+  if (tools::file_ext(download_filename) == "zip") {
+    utils::unzip(download_filename, exdir = paste0("data/", reference_id))
   }
 }
