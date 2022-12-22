@@ -2,20 +2,20 @@
 % Please edit documentation in R/getDataPackage.R
 \name{get_data_package}
 \alias{get_data_package}
-\title{Retrieve public digital data package holding from Data Store.}
+\title{Retrieve digital data package holding from DataStore.}
 \usage{
 get_data_package(reference_id, secure = FALSE)
 }
 \arguments{
 \item{reference_id}{is a 6-7 digit number corresponding to the reference ID of the data package.}
 
-\item{secure}{logical TRUE (default) or FALSE indicating whether the file should be acquired using data services available to NPS internal staff only.}
+\item{secure}{logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).}
 }
 \description{
-get_data_package downloads a data package from data store, copies it to the /data directory, and unzips it into a sub-directory of /data with the "HoldingID" name.
+get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory.
 }
 \examples{
 \dontrun{
-get_data_package(2272461, Secure = TRUE)
+get_data_package(2272461, secure = TRUE)
 }
 }
