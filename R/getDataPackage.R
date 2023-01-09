@@ -4,6 +4,7 @@
 #'
 #' @param reference_id is a 6-7 digit number corresponding to the reference ID of the data package.
 #' @param secure logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).
+#' @param path the directory where data directories and data files will be saved. Defaults to current working directory.
 #'
 #' @export
 #'
@@ -11,8 +12,14 @@
 #' \dontrun{
 #' get_data_package(2272461, secure = TRUE)
 #' }
-get_data_package <- function(reference_id, secure = FALSE) {
-  # Create directory to hold the data package if it does not already exist.
+get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
+  
+  #capture original working directory; 
+  #return to working directory on exit.
+  orig_wd <- getwd(); on.exit(setwd(orig_wd))
+  
+  #set wd to path; defaults to wd. 
+  setwd <- path
   
   if (!file.exists("data")) {
     dir.create("data")
