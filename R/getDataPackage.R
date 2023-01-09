@@ -13,61 +13,100 @@
 #' }
 get_data_package <- function(reference_id, secure = FALSE) {
   # Create directory to hold the data package if it does not already exist.
+  
   if (!file.exists("data")) {
     dir.create("data")
   }
-  #create a package-specific directory within the data directory, if necessary:
-  destination_dir <- paste("data/", reference_id, sep = "")
-  if (!file.exists(destination_dir)) {
-    dir.create(destination_dir)
-  }
   
-  #Secure route needs testing.
+  #Secure route (needs further testing).
   if (toupper(secure) == "TRUE") {
-    # get HoldingID from the ReferenceID - defaults to the first holding
-    rest_holding_info_url <- paste0(
-      "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
-      reference_id, "/DigitalFiles")
-    xml <- httr::content(httr::GET(rest_holding_info_url,
-                                   httr::authenticate(":", ":", "ntlm")))
-    for(i in seq_along(xml)){
-      rest_download_url <- paste0(
-        "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
-        xml[[i]]$resourceId)
+    
+    for(i in seq_along(reference_id)){
       
-      download_filename <- xml[[i]]$fileName
-      download_file_path <- paste0("data/",
-                                   reference_id, "/",
+      #create a package-specific directory within the data directory, if necessary:
+      destination_dir <- paste("data/", reference_id[i], sep = "")
+      if (!file.exists(destination_dir)) {
+        dir.create(destination_dir)
+      }
+    
+    # get HoldingID from the ReferenceID - defaults to the first holding
+      rest_holding_info_url <- paste0(
+        "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
+        reference_id[i], "/DigitalFiles")
+      xml <- httr::content(httr::GET(rest_holding_info_url,
+                                   httr::authenticate(":", ":", "ntlm")))
+      for(j in seq_along(xml)){
+        rest_download_url <- paste0(
+          "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
+          xml[[j]]$resourceId)
+      
+        download_filename <- xml[[j]]$fileName
+        download_file_path <- paste0("data/",
+                                   reference_id[i], "/",
                                    download_filename)
-      #download the file:
-      invisible(capture.output(
+        #download the file:
+        invisible(capture.output(
           httr::content(
             httr::GET(
               rest_download_url,
               httr::write_disk(download_file_path,
                                overwrite = TRUE),
               httr::authenticate(":", ":", "ntlm")))))
+        cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
+      }
+      #test for .zip; if found extract files and delete .zip file.
+      if (tools::file_ext(download_filename) == "zip") {
+        utils::unzip(zipfile=paste0("data/",
+                                  reference_id[i], "/",
+                                  download_filename),
+                   exdir = paste0("data/", reference_id[i]))
+        file.remove(paste0("data/", reference_id[i], "/", download_filename))
+      
+        cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
+        cat("     The original .zip file was removed.\n")
+      }
     }
   }
-  if (toupper(secure) == "FALSE") {
-    # get the HoldingID from the ReferenceID - defaults to the first holding
-    rest_holding_info_url <- paste0(
-      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
-      reference_id, "/DigitalFiles")
-    xml <- httr::content(httr::GET(rest_holding_info_url))
+  if (toupper(secure) == "FALSE"){
     
-    for(i in seq_along(xml)){
-      rest_download_url <- xml[[i]]$downloadLink
-      download_filename <- xml[[i]]$fileName
-      download_file_path <- paste0("data/", reference_id, "/", download_filename)
-      download.file(rest_download_url, download_file_path, quiet=TRUE, mode="wb")
-      #independent tests show download.file is faster than httr::GET or curl.
+    for(i in seq_along(reference_id)){
+      #create a package-specific directory within the data directory, if necessary:
+      destination_dir <- paste("data/", reference_id[i], sep = "")
+      if (!file.exists(destination_dir)) {
+        dir.create(destination_dir)
+      }
+      
+      # get the HoldingID from the ReferenceID - defaults to the first holding
+      rest_holding_info_url <- paste0(
+      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
+      reference_id[i], "/DigitalFiles")
+      xml <- httr::content(httr::GET(rest_holding_info_url))
+    
+      for(j in seq_along(xml)){
+        rest_download_url <- xml[[j]]$downloadLink
+        download_filename <- xml[[j]]$fileName
+        download_file_path <- paste0("data/",
+                                     reference_id[i], "/",
+                                     download_filename)
+        download.file(rest_download_url, 
+                      download_file_path, 
+                      quiet=TRUE, 
+                      mode="wb")
+        #independent tests show download.file is faster than httr::GET or curl.
+        cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
+      }
+    # unzip data package
+    # check to see if the downloaded file is a zip
+      if (tools::file_ext(download_filename) == "zip") {
+        utils::unzip(zipfile=paste0("data/",
+                                  reference_id[i], "/",
+                                  download_filename),
+                   exdir = paste0("data/", reference_id[i]))
+        file.remove(paste0("data/", reference_id[i], "/", download_filename))
+        
+        cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
+        cat("     The original .zip file was removed.\n")
+      }
     }
-  }
-
-  # unzip data package
-  # check to see if the downloaded file is a zip
-  if (tools::file_ext(download_filename) == "zip") {
-    utils::unzip(download_filename, exdir = paste0("data/", reference_id))
-  }
+  }  
 }
