@@ -77,13 +77,13 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
   if (toupper(secure) == "FALSE"){
     
     for(i in seq_along(reference_id)){
-      #create a package-specific directory within the data directory, if necessary:
+      #if necessary, create a package-specific directory within the /data:
       destination_dir <- paste("data/", reference_id[i], sep = "")
       if (!file.exists(destination_dir)) {
         dir.create(destination_dir)
       }
       
-      # get the HoldingID from the ReferenceID - defaults to the first holding
+      # get the HoldingID from the ReferenceID
       rest_holding_info_url <- paste0(
       "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
       reference_id[i], "/DigitalFiles")
@@ -95,11 +95,11 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
         download_file_path <- paste0("data/",
                                      reference_id[i], "/",
                                      download_filename)
+        #independent tests show download.file is faster than httr::GET or curl
         download.file(rest_download_url, 
                       download_file_path, 
                       quiet=TRUE, 
                       mode="wb")
-        #independent tests show download.file is faster than httr::GET or curl.
         cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
       }
     # unzip data package
@@ -115,5 +115,6 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
         cat("     The original .zip file was removed.\n")
       }
     }
-  }  
+  }
+  return(getwd())
 }
