@@ -7,19 +7,24 @@
 #' @param path the directory where data directories and data files will be saved. Defaults to current working directory.
 #'
 #' @export
+#' @return String. The path where the /data folder is written and all data package subdirectories and data files are contained.
 #'
 #' @examples
 #' \dontrun{
-#' get_data_package(2272461, secure = TRUE)
+#' get_data_package(2272461, secure = FALSE)
+#' path_to_data_for_piping <- get_data_package(2272461, secure = TRUE)
 #' }
 get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
   
-  #capture original working directory; 
-  #return to working directory on exit.
-  orig_wd <- getwd(); on.exit(setwd(orig_wd))
+  #capture original working directory;
+  #return the directory where /data is written.
+  #set directory back to original working directory on exit.
+  orig_wd <- getwd()
+  on.exit(return(getwd()))
+  on.exit(setwd(orig_wd), add=TRUE)
   
   #set wd to path; defaults to wd. 
-  setwd <- path
+  setwd(path)
   
   if (!file.exists("data")) {
     dir.create("data")
@@ -116,5 +121,5 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       }
     }
   }
-  return(getwd())
+  #return(getwd())
 }
