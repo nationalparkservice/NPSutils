@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="FederalConservationListTaxa_BRD_Edition_2272461-metadata" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd" system="unknown">
+  <access authSystem="unknown" order="allowFirst" scope="document">
+    <allow>
+      <principal>jcdevivo</principal>
+      <permission>all</permission>
+    </allow>
+    <allow>
+      <principal>public</principal>
+      <permission>read</permission>
+    </allow>
+  </access>
+  <dataset>
+    <title>Federal Listing Status of Taxa in National Park Service Units from NPS Biological Resources Division</title>
+    <creator>
+      <individualName>
+        <givenName>Joe</givenName>
+        <givenName>C</givenName>
+        <surName>DeVivo</surName>
+      </individualName>
+      <organizationName>National Park Service Inventory &amp; Monitoring Program</organizationName>
+    </creator>
+    <pubDate>2021-04-19</pubDate>
+    <abstract>
+      <para>In 2013, Executive Order 13642, Making Open and Machine Readable the New Default for Government Information (GPO 2013),  and associated policies issued by the Office of Management and Budget (OMB 2013) mandated that all data be made public  by default unless those data are protected from release by one or more authorities. Staff at all National Park Service (NPS)  units where the Inventory &amp; Monitoring Division conducts activities identified resources that warrant some level of  data protection, and default rules to be used when disseminating information about those resources. In nearly all cases,  information about taxa on the federal list of taxa with conservation status (USFWS 2019) were identified as taxa about  which data must be protected from public release. This report documents the creation of a standard dataset of federally protected taxa for each NPS unit to use in developing public-access versions of inventory &amp; monitoring data sets developed by the NPS Inventory  and Monitoring Program.&#13;
+</para>
+    </abstract>
+    <keywordSet>
+      <keyword>Protected Data Rules</keyword>
+      <keywordThesaurus>theme</keywordThesaurus>
+    </keywordSet>
+    <intellectualRights>
+      <para>This data package is released to the public domain under Creative Commons CC0 1.0 No Rights Reserved (see: https://creativecommons.org/publicdomain/zero/1.0/). It is considered professional etiquette to provide attribution of the original work if this data package is shared in whole or by individual components. A generic citation is provided for this data package on the website https://irma.nps.gov/datastore (website) in the summary metadata page. Communication (and collaboration) with the creators of this data package is recommended to prevent duplicate research or publication. This data package (and its components) is made available as is and with no warranty of accuracy or fitness for use. The creators of this data package and the website shall not be liable for any damages resulting from misinterpretation or misuse of the data package or its components. Periodic updates of this data package may be available from the website. Thank you.&#13;
+</para>
+    </intellectualRights>
+    <coverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2021-04-19</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>2021-04-19</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+    </coverage>
+    <maintenance>
+      <description>completed</description>
+    </maintenance>
+    <contact>
+      <organizationName>National Park Service Inventory &amp; Monitoring Program</organizationName>
+      <positionName>National Park Service Inventory &amp; Monitoring Program</positionName>
+      <electronicMailAddress>irma@nps.gov</electronicMailAddress>
+    </contact>
+    <methods>
+      <methodStep>
+        <description>
+          <para>Methods for the generation of this data set are documented in Data Release Report NPS/NRSS/DRR--2020/4, available at https://irma.nps.gov/DataStore/Reference/Profile/2272460.&#13;
+</para>
+        </description>
+      </methodStep>
+    </methods>
+    <dataTable>
+      <entityName>FederalConservationListTaxa_BRD_Edition_2272461-data.csv</entityName>
+      <entityDescription>Federal Listing Status - NPSBRD Edition</entityDescription>
+      <physical>
+        <objectName>FederalConservationListTaxa_BRD_Edition_2272461-data.csv</objectName>
+        <size unit="bytes">2238971</size>
+        <authentication method="MD5">11ab1340626f26a8e73be9df0d12d990</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\r\n</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>,</fieldDelimiter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+        <distribution>
+          <online>
+            <url function="download">https://irma.nps.gov/DataStore/Reference/Profile/2272461/FederalConservationListTaxa_BRD_Edition_2272461-data.csv</url>
+          </online>
+        </distribution>
+      </physical>
+      <attributeList>
+        <attribute>
+          <attributeName>MatchList</attributeName>
+          <attributeDefinition>Source of conservation status information</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Source of conservation status information</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Status</attributeName>
+          <attributeDefinition>Conservation status code</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>RT</code>
+                    <definition>Species that have been petitioned for listing and for which a Not Warranted 12 month finding or Not Substantial 90-day finding has been published in the Federal Register. Also includes species that have been removed from the candidate list.</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>T</code>
+                    <definition>Threatened</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>SC</code>
+                    <definition>Species that have not been petitioned or been given E, T, or C status but have been identified as important to monitor.</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>E</code>
+                    <definition>Endangered</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>DNS</code>
+                    <definition>Delisted - Species that has been removed from the list due to recovery, original data in error, or extinction</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>UR</code>
+                    <definition>Species that have been petitioned for listing and for which a 90 day finding has not been published or for which a 90 day substantial has been published but a 12 Month finding have not yet been published in the Federal Register. Also includes species that are being reviewed through the candidate process, but the CNOR has not yet been signed.</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>SU</code>
+                    <definition>Status undefined</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>SAT</code>
+                    <definition>Similarity of Appearance to a Threatened Taxon</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>D3A</code>
+                    <definition>Delisted Taxon, Evidently Extinct</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>D3B</code>
+                    <definition>Delisted Taxon, Invalid Name in Current Scientific Opinion</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>D3C</code>
+                    <definition>Delisted Taxon, Recovered</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>DM</code>
+                    <definition>Delisted Taxon, Recovered, Being Monitored First Five Years</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>EXPN</code>
+                    <definition>Experimental Population, Non-Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>XN</code>
+                    <definition>Experimental Population, Non-Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>DR</code>
+                    <definition>Delisted Taxon, Taxonomic Revision (Improved Understanding)</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>DP</code>
+                    <definition>Delisted Taxon, Discovered Previously Unknown Additional Populations and/or Habitat</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>C</code>
+                    <definition>Candidate Taxon, Ready for Proposal</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>DA</code>
+                    <definition>Delisted Taxon, Amendment of the Act</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>DO</code>
+                    <definition>Delisted Taxon, Original Commercial Data Erroneous</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PE</code>
+                    <definition>Proposed Endangered</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>Unlist</code>
+                    <definition>Pre-Act Delisting (or clearance--removal from the Lists)</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PSAT</code>
+                    <definition>Proposed Similarity of Appearance to a Threatened Taxon</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>EmE</code>
+                    <definition>Emergency Listing, Endangered</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>EmT</code>
+                    <definition>Emergency Listing Threatened</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>EXPE</code>
+                    <definition>Experimental Population, Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>XE</code>
+                    <definition>Experimental Population, Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>SAE</code>
+                    <definition>Similarity of Appearance to an Endangered Taxon</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PT</code>
+                    <definition>Proposed Threatened</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PEXPE</code>
+                    <definition>Proposed Experimental Population, Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PXE</code>
+                    <definition>Proposed Experimental Population, Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PEXPN</code>
+                    <definition>Proposed Experimental Population, Non-Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PXN</code>
+                    <definition>Proposed Experimental Population, Non-Essential</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>PSAE</code>
+                    <definition>Proposed Similarity of Appearance to an Endangered Taxon</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>AD</code>
+                    <definition>Proposed Delisting</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>AE</code>
+                    <definition>Proposed Reclassification to Endangered</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>AT</code>
+                    <definition>Proposed Reclassification to Threatened</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>NPSTaxonCode</attributeName>
+          <attributeDefinition>Taxonomic ID internal to NPS</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Taxonomic ID internal to NPS</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>NPSTSN</attributeName>
+          <attributeDefinition>Taxonomic Serial Number assigned by NPS. Corresponds to ITIS TSN if known.</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Taxonomic Serial Number assigned by NPS. Corresponds to ITIS TSN if known.</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>SourceSci</attributeName>
+          <attributeDefinition>Scientific name of taxon as included on source matchlist</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Scientific name of taxon as included on source matchlist</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>SourceCom</attributeName>
+          <attributeDefinition>Common name of taxon as included in source matchlist</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Common name of taxon as included in source matchlist</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>ParkCode</attributeName>
+          <attributeDefinition>Park or parks where conservation status applies</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Park or parks where conservation status applies</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>19988</numberOfRecords>
+    </dataTable>
+  </dataset>
+</eml:eml>
