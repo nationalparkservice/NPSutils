@@ -16,16 +16,17 @@
 #' }
 get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
   
-  #capture original working directory;
-  #return the directory where /data is written.
-  #set directory back to original working directory on exit.
+  #capture original working directory
   orig_wd <- getwd()
+  #return the directory where /data is written.
   on.exit(return(getwd()))
+  #set directory back to original working directory on exit.
   on.exit(setwd(orig_wd), add=TRUE)
   
   #set wd to path; defaults to wd. 
   setwd(path)
   
+  #create "data" directory, if necessary:
   if (!file.exists("data")) {
     dir.create("data")
   }
@@ -33,17 +34,18 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
   #Secure route (needs further testing).
   if (toupper(secure) == "TRUE") {
     for(i in seq_along(reference_id)){
-      #create a package-specific directory within the data directory, if necessary:
+      #create a package-specific sub-directory within "data", if necessary:
       destination_dir <- paste("data/", reference_id[i], sep = "")
       if (!file.exists(destination_dir)) {
         dir.create(destination_dir)
       }
-    # get HoldingID from the ReferenceID - defaults to the first holding
+      #get HoldingID from the ReferenceID - defaults to the first holding
       rest_holding_info_url <- paste0(
         "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
         reference_id[i], "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url,
                                    httr::authenticate(":", ":", "ntlm")))
+      #download each file in the holding:
       for(j in seq_along(xml)){
         rest_download_url <- paste0(
           "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
@@ -82,6 +84,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       }
     }
   }
+  #public/non-secure route:
   if (toupper(secure) == "FALSE"){
     
     for(i in seq_along(reference_id)){
@@ -97,6 +100,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       reference_id[i], "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url))
       
+      #test whether requires secure=TRUE & VPN; alert user:
       if(!is.null(xml$message)){
         cat("For ", crayon::blue$bold(reference_id[i]), " ", 
             crayon::red$bold(xml$message), "\n", sep="")
@@ -104,6 +108,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
             " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
         cat("Don't forget to log on to the VPN!")
       }
+      #download all files in reference:
       if(is.null(xml$message)){
         for(j in seq_along(xml)){
           rest_download_url <- xml[[j]]$downloadLink
@@ -118,15 +123,14 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
                       mode="wb")
           cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
         }
-        # unzip data package
-        # check to see if the downloaded file is a zip
+        # check to see if the downloaded file is a zip; unzip.
         if (tools::file_ext(download_filename) == "zip") {
           utils::unzip(zipfile = paste0("data\\",
                                   reference_id[i], "\\",
                                   download_filename),
                    exdir = paste0("data\\", reference_id[i]))
+          #delete .zip file
           file.remove(paste0("data/", reference_id[i], "/", download_filename))
-        
           cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
           cat("     The original .zip file was removed.\n")
         }
