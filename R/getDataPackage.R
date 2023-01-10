@@ -32,15 +32,12 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
   
   #Secure route (needs further testing).
   if (toupper(secure) == "TRUE") {
-    
     for(i in seq_along(reference_id)){
-      
       #create a package-specific directory within the data directory, if necessary:
       destination_dir <- paste("data/", reference_id[i], sep = "")
       if (!file.exists(destination_dir)) {
         dir.create(destination_dir)
       }
-    
     # get HoldingID from the ReferenceID - defaults to the first holding
       rest_holding_info_url <- paste0(
         "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
@@ -53,8 +50,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
           xml[[j]]$resourceId)
       
         download_filename <- xml[[j]]$fileName
-        download_file_path <- paste0("data/",
-                                   reference_id[i], "/",
+        download_file_path <- paste0("data/", reference_id[i], "/",
                                    download_filename)
         #download the file:
         invisible(capture.output(
@@ -65,17 +61,24 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
                                overwrite = TRUE),
               httr::authenticate(":", ":", "ntlm")))))
         cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
-      }
-      #test for .zip; if found extract files and delete .zip file.
-      if (tools::file_ext(download_filename) == "zip") {
-        utils::unzip(zipfile=paste0("data/",
+      
+        #test for .zip; if found extract files and delete .zip file.
+        if (tools::file_ext(download_filename) == "zip") {
+          tryCatch(
+            {utils::unzip(zipfile=paste0("data/",
                                   reference_id[i], "/",
                                   download_filename),
-                   exdir = paste0("data/", reference_id[i]))
-        file.remove(paste0("data/", reference_id[i], "/", download_filename))
-      
-        cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
-        cat("     The original .zip file was removed.\n")
+            exdir = paste0("data/", reference_id[i]))
+            cat("    ", crayon::blue$bold(download_filename),
+                "was unzipped.\n")},
+            warning = function(w){
+              cat(crayon::red$bold("     The .zip file appears empty. Are you sure you have permissions to access this file?"), "\n")},
+            finally = {
+              file.remove(paste0("data/", reference_id[i], "/",
+                                 download_filename))
+              cat("     The original .zip file was removed.\n")}
+            )
+        }
       }
     }
   }
@@ -93,33 +96,40 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
       reference_id[i], "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url))
-    
-      for(j in seq_along(xml)){
-        rest_download_url <- xml[[j]]$downloadLink
-        download_filename <- xml[[j]]$fileName
-        download_file_path <- paste0("data/",
+      
+      if(!is.null(xml$message)){
+        cat("For ", crayon::blue$bold(reference_id[i]), " ", 
+            crayon::red$bold(xml$message), "\n", sep="")
+        cat("Please re-run ", crayon::green$bold("get_data_package()"), 
+            " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
+      }
+      if(is.null(xml$message)){
+        for(j in seq_along(xml)){
+          rest_download_url <- xml[[j]]$downloadLink
+          download_filename <- xml[[j]]$fileName
+          download_file_path <- paste0("data/",
                                      reference_id[i], "/",
                                      download_filename)
-        #independent tests show download.file is faster than httr::GET or curl
-        download.file(rest_download_url, 
+          #independent tests show download.file is faster than httr::GET or curl
+          download.file(rest_download_url, 
                       download_file_path, 
                       quiet=TRUE, 
                       mode="wb")
-        cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
-      }
-    # unzip data package
-    # check to see if the downloaded file is a zip
-      if (tools::file_ext(download_filename) == "zip") {
-        utils::unzip(zipfile=paste0("data/",
-                                  reference_id[i], "/",
+          cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
+        }
+        # unzip data package
+        # check to see if the downloaded file is a zip
+        if (tools::file_ext(download_filename) == "zip") {
+          utils::unzip(zipfile = paste0("data\\",
+                                  reference_id[i], "\\",
                                   download_filename),
-                   exdir = paste0("data/", reference_id[i]))
-        file.remove(paste0("data/", reference_id[i], "/", download_filename))
+                   exdir = paste0("data\\", reference_id[i]))
+          file.remove(paste0("data/", reference_id[i], "/", download_filename))
         
-        cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
-        cat("     The original .zip file was removed.\n")
+          cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
+          cat("     The original .zip file was removed.\n")
+        }
       }
     }
   }
-  #return(getwd())
 }
