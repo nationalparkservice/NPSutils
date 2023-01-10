@@ -102,6 +102,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
             crayon::red$bold(xml$message), "\n", sep="")
         cat("Please re-run ", crayon::green$bold("get_data_package()"), 
             " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
+        cat("Don't forget to log on to the VPN!")
       }
       if(is.null(xml$message)){
         for(j in seq_along(xml)){
