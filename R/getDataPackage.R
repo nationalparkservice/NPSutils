@@ -47,10 +47,10 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
                                    httr::authenticate(":", ":", "ntlm")))
       #download each file in the holding:
       for(j in seq_along(xml)){
+        #get file URL
         rest_download_url <- paste0(
           "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
           xml[[j]]$resourceId)
-      
         download_filename <- xml[[j]]$fileName
         download_file_path <- paste0("data/", reference_id[i], "/",
                                    download_filename)
@@ -76,6 +76,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
             warning = function(w){
               cat(crayon::red$bold("     The .zip file appears empty. Are you sure you have permissions to access this file?"), "\n")},
             finally = {
+              #remove .zip after extracting
               file.remove(paste0("data/", reference_id[i], "/",
                                  download_filename))
               cat("     The original .zip file was removed.\n")}
@@ -86,8 +87,8 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
   }
   #public/non-secure route:
   if (toupper(secure) == "FALSE"){
-    
     for(i in seq_along(reference_id)){
+      
       #if necessary, create a package-specific directory within the /data:
       destination_dir <- paste("data/", reference_id[i], sep = "")
       if (!file.exists(destination_dir)) {
@@ -108,6 +109,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
             " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
         cat("Don't forget to log on to the VPN!")
       }
+      
       #download all files in reference:
       if(is.null(xml$message)){
         for(j in seq_along(xml)){
