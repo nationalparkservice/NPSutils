@@ -41,16 +41,27 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       }
       #get HoldingID from the ReferenceID - defaults to the first holding
       rest_holding_info_url <- paste0(
-        "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
+        "https://irmaservices.nps.gov/datastore-secure/v5/rest/reference/",
         reference_id[i], "/DigitalFiles")
-      xml <- httr::content(httr::GET(rest_holding_info_url,
-                                   httr::authenticate(":", ":", "ntlm")))
-      #download each file in the holding:
+      xml <- suppressMessages(httr::content(httr::GET(rest_holding_info_url,
+                                   httr::authenticate(":", ":", "ntlm"))))
+        #download each file in the holding:
       for(j in seq_along(xml)){
         #get file URL
-        rest_download_url <- paste0(
-          "https://irmaservices.nps.gov/datastore-secure/v4/rest/DownloadFile/",
-          xml[[j]]$resourceId)
+        tryCatch(
+          {rest_download_url <- paste0(
+            "https://irmaservices.nps.gov/datastore-secure",
+            "/v5/rest/DownloadFile/",xml[[j]]$resourceId)},
+          error = function(e){
+            cat(crayon::red$bold("You may not have permissions to access ", 
+                                 crayon::blue$bold(reference_id[i]), 
+                                 "\n", sep=""))
+            cat("Try logging on to the NPS VPN before running ",
+                crayon::green$bold("get_data_package()"), "\n", sep="")
+          },
+          finally = { stop(cat(crayon::red$bold("function terminated.\n"))) } 
+        )
+        
         download_filename <- xml[[j]]$fileName
         download_file_path <- paste0("data/", reference_id[i], "/",
                                    download_filename)
@@ -97,7 +108,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       
       # get the HoldingID from the ReferenceID
       rest_holding_info_url <- paste0(
-      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
+      "https://irmaservices.nps.gov/datastore/v5/rest/reference/",
       reference_id[i], "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url))
       
