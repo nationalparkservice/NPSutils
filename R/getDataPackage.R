@@ -59,7 +59,10 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
               ".", "\n", sep=""))
             cat("Try logging on to the NPS VPN before running ",
                 crayon::green$bold("get_data_package()"), ".", "\n", sep="")
-          },
+            cat(crayon::red$bold("Function terminated.\n"))
+            stop()
+          }
+          #finally = {}
           #finally = { stop(cat(crayon::red$bold("Function terminated.\n"))) } 
         )
         
@@ -86,13 +89,22 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
             cat("    ", crayon::blue$bold(download_filename),
                 "was unzipped.\n")},
             warning = function(w){
-              cat(crayon::red$bold("     The .zip file appears empty. Are you sure you have permissions to access this file?"), "\n")},
+              if(stringr::str_detect(w$message, "-1")){
+                cat(crayon::red$bold("     The .zip file appears empty. Are you sure you have permissions to access this file?\n"))
+              }
+              if(stringr::str_detect(w$message, "3")){
+                cat(crayon::red$bold("     There was an undiagnosed problem with the .zip file. Please double check your results.\n"))
+              }
+            },
             finally = {
+              cat("    unzipping ", crayon::blue$bold(download_filename),
+                  ".\n", sep="")
               #remove .zip after extracting
               file.remove(paste0("data/", reference_id[i], "/",
                                  download_filename))
-              cat("     The original .zip file was removed.\n")}
-            )
+              cat("     The original .zip file was removed.\n")
+            }
+          )
         }
       }
     }
@@ -119,7 +131,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
             crayon::red$bold(xml$message), "\n", sep="")
         cat("Please re-run ", crayon::green$bold("get_data_package()"), 
             " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
-        cat("Don't forget to log on to the VPN!")
+        cat("Don't forget to log on to the VPN!\n")
       }
       
       #download all files in reference:
@@ -145,7 +157,8 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
                    exdir = paste0("data\\", reference_id[i]))
           #delete .zip file
           file.remove(paste0("data/", reference_id[i], "/", download_filename))
-          cat("    ", crayon::blue$bold(download_filename), "was unzipped.\n")
+          cat("    unzipping", crayon::blue$bold(download_filename),
+              ".\n", sep="")
           cat("     The original .zip file was removed.\n")
         }
       }
