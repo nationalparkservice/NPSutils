@@ -1,6 +1,6 @@
 #' Retrieve digital data package holding from DataStore.
 #'
-#' @description get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory. .Zip archives files are extracted and the original .zip file is deleted. Remember, to download restricted data packages, set secure=TRUE *and* log on to the VPN.
+#' @description get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory. .Zip archives files are extracted and the original .zip file is deleted. Remember, to download restricted data packages, set secure=TRUE *and* log on to the VPN. 
 #'
 #' @param reference_id is a 6-7 digit number corresponding to the reference ID of the data package.
 #' @param secure logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).
@@ -77,10 +77,10 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
               httr::write_disk(download_file_path,
                                overwrite = TRUE),
               httr::authenticate(":", ":", "ntlm")))))
-        cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
+        cat("writing: ", crayon::blue$bold(download_file_path), ".\n", sep="")
       
         #test for .zip; if found extract files and delete .zip file.
-        if (tools::file_ext(download_filename) == "zip") {
+        if (tools::file_ext(tolower(download_filename)) == "zip") {
           tryCatch(
             {utils::unzip(zipfile=paste0("data/",
                                   reference_id[i], "/",
@@ -150,7 +150,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
           cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
         }
         # check to see if the downloaded file is a zip; unzip.
-        if (tools::file_ext(download_filename) == "zip") {
+        if (tools::file_ext(tolower(download_filename)) == "zip") {
           utils::unzip(zipfile = paste0("data\\",
                                   reference_id[i], "\\",
                                   download_filename),
