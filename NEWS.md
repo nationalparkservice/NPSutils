@@ -5,7 +5,7 @@
   * get_data_package can now specify the directory that the /data folder and all child data package folders and data files are saved to. Defaults to the working directory.
   * get_data_package now returns the directory that the /data directory (where all sub-directories and data files are) to enable piping with downstream functions.
   * get_data_package informs the user of the file names being downloaded and where they are being saved; informs the user if a .zip is extracted and informs the user when the original .zip file is deleted.
-  * get_data_package informs the user if a download failed due to not being on the VPN or not specifying secure=TRUE.
+  * get_data_package informs the user if a download failed due to not specifying secure=TRUE.
 
 # NPSutils 0.2.0.0
 
