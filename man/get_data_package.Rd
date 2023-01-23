@@ -10,14 +10,12 @@ get_data_package(reference_id, secure = FALSE, path = here::here())
 \item{reference_id}{is a 6-7 digit number corresponding to the reference ID of the data package.}
 
 \item{secure}{logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).}
-
-\item{path}{the directory where data directories and data files will be saved. Defaults to current working directory.}
 }
 \value{
 String. The path where the /data folder is written and all data package sub-directories and data files are contained.
 }
 \description{
-get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory. .Zip archives files are extracted and the original .zip file is deleted. Remember, to download restricted data packages, set secure=TRUE *and* log on to the VPN.
+get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory.
 }
 \examples{
 \dontrun{
