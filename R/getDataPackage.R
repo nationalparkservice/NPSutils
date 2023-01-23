@@ -147,22 +147,21 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
                       quiet=TRUE, 
                       mode="wb")
           cat("writing: ", crayon::blue$bold(download_file_path), "\n", sep="")
-        }
-        # check to see if the downloaded file is a zip; unzip.
-        if (tools::file_ext(tolower(download_filename)) == "zip") {
-          utils::unzip(zipfile = paste0("data\\",
-                                  reference_id[i], "\\",
-                                  download_filename),
-                   exdir = paste0("data\\", reference_id[i]))
+        
+          # check to see if the downloaded file is a zip; unzip.
+          if (tools::file_ext(tolower(download_filename)) == "zip") {
+            utils::unzip(zipfile = paste0("data\\",
+                                    reference_id[i], "\\",
+                                    download_filename),
+                     exdir = paste0("data\\", reference_id[i]))
           #delete .zip file
-          file.remove(paste0("data/", reference_id[i], "/", download_filename))
-          cat("    unzipping", crayon::blue$bold(download_filename),
+            file.remove(paste0("data/", reference_id[i], "/", download_filename))
+            cat("    unzipping", crayon::blue$bold(download_filename),
               ".\n", sep="")
-          cat("     The original .zip file was removed.\n")
+            cat("     The original .zip file was removed.\n")
+          }
         }
       }
     }
-   }
   }
- }
 }
