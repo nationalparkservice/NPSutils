@@ -1,6 +1,6 @@
 #' Retrieve digital data package holding from DataStore.
 #'
-#' @description get_data_package creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory. 
+#' @description `getDataPackages()` creates a directory called "data" in the current working directory (unless it already exists). For each data package, it writes a new sub-directory of "data" named with the corresponding data package reference ID. All the data package files are then copied to that directory. 
 #'
 #' @param reference_id is a 6-7 digit number corresponding to the reference ID of the data package.
 #' @param secure logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).
@@ -13,7 +13,7 @@
 #' get_data_package(2272461, secure = FALSE)
 #' path_to_data_for_piping <- get_data_package(2272461, secure = TRUE)
 #' }
-get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
+getDataPackages <- function(reference_id, secure = FALSE, path=here::here()) {
   
   #capture original working directory
   orig_wd <- getwd()
@@ -40,7 +40,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       }
       #get HoldingID from the ReferenceID - defaults to the first holding
       rest_holding_info_url <- paste0(
-        "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
+        "https://irmaservices.nps.gov/datastore-secure/v5/rest/reference/",
         reference_id[i], "/DigitalFiles")
       xml <- suppressMessages(httr::content(httr::GET(rest_holding_info_url,
                                    httr::authenticate(":", ":", "ntlm"))))
@@ -120,7 +120,7 @@ get_data_package <- function(reference_id, secure = FALSE, path=here::here()) {
       
       # get the HoldingID from the ReferenceID
       rest_holding_info_url <- paste0(
-      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
+      "https://irmaservices.nps.gov/datastore/v5/rest/reference/",
       reference_id[i], "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url))
       
