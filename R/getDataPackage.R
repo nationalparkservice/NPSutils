@@ -4,6 +4,7 @@
 #'
 #' @param reference_id is a 6-7 digit number corresponding to the reference ID of the data package.
 #' @param secure logical indicating whether the file should be acquired using data services available to NPS internal staff only. Defaults to FALSE for public data. TRUE indicates internal data and requires a VPN connection (unless you are in an NPS office).
+#' @param path String. Indicates the location that the "data" directory and all subdirectories and files should be written to. Defaults to the working directory.
 #'
 #' @export
 #' @return String. The path where the /data folder is written and all data package sub-directories and data files are contained.
