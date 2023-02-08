@@ -25,7 +25,7 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/get_data_package.html</loc>
+    <loc>/reference/getDataPackages.html</loc>
   </url>
   <url>
     <loc>/reference/get_park_code.html</loc>
@@ -55,10 +55,10 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/load_data_package.html</loc>
+    <loc>/reference/loadDataPackages.html</loc>
   </url>
   <url>
-    <loc>/reference/load_data_package_list.html</loc>
+    <loc>/reference/load_data_package.html</loc>
   </url>
   <url>
     <loc>/reference/load_domains.html</loc>
