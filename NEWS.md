@@ -1,3 +1,8 @@
+# NPSutils 0.2.0.2
+
+  * deprecated `get_data_package()` in favor of `getDataPackages()`. This is just a name change and does not change any functionality.
+  * updated `getDataPackages()` to work with IRMA REST Api v5 (from v4).
+
 # NPSutils 0.2.0.1
   
   * updated get_data_package to retrieve 1 or more files from a given reference, if for instance a data package has multiple files associated with it. get_data_package is file extension agnostic.
