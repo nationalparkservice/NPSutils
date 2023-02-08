@@ -10,8 +10,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' get_data_package(2272461, secure = FALSE)
-#' path_to_data_for_piping <- get_data_package(2272461, secure = TRUE)
+#' getDataPackages(2272461, secure = FALSE)
+#' pathToDataForPiping <- getDataPackages(2272461, secure = TRUE)
 #' }
 getDataPackages <- function(reference_id, secure = FALSE, path=here::here()) {
   
