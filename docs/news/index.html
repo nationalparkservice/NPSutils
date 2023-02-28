@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NPSutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.3</span>
       </span>
     </div>
 
@@ -50,6 +50,10 @@
       <small>Source: <a href="https://github.com/RobLBaker/NPSutils/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.0.3" id="npsutils-0203">NPSutils 0.2.0.3<a class="anchor" aria-label="anchor" href="#npsutils-0203"></a></h2>
+<ul><li>added <code><a href="../reference/map_wkt.html">map_wkt()</a></code> function to map points, polygons, or both from Well Known Text coordinates (WKT). WKT is used in place to GPS coordinates when sensitive species locations have been “fuzzed”. In this case, providing a polygon rather than the an exact (albeit fuzzed) is preferable as it is clear that the location is not exact. WKT is an efficient way to store geographic shapes such as polygons in flat files such as .csv.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0.2" id="npsutils-0202">NPSutils 0.2.0.2<a class="anchor" aria-label="anchor" href="#npsutils-0202"></a></h2>
 <ul><li>deprecated <code>get_data_package()</code> in favor of <code><a href="../reference/getDataPackages.html">getDataPackages()</a></code>. This is just a name change and does not change any functionality.</li>
