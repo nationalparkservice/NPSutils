@@ -67,6 +67,9 @@
     <loc>/reference/load_metadata.html</loc>
   </url>
   <url>
+    <loc>/reference/map_wkt.html</loc>
+  </url>
+  <url>
     <loc>/reference/validate_data_package.html</loc>
   </url>
 </urlset>
