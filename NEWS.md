@@ -1,3 +1,6 @@
+# NPSutils 0.2.0.3
+  * added `map_wkt()` function to map points, polygons, or both from Well Known Text coordinates (WKT). WKT is used in place to GPS coordinates when sensitive species locations have been "fuzzed". In this case, providing a polygon rather than the an exact (albeit fuzzed) is preferable as it is clear that the location is not exact. WKT is an efficient way to store geographic shapes such as polygons in flat files such as .csv.
+
 # NPSutils 0.2.0.2
 
   * deprecated `get_data_package()` in favor of `getDataPackages()`. This is just a name change and does not change any functionality.
