@@ -1,7 +1,7 @@
 Package: NPSutils
 Type: Package
 Title: Collection of Functions to read/write information from the NPS Data Store
-Version: 0.2.0.0
+Version: 0.2.0.3
 Authors@R: c(
     person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
            role = c("aut", "cre"),
@@ -29,8 +29,9 @@ Imports:
     readr,
     magrittr,
     crayon,
-    stringr
-RoxygenNote: 7.2.1
+    stringr,
+    leaflet
+RoxygenNote: 7.2.3
 Suggests: 
     knitr,
     rmarkdown
