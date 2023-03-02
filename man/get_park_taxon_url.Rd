@@ -9,7 +9,7 @@ get_park_taxon_url(park_code, taxon_code)
 \arguments{
 \item{park_code}{The four-letter unit code for the park of interest.}
 
-\item{taxon_code}{Taxonomic Serial Number for the taxon of interest.}
+\item{taxon_code}{The IRMA taxon code.}
 }
 \description{
 \code{get_park_taxon_url} returns a vector of URLs for references in Data Store corresponding to a particular taxon at a park.
