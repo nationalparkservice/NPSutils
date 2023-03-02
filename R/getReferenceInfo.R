@@ -3,11 +3,13 @@
 #' @description \code{get_park_taxon_refs} returns a data frame of metadata for references in Data Store corresponding to a particular taxon at a park.
 #' The resultant data frame is then usable by other functions to extract metadata from the records.
 #'
+#' Because `get_park_taxon_refs()` accesses restricted data on the secure DataStore server, results of these queries need to be considered for potential park-specific data protection protocols. 
+#'
 #' Note that this function only returns references that have been "tagged" with a taxon code and may represent only a
 #' subset of references that have information about a taxon.
 #'
 #' @param park_code The four-letter unit code for the park of interest.
-#' @param taxon_code Taxonomic Serial Number for the taxon of interest.
+#' @param taxon_code The IRMA taxon code.
 #'
 #' @export
 #'
@@ -17,7 +19,7 @@
 #' }
 get_park_taxon_refs <- function(park_code, taxon_code) {
   url <- paste(
-    "https://irmaservices.nps.gov/datastore-secure/v4/rest/UnitSpeciesSearch/",
+    "https://irmaservices.nps.gov/datastore-secure/v5/rest/UnitSpeciesSearch/",
     park_code, "/", taxon_code,
     sep = ""
   )
@@ -32,6 +34,8 @@ get_park_taxon_refs <- function(park_code, taxon_code) {
 #'
 #' @description \code{get_park_taxon_citations} returns a vector of citations in Data Store corresponding to a particular taxon at a park.
 #'
+#' Because `get_park_taxon_citations()` accesses restricted data on the secure DataStore server, results of these queries need to be considered for potential park-specific data protection protocols.
+#' 
 #' Note that this function only returns citations that have been "tagged" with a taxon code and may represent only a subset of references that have information about a taxon.
 #'
 #' @inheritParams get_park_taxon_refs
