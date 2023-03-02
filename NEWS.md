@@ -1,3 +1,7 @@
+* update `get_park_taxon_refs()` to hit v5/rest services
+* update documentation: make it clear that the taxon_code parameter in `get_park_taxon_refs()` is the IRMA taxon code, not the ITIS TSN.
+* update documentation: make it explicit when `get_park_taxon_refs()` and `get_park_taxon_citations()` are hitting secure servers and warn users that the results may also need to be restricted.
+
 # NPSutils 0.2.0.3
   * added `map_wkt()` function to map points, polygons, or both from Well Known Text coordinates (WKT). WKT is used in place to GPS coordinates when sensitive species locations have been "fuzzed". In this case, providing a polygon rather than the an exact (albeit fuzzed) is preferable as it is clear that the location is not exact. WKT is an efficient way to store geographic shapes such as polygons in flat files such as .csv.
 
