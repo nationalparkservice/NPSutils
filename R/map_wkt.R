@@ -62,7 +62,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all") {
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
               leaflet::addCircles(data = df_pts, color = "blue",) %>%
-              leaflet::addPolygons(data = df, color = "red",)  #odd stray ,
+              leaflet::addPolygons(data = df_polys, color = "red",)  #odd stray ,
   }
   return(map)
 }
