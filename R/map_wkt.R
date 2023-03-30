@@ -20,16 +20,20 @@
 #' #map species observations - points only
 #' map_wkt(my_NPS_species_obs, wellknowntext = "footprintWKT", type = "points")
 #' }
-map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all") {
+map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.duplicates = FALSE) {
   #filter to just wellknowntext column:
   wkt_grepl <- paste0('\\b', wellknowntext, '\\b')
   df <- df[grepl(wkt_grepl, colnames(df))]
+  
   #omit NAs - not important for plotting anyway:
   df <- na.omit(df)
+  
   #convert to geographic object:
   df <- sf::st_as_sf(df, wkt = wellknowntext)
+  
   #new column in data frame for the geometry type
   df$geometry_types <- sf::st_geometry_type(df)
+  
   #use the geometry_type column to filter only for POINT or POLYGON
   df_pts <- df[df$geometry_types == "POINT",]
   df_polys <- df[df$geometry_types == "POLYGON",]
