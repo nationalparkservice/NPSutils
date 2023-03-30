@@ -21,7 +21,7 @@
 #' #map species observations - points only
 #' map_wkt(my_NPS_species_obs, wellknowntext = "footprintWKT", type = "points")
 #' }
-map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.duplicates = FALSE) {
+map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.duplicates = TRUE) {
   #filter to just wellknowntext column:
   wkt_grepl <- paste0('\\b', wellknowntext, '\\b')
   df <- df[grepl(wkt_grepl, colnames(df))]
@@ -48,7 +48,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
   #only map what is requested
   if(type == "points") {
     map <- leaflet::leaflet(df, 
-              options = leafletOptions(preferCanvas = TRUE)) %>%
+              options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)"); prevent unwanted map updates:
               leaflet::addProviderTiles(providers$Esri.WorldGrayCanvas, 
                                         options = providerTileOptions(
@@ -57,7 +57,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
               leaflet::addCircles(data = df_pts, color = "blue",) #odd stray ,
   } else if(type == "polygons") {
     map <- leaflet::leaflet(df, 
-              options = leafletOptions(preferCanvas = TRUE)) %>%
+              options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)"); prevent unwanted map updates:
               leaflet::addProviderTiles(providers$Esri.WorldGrayCanvas, 
                                         options = providerTileOptions(
@@ -66,8 +66,8 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
               leaflet::addPolygons(data = df_polys, color = "red",) #odd stray ,
   } else if(type == "all") {
     map <- leaflet::leaflet(df, 
-              options = leafletOptions(preferCanvas = TRUE)) %>%
-      #addTiles(group = "OSM (default)") %>%; prevent unwatned map updates:
+              options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
+      #addTiles(group = "OSM (default)") %>%; prevent unwanted map updates:
               leaflet::addProviderTiles(providers$Esri.WorldGrayCanvas,
                                         options = providerTileOptions(
                                           updateWhenZooming = FALSE,
