@@ -7,6 +7,7 @@
 #' @param df - The name of the data frame that contains WKT geometry.
 #' @param wellknowntext - The name of the specific column within the data frame that contains the WKT geometry. This parameter is currently not fully implemented and defaults to the Darwin Core 'footprintsWKT'.
 #' @param type -  Pick one from "points", "polygons", or "all" to map specific geometry types.
+#' @param remove.duplicates - Boolean (TRUE or FALSE). Whether or not to remove identical geometries before plotting.
 #'
 #' @return The function returns a dynamic, zoomable leaflet map with the specific geometry plotted.
 #' @importFrom magrittr %>%
