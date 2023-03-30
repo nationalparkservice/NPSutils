@@ -50,7 +50,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
     map <- leaflet::leaflet(df, 
               options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)"); prevent unwanted map updates:
-              leaflet::addProviderTiles(providers$Esri.WorldGrayCanvas, 
+              leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas, 
                                         options = providerTileOptions(
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
@@ -59,7 +59,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
     map <- leaflet::leaflet(df, 
               options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)"); prevent unwanted map updates:
-              leaflet::addProviderTiles(providers$Esri.WorldGrayCanvas, 
+              leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas, 
                                         options = providerTileOptions(
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
@@ -68,7 +68,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
     map <- leaflet::leaflet(df, 
               options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)") %>%; prevent unwanted map updates:
-              leaflet::addProviderTiles(providers$Esri.WorldGrayCanvas,
+              leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas,
                                         options = providerTileOptions(
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
