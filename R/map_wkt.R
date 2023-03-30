@@ -28,6 +28,12 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
   #omit NAs - not important for plotting anyway:
   df <- na.omit(df)
   
+  #remove duplicates if desired
+  if(remove.duplicates == TRUE) {
+    df <- df %>%
+    distinct()
+  }
+  
   #convert to geographic object:
   df <- sf::st_as_sf(df, wkt = wellknowntext)
   
