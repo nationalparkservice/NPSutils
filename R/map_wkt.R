@@ -51,7 +51,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
               options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)"); prevent unwanted map updates:
               leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas, 
-                                        options = providerTileOptions(
+                                        options = leaflet::providerTileOptions(
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
               leaflet::addCircles(data = df_pts, color = "blue",) #odd stray ,
@@ -60,7 +60,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
               options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)"); prevent unwanted map updates:
               leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas, 
-                                        options = providerTileOptions(
+                                        options = leaflet::providerTileOptions(
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
               leaflet::addPolygons(data = df_polys, color = "red",) #odd stray ,
@@ -69,7 +69,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
               options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
       #addTiles(group = "OSM (default)") %>%; prevent unwanted map updates:
               leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas,
-                                        options = providerTileOptions(
+                                        options = leaflet::providerTileOptions(
                                           updateWhenZooming = FALSE,
                                           updateWhenIdle = TRUE)) %>%
               leaflet::addCircles(data = df_pts, color = "blue",) %>%
