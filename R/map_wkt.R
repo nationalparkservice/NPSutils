@@ -32,7 +32,7 @@ map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.dup
   #remove duplicates if desired
   if(remove.duplicates == TRUE) {
     df <- df %>%
-    distinct()
+    dplyr::distinct()
   }
   
   #convert to geographic object:
