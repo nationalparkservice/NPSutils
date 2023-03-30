@@ -4,7 +4,12 @@
 \alias{map_wkt}
 \title{Map WKT geometry (points and polygons)}
 \usage{
-map_wkt(df, wellknowntext = "footprintWKT", type = "all")
+map_wkt(
+  df,
+  wellknowntext = "footprintWKT",
+  type = "all",
+  remove.duplicates = TRUE
+)
 }
 \arguments{
 \item{df}{- The name of the data frame that contains WKT geometry.}
@@ -12,6 +17,8 @@ map_wkt(df, wellknowntext = "footprintWKT", type = "all")
 \item{wellknowntext}{- The name of the specific column within the data frame that contains the WKT geometry. This parameter is currently not fully implemented and defaults to the Darwin Core 'footprintsWKT'.}
 
 \item{type}{-  Pick one from "points", "polygons", or "all" to map specific geometry types.}
+
+\item{remove.duplicates}{- Boolean (TRUE or FALSE). Whether or not to remove identical geometries before plotting.}
 }
 \value{
 The function returns a dynamic, zoomable leaflet map with the specific geometry plotted.
