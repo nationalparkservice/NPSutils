@@ -1,8 +1,8 @@
 #' Read contents of data package(s) and return a tibble with dataframe for each data file. 
 #'
-#' @description `loadDataPackages()` finds all the specified data packages in a /data directory (generated via `getDataPackages()`) and returns a tibble of tibbles where each data package is a tible and within that each data file is it's own tibble. `loadDataPackages()` also utilizes the metadata (only EML is currently supported) to correctly assign attributes to each data column.
+#' @description `load_data_packages()` finds all the specified data packages in a /data directory (generated via `getDataPackages()`) and returns a tibble of tibbles where each data package is a tible and within that each data file is it's own tibble. `load_data_packages()` also utilizes the metadata (only EML is currently supported) to correctly assign attributes to each data column.
 #' 
-#' @details currently `loadDataPackages()` only supports EML metadata and .csv files in a very specific file structure, which is most easily set up using `getDataPackages()`. Archived (.zip) files must be extractecd for `loadDataPackages()` to work properly. Again, `getDataPackages()` will accomplish this for you. 
+#' @details currently `load_data_packages()` only supports EML metadata and .csv files in a very specific file structure, which is most easily set up using `getDataPackages()`. Archived (.zip) files must be extractecd for `load_data_packages()` to work properly. Again, `getDataPackages()` will accomplish this for you. 
 #' '
 #' @param dataStoreReference is a list of 6-7 digit numbers corresponding to the DataStore reference ID of the datapackage(s) to load. Alternatively, you can set `dataStoreReference` to "loadAll", which will load all the data packages in your /data folder.
 #' @param path is the location of a folder, 'data' (created during `getDataPackages()`) which contains subdirectories where each subdirectory is the DataStore referenceId of the data package. Again, this file structure is all set up using `getDataPackages()`. Defaults to the current workign directory (which is the default location for `getDataPackages()`). 
@@ -10,16 +10,16 @@
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package. Currently the only supported format is Ecological Metadata (EML) and the parameter defaults to EML.
 #' @param simplify logical. Defaults to TRUE. If there is only a single data package loaded, the function will return a simple list of tibbles (where each tibble reflects a data file from within the data package). If set to FALSE, the function will return a list that contains a list of tibbles. This structure mirrors the object structure returned if multiple data packages are simultaneously loaded (a list of data packages with each data package containing a list of tibbles where each tibble corresponds to a data file in the given data package).
 #'
-#' @export
+#' @keywords private
 #'
 #' @return a list of (of lists of) tibbles. 
 #'
 #' @examples
 #' \dontrun{
-#' loadDataPackages(2272461, data_format = "csv", metadata_format = "eml")
+#' load_data_packages(2272461, data_format = "csv", metadata_format = "eml")
 #' }
 #'
-loadDataPackages <- function(dataStoreReference, 
+load_data_packages <- function(datastore_reference, 
                              path = here::here(),
                              dataFormat = "*.csv",
                              metadataFormat = "EML",
@@ -31,13 +31,26 @@ loadDataPackages <- function(dataStoreReference,
   #set wd to path; defaults to wd. 
   setwd(path)
   
-  if(length(seq_along(dataStoreReference)) == 1 & dataStoreReference != "allData" & simplify == TRUE) {
-    
+  
+  if(length(
+    seq_along(
+      datastore_reference)) == 1 
+    & datastore_reference != "allData" 
+    & simplify == TRUE) {
+  #return a tibble of data files  
+  }
+  if(length(
+    seq_along(
+      datastore_reference)) == 1 
+    & datastore_reference != "allData" 
+    & simplify == FALSE) {
+    #return a list of of tibbles, each tibble corresponds to a data files  
   }
   
+  
 
-  for(i in 1:seq_along(dataStoreReference)){
-    dataPackageDirectory <- paste("data/", dataStoreReference[i])
+  for(i in 1:seq_along(datastore_reference)){
+    dataPackageDirectory <- paste("data/", datastore_reference[i])
     filenames <- list.files(
       path = dataPackageDirectory,
       pattern = dataFormat)
