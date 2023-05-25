@@ -1,6 +1,6 @@
 #' Read contents of data package(s) and return a tibble with dataframe for each data file. 
 #'
-#' @description `load_data_packages()` finds all the specified data packages in a /data directory (generated via `getDataPackages()`) and returns a tibble of tibbles where each data package is a tible and within that each data file is it's own tibble. `load_data_packages()` also utilizes the metadata (only EML is currently supported) to correctly assign attributes to each data column.
+#' @description `load_data_packages()` finds all the specified data packages in a /data directory (generated via `getDataPackages()`) and returns a tibble of tibbles where each data package is a tibble and within that each data file is it's own tibble. `load_data_packages()` also utilizes the metadata (only EML is currently supported) to correctly assign attributes to each data column.
 #' 
 #' @details currently `load_data_packages()` only supports EML metadata and .csv files in a very specific file structure, which is most easily set up using `getDataPackages()`. Archived (.zip) files must be extractecd for `load_data_packages()` to work properly. Again, `getDataPackages()` will accomplish this for you. 
 #' '
