@@ -1,6 +1,6 @@
 #' Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
 #'
-#' @description \code{load_metadata} reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
+#' @description `load_pkg_metadata()` reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
 #'
 #' @param holding_id is a 6-7 digit number corresponding to the holding ID of the data package zip file.
 #'
@@ -12,7 +12,7 @@
 #' \dontrun{
 #' load_metadata(2266200)
 #' }
-load_metadata <- function(holding_id) {
+load_pkg_metadata <- function(holding_id) {
   DataPackageDirectory <- paste("data/", holding_id, sep = "")
 
   metadatafile <- list.files(
