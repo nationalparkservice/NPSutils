@@ -25,6 +25,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/delete_packages.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_data_packages.html</loc>
   </url>
   <url>
