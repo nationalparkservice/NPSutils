@@ -1,6 +1,6 @@
 #' Delete data packages from your local machine
 #'
-#' @description `delete_packages()` will delete one or more specified data packages. The function assumes that all data packages are in a folder called "data" and will delete items within the folder "data" but will not remove the "data" folder itself. 
+#' @description `delete_packages()` will delete one or more specified data packages. The function assumes that all data packages are in a folder called "data" and will delete items within the folder "data" but will not remove the "data" folder itself. You could just delete the files using Windows explorer. But if you really hate your OS (or just don't like using a mouse) you can to it this way too. 
 #'
 #' @param reference_id List. One or more data packages indicated by their 7-digit reference number.
 #' @param all Logical. Defaults to `FALSE`. When set to `TRUE` all files and directories within the "data" folder will be deleted. It does not matter whether they are data packages or other files: the "data" folder will be empty. When `all = TRUE`, you do not need to supply the data package reference IDs in the reference_id parameter. When set to TRUE, 
