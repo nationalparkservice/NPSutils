@@ -1,3 +1,4 @@
+* added a new function `delete_packages()` which can delete one or more (or all) packages within a folder called "data" (where your packages should be if you downloaded them with `get_data_packages()`)
 * changed function name `load_metadata()` is now `load_pkg_metadata()` so as not to conflict with `DPchecker::load_metadata()`
 * updated all function names to be snake_case
 * updated all file names to match function names
