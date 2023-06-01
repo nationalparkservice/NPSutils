@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' load_metadata(2266200)
+#' load_pgk_metadata(2266200)
 #' }
 load_pkg_metadata <- function(holding_id) {
   DataPackageDirectory <- paste("data/", holding_id, sep = "")
