@@ -24,6 +24,7 @@
 #' 
 #' #delete data packages from a "data" directory in a custom location:
 #' delete_packages(1234567, path = "C:/Users/username/Documents")
+#' }
 delete_packages <- function (reference_id, all = FALSE, path = here::here(), force = FALSE){
   if(all == FALSE){
     for(i in seq_along(reference_id)){
