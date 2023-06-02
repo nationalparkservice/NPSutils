@@ -1,6 +1,6 @@
 #' Delete data packages from your local machine
 #'
-#' @description `delete_packages()` will delete one or more specified data packages. The function assumes that all data packages are in a folder called "data" and will delete items within the folder "data" but will not remove the "data" folder itself. You could just delete the files using Windows explorer. But if you really hate your OS (or just don't like using a mouse) you can do it this way too. 
+#' @description `rm_local_packages()` will delete one or more specified data packages. The function assumes that all data packages are in a folder called "data" and will delete items within the folder "data" but will not remove the "data" folder itself. You could just delete the files using Windows explorer. But if you really hate your OS (or just don't like using a mouse) you can do it this way too. 
 #'
 #' @param reference_id List. One or more data packages indicated by their 7-digit reference number.
 #' @param all Logical. Defaults to `FALSE`. When set to `TRUE` all files and directories within the "data" folder will be deleted. It does not matter whether they are data packages or other files: the "data" folder will be empty. When `all = TRUE`, you do not need to supply the data package reference IDs in the reference_id parameter. When set to TRUE, 
@@ -23,9 +23,9 @@
 #' delete_packages(all = TRUE)
 #' 
 #' #delete data packages from a "data" directory in a custom location:
-#' delete_packages(1234567, path = "C:/Users/username/Documents")
+#' rm_local_packages(1234567, path = "C:/Users/username/Documents")
 #' }
-delete_packages <- function (reference_id, all = FALSE, path = here::here(), force = FALSE){
+rm_local_packages <- function (reference_id, all = FALSE, path = here::here(), force = FALSE){
   if(all == FALSE){
     for(i in seq_along(reference_id)){
       d_path <- paste0(path, "/data/", reference_id[i])
