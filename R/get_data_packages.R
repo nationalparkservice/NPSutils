@@ -241,7 +241,7 @@ get_data_packages <- function(reference_id,
           cat("Would you like to attempt to download the resource anyway?\n\n")
           var1 <- readline(prompt = "1: Yes\n2: No\n")
           if(var1 == 2){
-            cat("Reference ", reference_id[i], " was not downloaded.\n")
+            cat("Reference ", reference_id[i], " was not downloaded.\n\n")
             next
           }
         }
@@ -356,6 +356,6 @@ get_data_packages <- function(reference_id,
     }
   }
   data_path<-paste0(path, "/data")
-  cat("your data package(s) can be found at:\n")
+  cat("Any downloaded data package(s) can be found at:\n")
   on.exit(return(data_path))
 }
