@@ -62,16 +62,21 @@ get_data_packages <- function(reference_id,
         ref_data <- jsonlite::fromJSON(
           httr::content(
             test_req, "text"))
-       version <-ref_data$mostRecentVersion
-        if(!is.na(version)){
-          newest_url <- paste0(
-            "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=",
-            version)
-          new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
-          new_status <- httr::stop_for_status(new_req)$status_code
-          if(!new_status == 200){
-            stop("DataStore connection failed. Are you logged in to the VPN?\n")
-          }
+        #if(length(ref_data) == 0){
+        #  cat("The DataStore reference ID supplied, ",
+        #      crayon::blue$bold(reference_id[i]), " is invalid.\n", sep = "")
+        #  next
+        #}
+        #print(i)
+        version <-ref_data$mostRecentVersion
+          if(!is.na(version)){
+            newest_url <- paste0(
+              "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=", version)
+            new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
+            new_status <- httr::stop_for_status(new_req)$status_code
+            if(!new_status == 200){
+              stop("DataStore connection failed. Are you logged in to the VPN?\n")
+            }
           new_data <- jsonlite::fromJSON(
             httr::content(
               new_req, "text"))
@@ -201,6 +206,7 @@ get_data_packages <- function(reference_id,
   #public/non-secure route:
   if (toupper(secure) == FALSE){
     for(i in seq_along(reference_id)){
+      print(paste0("The first ", i, ".\n"))
       #check for newer version:
       if(force == FALSE){
         url <- paste0(
@@ -209,6 +215,7 @@ get_data_packages <- function(reference_id,
         #api call to see if ref exists
         test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
         status_code <- httr::stop_for_status(test_req)$status_code
+        
         #if API call fails, alert user and remind them to log on to VPN:
         if(!status_code == 200){
           stop("DataStore connection failed. 
@@ -218,6 +225,27 @@ get_data_packages <- function(reference_id,
         ref_data <- jsonlite::fromJSON(
           httr::content(
             test_req, "text"))
+        
+        #if an invalid reference number was supplied (no reference found):
+        if(length(ref_data) == 0){
+          cat("Invalid DataStore reference ID supplied (",
+              crayon::red$bold(reference_id[i]), ").\n", sep = "")
+          next
+        }
+        #Alert to incorrect (not data package) reference type:
+        ref_type <- ref_data$referenceType
+        if(!identical(ref_type, "Data Package")){
+          cat("Error: reference ", crayon::red$bold(reference_id[i]),
+              " is a ", crayon::red$bold(ref_type),
+              " not a data package.\n", sep ="")
+          cat("Would you like to attempt to download the resource anyway?\n\n")
+          var1 <- readline(prompt = "1: Yes\n2: No\n")
+          if(var1 == 2){
+            cat("Reference ", reference_id[i], " was not downloaded.\n")
+            next
+          }
+        }
+        #Look for a newer version:
         version <-ref_data$mostRecentVersion
         if(!is.na(version)){
           newest_url <- paste0(
@@ -234,7 +262,7 @@ get_data_packages <- function(reference_id,
               new_req, "text"))
           ref_date <- stringr::str_sub(ref_data$dateOfIssue, 1, 10)
           new_date <- stringr::str_sub(new_data$dateOfIssue, 1, 10)
-          cat("Reference ", crayon::blue$bold(reference_id[1]),
+          cat("Reference ", crayon::blue$bold(reference_id[i]),
               " was issued on ", crayon::blue$bold(ref_date), ".\n", sep = "")
           cat("There is a newer version available.\n", sep = "")
           cat("The newest version, ", crayon::bold$blue(version),
