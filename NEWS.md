@@ -1,4 +1,5 @@
-* added a new function `delete_packages()` which can delete one or more (or all) packages within a folder called "data" (where your packages should be if you downloaded them with `get_data_packages()`)
+* added new functionality to `get_data_packages()`: it will now check to see if a DataStore reference ID is invalid or not. It will also check whether the reference is a data package or not. Substantial feedback is reported to the user if the flag force is set to FALSE.
+* added a new function `rm_local_packages()` which can delete one or more (or all) packages within a folder called "data" (where your packages should be if you downloaded them with `get_data_packages()`). This only deletes local copies and does not delete any data from DataStore.
 * changed function name `load_metadata()` is now `load_pkg_metadata()` so as not to conflict with `DPchecker::load_metadata()`
 * updated all function names to be snake_case
 * updated all file names to match function names
