@@ -46,8 +46,10 @@ get_data_packages <- function(reference_id,
   #Secure route (needs further testing).
   if (toupper(secure) == "TRUE") {
     for(i in seq_along(reference_id)){
+      
       #check for newer version:
       if(force == FALSE){
+        cat("working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
         url <- paste0(
           "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=",
           reference_id[i])
@@ -62,45 +64,58 @@ get_data_packages <- function(reference_id,
         ref_data <- jsonlite::fromJSON(
           httr::content(
             test_req, "text"))
-        #if(length(ref_data) == 0){
-        #  cat("The DataStore reference ID supplied, ",
-        #      crayon::blue$bold(reference_id[i]), " is invalid.\n", sep = "")
-        #  next
-        #}
-        #print(i)
-        version <-ref_data$mostRecentVersion
-          if(!is.na(version)){
-            newest_url <- paste0(
-              "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=", version)
-            new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
-            new_status <- httr::stop_for_status(new_req)$status_code
-            if(!new_status == 200){
-              stop("DataStore connection failed. Are you logged in to the VPN?\n")
-            }
-          new_data <- jsonlite::fromJSON(
-            httr::content(
-              new_req, "text"))
-          ref_date <- stringr::str_sub(ref_data$dateOfIssue, 1, 10)
-          new_date <- stringr::str_sub(new_data$dateOfIssue, 1, 10)
-          cat("Reference ", crayon::blue$bold(reference_id[1]),
-              " was issued on ", crayon::blue$bold(ref_date), ".\n", sep = "")
-          cat("There is a newer version available.\n", sep = "")
-          cat("The newest version, ", crayon::bold$blue(version),
-              ", was issued on ", crayon::bold$blue(new_date),
-              ".\n", sep = "")
-          cat("Would you like to download the newest version instead?\n\n")
+        #if an invalid reference number was supplied (no reference found):
+        if(length(ref_data) == 0){
+          cat("Invalid DataStore reference ID supplied (",
+              crayon::red$bold(reference_id[i]), 
+              "). These data were not downloaded.\n\n", sep = "")
+          next
+        }
+        #Alert to incorrect (not data package) reference type:
+        ref_type <- ref_data$referenceType
+        if(!identical(ref_type, "Data Package")){
+          cat("Error: reference ", crayon::red$bold(reference_id[i]),
+              " is a ", crayon::red$bold(ref_type),
+              " not a data package.\n", sep ="")
+          cat("Would you like to attempt to download the resource anyway?\n\n")
           var1 <- readline(prompt = "1: Yes\n2: No\n")
-          if(var1 == 1){
-            #update to new reference and destination directory
-            reference_id[i] <- version
+          if(var1 == 2){
+            cat("Reference ", reference_id[i], " was not downloaded.\n\n")
+            next
+          }
+        }
+        #check for a newer version:    
+        version <-ref_data$mostRecentVersion
+        if(!is.na(version)){
+          newest_url <- paste0(
+            "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=", version)
+          new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
+          new_status <- httr::stop_for_status(new_req)$status_code
+          if(!new_status == 200){
+            stop("DataStore connection failed. Are you logged in to the VPN?\n")
+          }
+        new_data <- jsonlite::fromJSON(httr::content(new_req, "text"))
+        ref_date <- stringr::str_sub(ref_data$dateOfIssue, 1, 10)
+        new_date <- stringr::str_sub(new_data$dateOfIssue, 1, 10)
+        cat("Reference ", crayon::blue$bold(reference_id[i]),
+            " was issued on ", crayon::blue$bold(ref_date), ".\n", sep = "")
+        cat("There is a newer version available.\n", sep = "")
+        cat("The newest version, ", crayon::bold$blue(version),
+            ", was issued on ", crayon::bold$blue(new_date),
+            ".\n", sep = "")
+        cat("Would you like to download the newest version instead?\n\n")
+        var1 <- readline(prompt = "1: Yes\n2: No\n")
+        if(var1 == 1){
+          #update to new reference and destination directory
+          reference_id[i] <- version
           }
         }
       }
-      #create a package-specific sub-directory within "data", if necessary:
-      destination_dir <- paste("data/", reference_id[i], sep = "")
       
+      #generate name for package-specific sub-directory within "data", if necessary:
+      destination_dir <- paste("data/", reference_id[i], sep = "")
       #if the directory already exists, prompt user to overwrite:
-      if (file.exists(destination_dir) & force == FALSE){
+      if(file.exists(destination_dir) & force == FALSE){
         cat("The directory ",
             crayon::blue$bold(destination_dir),
             " already exists.\n",
@@ -119,15 +134,22 @@ get_data_packages <- function(reference_id,
           next #exit this iteration and go on to the next one
         }
       }
+      #if the directory does not already exist, create it:
       if (!file.exists(destination_dir)) {
         dir.create(destination_dir)
       }
+      
       #get HoldingID from the ReferenceID - defaults to the first holding
       rest_holding_info_url <- paste0(
         "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
         reference_id[i], "/DigitalFiles")
-      xml <- suppressMessages(httr::content(httr::GET(rest_holding_info_url,
+        xml <- suppressMessages(httr::content(httr::GET(rest_holding_info_url,
                                    httr::authenticate(":", ":", "ntlm"))))
+        
+        #catch invalid DataStore ID (code does this above, but only if force = FALSE; this catches it if force = TRUE; better to have both so in a force = FALSE case the error gets caught sooner, fewer API calls, and faster function response times)
+        if(!is.null(xml$message)){
+          next
+        }
         #download each file in the holding:
       for(j in seq_along(xml)){
         #get file URL
@@ -156,6 +178,7 @@ get_data_packages <- function(reference_id,
           suppressMessages(httr::content(
             httr::GET(
               rest_download_url,
+              httr::progress(),
               httr::write_disk(download_file_path,
                                overwrite = TRUE),
               httr::authenticate(":", ":", "ntlm"))))))
@@ -206,9 +229,9 @@ get_data_packages <- function(reference_id,
   #public/non-secure route:
   if (toupper(secure) == FALSE){
     for(i in seq_along(reference_id)){
-      print(paste0("The first ", i, ".\n"))
       #check for newer version:
       if(force == FALSE){
+        cat("working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
         url <- paste0(
           "https://irmaservices.nps.gov/datastore/v5/rest/ReferenceCodeSearch?q=",
           reference_id[i])
@@ -229,7 +252,8 @@ get_data_packages <- function(reference_id,
         #if an invalid reference number was supplied (no reference found):
         if(length(ref_data) == 0){
           cat("Invalid DataStore reference ID supplied (",
-              crayon::red$bold(reference_id[i]), ").\n", sep = "")
+              crayon::red$bold(reference_id[i]), 
+              "). These data were not downloaded.\n\n", sep = "")
           next
         }
         #Alert to incorrect (not data package) reference type:
@@ -309,11 +333,20 @@ get_data_packages <- function(reference_id,
       
       #test whether requires secure=TRUE & VPN; alert user:
       if(!is.null(xml$message)){
-        cat("For ", crayon::blue$bold(reference_id[i]), " ", 
-            crayon::red$bold(xml$message), "\n", sep="")
-        cat("Please re-run ", crayon::green$bold("get_data_package()"), 
-            " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
-        cat("Don't forget to log on to the VPN!\n")
+        if(force == FALSE){
+          if(nchar(xml$message) <= 90){
+            cat("For ", crayon::blue$bold(reference_id[i]), " ", 
+              crayon::red$bold(xml$message), "\n", sep="")
+            cat("Please re-run ", crayon::green$bold("get_data_package()"), 
+              " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
+            cat("Don't forget to log on to the VPN!\n")
+          }
+          else{
+            cat(crayon::red$bold("ERROR:"), xml$exceptionMessage)
+            cat("The resource was not downloaded.\n\n")
+          }
+        }
+        next
       }
       #download all files in reference:
       if(is.null(xml$message)){
