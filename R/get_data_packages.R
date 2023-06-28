@@ -251,9 +251,14 @@ get_data_packages <- function(reference_id,
         
         #if an invalid reference number was supplied (no reference found):
         if(length(ref_data) == 0){
-          cat("Invalid DataStore reference ID supplied (",
-              crayon::red$bold(reference_id[i]), 
-              "). These data were not downloaded.\n\n", sep = "")
+          cat("Reference ",
+              crayon::red$bold(reference_id[i]),
+              " not found.\n", sep = "")
+          cat("Invalid reference ID supplied or VPN required.\n")
+          cat("Please re-run ", crayon::green$bold("get_data_packages()"), 
+              " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
+          cat("Reference ", crayon::red$bold(reference_id[i]),
+              " Not downloaded.\n\n", sep = "")
           next
         }
         #Alert to incorrect (not data package) reference type:
@@ -337,7 +342,7 @@ get_data_packages <- function(reference_id,
           if(nchar(xml$message) <= 90){
             cat("For ", crayon::blue$bold(reference_id[i]), " ", 
               crayon::red$bold(xml$message), "\n", sep="")
-            cat("Please re-run ", crayon::green$bold("get_data_package()"), 
+            cat("Please re-run ", crayon::green$bold("get_data_packages()"), 
               " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
             cat("Don't forget to log on to the VPN!\n")
           }
