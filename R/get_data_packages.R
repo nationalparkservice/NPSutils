@@ -51,7 +51,7 @@ get_data_packages <- function(reference_id,
       
       #check for newer version:
       if(force == FALSE){
-        cat("working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
+        cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
         url <- paste0(
           "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=",
           reference_id[i])
@@ -233,7 +233,7 @@ get_data_packages <- function(reference_id,
     for(i in seq_along(reference_id)){
       #check for newer version:
       if(force == FALSE){
-        cat("working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
+        cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
         url <- paste0(
           "https://irmaservices.nps.gov/datastore/v5/rest/ReferenceCodeSearch?q=",
           reference_id[i])
