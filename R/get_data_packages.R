@@ -185,7 +185,7 @@ get_data_packages <- function(reference_id,
                                overwrite = TRUE),
               httr::authenticate(":", ":", "ntlm"))))))
         if(force == FALSE){
-          cat("writing: ",
+          cat("Writing: ",
               crayon::blue$bold(download_file_path),
               ".\n", sep="")
         }    
@@ -369,9 +369,9 @@ get_data_packages <- function(reference_id,
                       quiet=TRUE, 
                       mode="wb")
           if(force == FALSE){
-            cat("writing: ",
+            cat("Writing: ",
                 crayon::blue$bold(download_file_path),
-                "\n", sep="")
+                ".\n", sep="")
           }        
           # check to see if the downloaded file is a zip; unzip.
           if (tools::file_ext(tolower(download_filename)) == "zip") {
@@ -385,7 +385,7 @@ get_data_packages <- function(reference_id,
                                "/",
                                download_filename))
             if(force == FALSE){
-              cat("unzipping ",
+              cat("Unzipping ",
                   crayon::blue$bold(download_filename),
                   ".\n", sep="")
               cat("The original .zip file was removed.\n\n")
