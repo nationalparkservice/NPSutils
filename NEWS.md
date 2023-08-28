@@ -1,3 +1,9 @@
+* added new functionality to `get_data_packages()`: it will now check to see if a DataStore reference ID is invalid or not. It will also check whether the reference is a data package or not. Substantial feedback is reported to the user if the flag force is set to FALSE.
+* added a new function `rm_local_packages()` which can delete one or more (or all) packages within a folder called "data" (where your packages should be if you downloaded them with `get_data_packages()`). This only deletes local copies and does not delete any data from DataStore.
+* changed function name `load_metadata()` is now `load_pkg_metadata()` so as not to conflict with `DPchecker::load_metadata()`
+* updated all function names to be snake_case
+* updated all file names to match function names
+* updated `get_data_packages()` to (when `force = FALSE`) check for newer versions of requested data packages and  prompt the user to download the newest version if they so choose.
 * updated `get_data_packages()` to:
   * include a force option. Force defaults to false for a verbose & interactive function. Setting force = TRUE removes the interactive portions and eliminates all informative messages except critical errors.
   * `get_data_packages()` now inspects the location the data packages are being written to. If a folder with the data package reference id already exists, the function will prompt the user asking if they want to re-download and overwrite the existing data package (when force = FALSE)

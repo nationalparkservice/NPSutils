@@ -25,6 +25,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/delete_packages.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_data_packages.html</loc>
   </url>
   <url>
@@ -64,7 +67,7 @@
     <loc>/reference/load_domains.html</loc>
   </url>
   <url>
-    <loc>/reference/load_metadata.html</loc>
+    <loc>/reference/load_pkg_metadata.html</loc>
   </url>
   <url>
     <loc>/reference/map_wkt.html</loc>
