@@ -52,9 +52,7 @@ get_data_packages <- function(reference_id,
       #check for newer version:
       if(force == FALSE){
         cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
-        url <- paste0(
-          "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=",
-          reference_id[i])
+        url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id[i])
         #api call to see if ref exists
         test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
         status_code <- httr::stop_for_status(test_req)$status_code
@@ -89,8 +87,9 @@ get_data_packages <- function(reference_id,
         #check for a newer version:    
         version <-ref_data$mostRecentVersion
         if(!is.na(version)){
-          newest_url <- paste0(
-            "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=", version)
+          newest_url <- paste0(.ds_secure_api(),
+                               "ReferenceCodeSearch?q=",
+                               version)
           new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
           new_status <- httr::stop_for_status(new_req)$status_code
           if(!new_status == 200){
@@ -142,9 +141,10 @@ get_data_packages <- function(reference_id,
       }
       
       #get HoldingID from the ReferenceID - defaults to the first holding
-      rest_holding_info_url <- paste0(
-        "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
-        reference_id[i], "/DigitalFiles")
+      rest_holding_info_url <- paste0(.ds_secure_api(),
+                                      "reference/",
+                                      reference_id[i],
+                                      "/DigitalFiles")
         xml <- suppressMessages(httr::content(httr::GET(rest_holding_info_url,
                                    httr::authenticate(":", ":", "ntlm"))))
         
@@ -156,9 +156,9 @@ get_data_packages <- function(reference_id,
       for(j in seq_along(xml)){
         #get file URL
         tryCatch(
-          {rest_download_url <- paste0(
-            "https://irmaservices.nps.gov/datastore-secure",
-            "/v4/rest/DownloadFile/",xml[[j]]$resourceId)},
+          {rest_download_url <- paste0(.ds_secure_api(),
+                                       "DownloadFile/",
+                                       xml[[j]]$resourceId)},
           error = function(e){
             cat(crayon::red$bold(
               "ERROR: You do not have permissions to access ",
@@ -234,9 +234,9 @@ get_data_packages <- function(reference_id,
       #check for newer version:
       if(force == FALSE){
         cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
-        url <- paste0(
-          "https://irmaservices.nps.gov/datastore/v5/rest/ReferenceCodeSearch?q=",
-          reference_id[i])
+        url <- paste0(.ds_api(),
+                      "ReferenceCodeSearch?q=",
+                      reference_id[i])
         #api call to see if ref exists
         test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
         status_code <- httr::stop_for_status(test_req)$status_code
@@ -279,9 +279,9 @@ get_data_packages <- function(reference_id,
         #Look for a newer version:
         version <-ref_data$mostRecentVersion
         if(!is.na(version)){
-          newest_url <- paste0(
-            "https://irmaservices.nps.gov/datastore/v5/rest/ReferenceCodeSearch?q=",
-            version)
+          newest_url <- paste0(.ds_api(),
+                               "ReferenceCodeSearch?q=",
+                               version)
           new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
           new_status <- httr::stop_for_status(new_req)$status_code
           if(!new_status == 200){
@@ -333,9 +333,10 @@ get_data_packages <- function(reference_id,
         dir.create(destination_dir)
       }
       # get the HoldingID from the ReferenceID
-      rest_holding_info_url <- paste0(
-      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
-      reference_id[i], "/DigitalFiles")
+      rest_holding_info_url <- paste0(.ds_api(),
+                                      "reference/",
+                                      reference_id[i],
+                                      "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url))
       
       #test whether requires secure=TRUE & VPN; alert user:
