@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NPSutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/RobLBaker/NPSutils/" class="external-link">
+  <a href="https://github.com/nationalparkservice/NPSutils/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -47,7 +47,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve digital data package holding(s) from DataStore.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RobLBaker/NPSutils/blob/HEAD/R/get_data_packages.R" class="external-link"><code>R/get_data_packages.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/nationalparkservice/NPSutils/blob/HEAD/R/get_data_packages.R" class="external-link"><code>R/get_data_packages.R</code></a></small>
     <div class="hidden name"><code>get_data_packages.Rd</code></div>
     </div>
 
@@ -59,7 +59,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_data_packages</span><span class="op">(</span></span>
 <span>  <span class="va">reference_id</span>,</span>
 <span>  secure <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  force <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -88,6 +88,11 @@
     
 
 <p>String. The path (including the /data folder) where all data package sub-directories and data files are contained.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>In the default mode (force = FALSE), `get_data_packages()` will inform a user if the directory for that data package already exists and give the user the option to overwrite it (or skip downloading). In the default mode (force = FALSE), `get_data_packages()` will also check to see if there are newer versions of the requested data package and if there are newer versions, `get_data_packages()` will inform the user of when the requested data package was issued, when the newest data package was issued, and will then ask the user if they would like to download the newest version instead of the requested version. In the default mode (force = FALSE), `get_data_packages()` will warn a user if the reference ID supplied was not found (does not exist or requires VPN) and if a reference ID refers to a product that is not a data package, `get_data_packages()` will ask if the user wants to attempt to download it anyway.</p>
+<p>Although `get_data_packages()` is designed to handle the data package reference type on DataStore, it should in theory work on any reference type and download all files associated with a reference (it ignores web links/web resources associated with a reference). If the reference includes a .zip file, the file will be downloaded and the contents extracted. The original .zip archive file will then be deleted. If the .zip contains files with the same name as files in the parent directory, the parent directory files will be over-written by the contents of the .zip archive.</p>
     </div>
 
     <div id="ref-examples">

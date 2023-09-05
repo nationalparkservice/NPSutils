@@ -1,7 +1,7 @@
 Package: NPSutils
 Type: Package
 Title: Collection of Functions to read/write information from the NPS Data Store
-Version: 0.2.0.3
+Version: 0.3.0
 Authors@R: c(
     person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
            role = c("aut", "cre"),
@@ -36,5 +36,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://github.com/RobLBaker/NPSutils
-BugReports: https://github.com/RobLBaker/NPSutils/issues
+URL: https://github.com/nationalparkservice/NPSutils
+BugReports: https://github.com/nationalparkservice/NPSutils/issues

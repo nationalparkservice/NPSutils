@@ -2,7 +2,7 @@
 #'
 #' @description `get_data_packages()` creates a directory called "data" in the current working directory (or user-specified location, see the `path` option). For each data package, it writes a new sub-directory within the "data" directory named with the corresponding data package reference ID. All the data package files are then copied to the directory specific to the data package. 
 #' 
-#' @detail In the default mode (force = FALSE), `get_data_packages()` will inform a user if the directory for that data package already exists and give the user the option to overwrite it (or skip downloading). In the default mode (force = FALSE), `get_data_packages()` will also check to see if there are newer versions of the requested data package and if there are newer versions, `get_data_packages()` will inform the user of when the requested data package was issued, when the newest data package was issued, and will then ask the user if they would like to download the newest version instead of the requested version. In the default mode (force = FALSE), `get_data_packages()` will warn a user if the reference ID supplied was not found (does not exist or requires VPN) and if a reference ID refers to a product that is not a data package, `get_data_packages()` will ask if the user wants to attempt to download it anyway. 
+#' @details In the default mode (force = FALSE), `get_data_packages()` will inform a user if the directory for that data package already exists and give the user the option to overwrite it (or skip downloading). In the default mode (force = FALSE), `get_data_packages()` will also check to see if there are newer versions of the requested data package and if there are newer versions, `get_data_packages()` will inform the user of when the requested data package was issued, when the newest data package was issued, and will then ask the user if they would like to download the newest version instead of the requested version. In the default mode (force = FALSE), `get_data_packages()` will warn a user if the reference ID supplied was not found (does not exist or requires VPN) and if a reference ID refers to a product that is not a data package, `get_data_packages()` will ask if the user wants to attempt to download it anyway. 
 #' 
 #' Although `get_data_packages()` is designed to handle the data package reference type on DataStore, it should in theory work on any reference type and download all files associated with a reference (it ignores web links/web resources associated with a reference). If the reference includes a .zip file, the file will be downloaded and the contents extracted. The original .zip archive file will then be deleted. If the .zip contains files with the same name as files in the parent directory, the parent directory files will be over-written by the contents of the .zip archive.
 #'
@@ -52,9 +52,7 @@ get_data_packages <- function(reference_id,
       #check for newer version:
       if(force == FALSE){
         cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
-        url <- paste0(
-          "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=",
-          reference_id[i])
+        url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id[i])
         #api call to see if ref exists
         test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
         status_code <- httr::stop_for_status(test_req)$status_code
@@ -89,8 +87,9 @@ get_data_packages <- function(reference_id,
         #check for a newer version:    
         version <-ref_data$mostRecentVersion
         if(!is.na(version)){
-          newest_url <- paste0(
-            "https://irmaservices.nps.gov/datastore-secure/v5/rest/ReferenceCodeSearch?q=", version)
+          newest_url <- paste0(.ds_secure_api(),
+                               "ReferenceCodeSearch?q=",
+                               version)
           new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
           new_status <- httr::stop_for_status(new_req)$status_code
           if(!new_status == 200){
@@ -142,9 +141,10 @@ get_data_packages <- function(reference_id,
       }
       
       #get HoldingID from the ReferenceID - defaults to the first holding
-      rest_holding_info_url <- paste0(
-        "https://irmaservices.nps.gov/datastore-secure/v4/rest/reference/",
-        reference_id[i], "/DigitalFiles")
+      rest_holding_info_url <- paste0(.ds_secure_api(),
+                                      "reference/",
+                                      reference_id[i],
+                                      "/DigitalFiles")
         xml <- suppressMessages(httr::content(httr::GET(rest_holding_info_url,
                                    httr::authenticate(":", ":", "ntlm"))))
         
@@ -156,9 +156,9 @@ get_data_packages <- function(reference_id,
       for(j in seq_along(xml)){
         #get file URL
         tryCatch(
-          {rest_download_url <- paste0(
-            "https://irmaservices.nps.gov/datastore-secure",
-            "/v4/rest/DownloadFile/",xml[[j]]$resourceId)},
+          {rest_download_url <- paste0(.ds_secure_api(),
+                                       "DownloadFile/",
+                                       xml[[j]]$resourceId)},
           error = function(e){
             cat(crayon::red$bold(
               "ERROR: You do not have permissions to access ",
@@ -234,9 +234,9 @@ get_data_packages <- function(reference_id,
       #check for newer version:
       if(force == FALSE){
         cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
-        url <- paste0(
-          "https://irmaservices.nps.gov/datastore/v5/rest/ReferenceCodeSearch?q=",
-          reference_id[i])
+        url <- paste0(.ds_api(),
+                      "ReferenceCodeSearch?q=",
+                      reference_id[i])
         #api call to see if ref exists
         test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
         status_code <- httr::stop_for_status(test_req)$status_code
@@ -279,9 +279,9 @@ get_data_packages <- function(reference_id,
         #Look for a newer version:
         version <-ref_data$mostRecentVersion
         if(!is.na(version)){
-          newest_url <- paste0(
-            "https://irmaservices.nps.gov/datastore/v5/rest/ReferenceCodeSearch?q=",
-            version)
+          newest_url <- paste0(.ds_api(),
+                               "ReferenceCodeSearch?q=",
+                               version)
           new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
           new_status <- httr::stop_for_status(new_req)$status_code
           if(!new_status == 200){
@@ -333,9 +333,10 @@ get_data_packages <- function(reference_id,
         dir.create(destination_dir)
       }
       # get the HoldingID from the ReferenceID
-      rest_holding_info_url <- paste0(
-      "https://irmaservices.nps.gov/datastore/v4/rest/reference/",
-      reference_id[i], "/DigitalFiles")
+      rest_holding_info_url <- paste0(.ds_api(),
+                                      "reference/",
+                                      reference_id[i],
+                                      "/DigitalFiles")
       xml <- httr::content(httr::GET(rest_holding_info_url))
       
       #test whether requires secure=TRUE & VPN; alert user:
