@@ -18,11 +18,11 @@
 #' get_park_taxon_refs("APIS", 126749)
 #' }
 get_park_taxon_refs <- function(park_code, taxon_code) {
-  url <- paste(
-    "https://irmaservices.nps.gov/datastore-secure/v5/rest/UnitSpeciesSearch/",
-    park_code, "/", taxon_code,
-    sep = ""
-  )
+  url <- paste0(.ds_secure_api(),
+               "UnitSpeciesSearch/",
+               park_code,
+               "/",
+               taxon_code)
   DSReference <- httr::content(httr::GET(
     url, httr::authenticate(":", ":", "ntlm")
   )) %>%
@@ -97,10 +97,9 @@ get_park_taxon_url <- function(park_code, taxon_code) {
 #' get_ref_info(2266196, "Title")
 #' }
 get_ref_info <- function(holding_id, field) {
-  url <- paste0(
-    "https://irmaservices.nps.gov/datastore/v4/rest/Profile/",
-    holding_id
-  )
+  url <- paste0(.ds_api(),
+                "Profile/",
+                holding_id)
   DSReference <- httr::content(httr::GET(
     url, httr::authenticate(":", ":", "ntlm")
   ))
