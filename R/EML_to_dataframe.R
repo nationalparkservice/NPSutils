@@ -1,6 +1,18 @@
-load_EML_df <- function(datapackage, directory = here::here("data")){
+#' Gets common EML metadata elements and puts them in a dataframe
+#' 
+#' @description `load_EML_df()` gets commonly used EML metadata items from a previously downloaded data package, extracts them, and puts them into a single data frame. This is particularly useful when importing data packages into Power BI as Power BI will only import items in data frames.
+#'
+#' @param ds_ref Integer. The DataStore reference number of a previously downloaded data package (if downloaded using `get_data_packages()`).
+#' @param directory String. The location of the data package. If you used the default settings for where data packages are downloaded by `get_data_packages()`, directory can also be left as the default.
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' 
+load_EML_df <- function(ds_ref, directory = here::here("data")){
   #construct path to downloaded data package:
-  path <- here::here(directory, datapackage)
+  path <- here::here(directory, ds_ref)
   
   #load metadata
   metadata <- DPchecker::load_metadata(directory = path)  
@@ -81,7 +93,9 @@ load_EML_df <- function(datapackage, directory = here::here("data")){
   EML_metadata[nrow(EML_metadata) + 1,] <- list("license_name",
                                                 license_name,
                                                 license_name)
-  EML_metadata <- data.frame(mapply(c, EML_metadata, file_names, SIMPLIFY=FALSE))
+  colnames(file_names) <- colnames(EML_metadata)
+  EML_metadata <- rbind(EML_metadata, file_names)
+  
   
   return(EML_metadata)
 }
