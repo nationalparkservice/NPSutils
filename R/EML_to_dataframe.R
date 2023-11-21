@@ -42,6 +42,12 @@ load_EML_df <- function(datapackage, directory = here::here("data")){
   
   license_name <- metadata$dataset$licensed$licenseName
   
+  #get files lists:
+  files <- list.files(path=path, pattern = "*.csv")
+  file_names <- data.frame(files, files)
+  file_names$eml_element <- "data_file"
+  file_names <- file_names[,c(3,1,2)]
+  
   #build dataframe for return object:
   EML_metadata <- data.frame(EML_element = as.character(),
                              EML_data = as.character(),
@@ -75,6 +81,8 @@ load_EML_df <- function(datapackage, directory = here::here("data")){
   EML_metadata[nrow(EML_metadata) + 1,] <- list("license_name",
                                                 license_name,
                                                 license_name)
+  EML_metadata <- data.frame(mapply(c, EML_metadata, file_names, SIMPLIFY=FALSE))
+  
   return(EML_metadata)
 }
 
