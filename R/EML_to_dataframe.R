@@ -8,9 +8,13 @@ load_EML_df <- function(datapackage, directory = here::here("data")){
   title <- EMLeditor::get_title(metadata)
   pub_date <- metadata$dataset$pubDate
   
-  authors <- get_authors(metadata)
+  authors <- get_authors(metadata) #returns dataframe [x,2]
+  authors$eml_element = "author"
+  authors <- authors[,c(3,1,2)]
   
-  #get contacts
+  contacts <- get_contacts(metadata) # returns dataframe [x,2]
+  contacts$eml_element = "contact"
+  contacts <- contacts[,c(3,1,2)]
   
   publisher <- metadata$dataset$publisher$organizationName
   doi <- EMLeditor::get_doi(metadata)
@@ -37,6 +41,41 @@ load_EML_df <- function(datapackage, directory = here::here("data")){
   }
   
   license_name <- metadata$dataset$licensed$licenseName
+  
+  #build dataframe for return object:
+  EML_metadata <- data.frame(EML_element = as.character(),
+                             EML_data = as.character(),
+                             EML_data2 = as.character())
+  
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("Title", title, title)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("Published_date",
+                                                pub_date,
+                                                pub_date)
+  EML_metadata <- data.frame(mapply(c, EML_metadata, authors, SIMPLIFY=FALSE))
+  EML_metadata <- data.frame(mapply(c, EML_metadata, contacts, SIMPLIFY=FALSE))
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("publisher",
+                                                publisher,
+                                                publisher)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("doi", doi, doi)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("pub_city", pub_city, pub_city)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("pub_state",
+                                                pub_state,
+                                                pub_state)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("content_begin",
+                                                content_begin,
+                                                content_begin)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("content_end",
+                                                content_end,
+                                                content_end)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("absract", abstract, abstract)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("notes", notes, notes)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("origination",
+                                                origination,
+                                                origination)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("license_name",
+                                                license_name,
+                                                license_name)
+  return(EML_metadata)
 }
 
 get_authors <- function(metadata){
@@ -87,12 +126,13 @@ get_authors <- function(metadata){
       individual <- rbind(individual, author)
     }
   }
+  colnames(individual)<-c("author", "email")
+  return(individual)
 }
 
 get_contacts <- function(metadata){
   contact <- metadata$dataset$contact
   individual <- NULL
-  org <- NULL
   email <- NULL
   for(i in 1:length(seq_along(contact))){
     #get name as first-laste:
@@ -110,10 +150,9 @@ get_contacts <- function(metadata){
       ind_name <- name_list
     }
     individual <- append(individual, ind_name)
-    #get oganiztion
-    org <- append(org, contact[[i]]$organizationName)
     email <- append(email, contact[[i]]$electronicMailAddress)
   }
-  contact_df <- data.frame(individual, org, email)
-}
+  contact_df <- data.frame(individual, email)
+  names(contact_df)[1] = "contact"
+  return(contact_df)
 }
