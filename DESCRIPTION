@@ -1,7 +1,7 @@
 Package: NPSutils
 Type: Package
-Title: Collection of Functions to read/write information from the NPS Data Store
-Version: 0.3.0
+Title: Collection of Functions to read and manipulate information from the NPS Data Store
+Version: 0.3.1
 Authors@R: c(
     person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
            role = c("aut", "cre"),
@@ -30,7 +30,8 @@ Imports:
     magrittr,
     crayon,
     stringr,
-    leaflet
+    leaflet,
+    lifecycle
 RoxygenNote: 7.2.3
 Suggests: 
     knitr,
@@ -38,3 +39,4 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/nationalparkservice/NPSutils
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
+Roxygen: list(markdown = TRUE)
