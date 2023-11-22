@@ -1,9 +1,13 @@
 #' Gets common EML metadata elements and puts them in a dataframe
 #' 
-#' @description `load_EML_df()` gets commonly used EML metadata items from a previously downloaded data package, extracts them, and puts them into a single data frame. This is particularly useful when importing data packages into Power BI as Power BI will only import items in data frames.
+#' @description `load_EML_df()` gets commonly used EML metadata items from a previously downloaded data package, extracts them, and returns them as single data frame. This is particularly useful when importing data packages into Power BI as Power BI will only import items in data frames. 
 #'
 #' @param ds_ref Integer. The DataStore reference number of a previously downloaded data package (if downloaded using `get_data_packages()`).
 #' @param directory String. The location of the data package. If you used the default settings for where data packages are downloaded by `get_data_packages()`, directory can also be left as the default.
+#' 
+#' @details The returned dataframe has three columns, EML_element, EML_data and EML_data2. EML_element describes the EML element that was extracted. EML_data and EML_data2 contain the data from that element. In the case of EML_elements with only one piece of data (e.g. the data package title), the data is repeated in the EML_data and EML_data2 columns.  In cases where the element contains two related pieces of data (e.g. author), those items are held in EML_data (e.g. the author's name) and EML_data2 (e.g. the author's email address). 
+#' 
+#' Currently this function is under development and may have issues if an author has more than two givenNames (it will only use the first givenName), an author has not givenNames (only a surName) or an author is an organization and does not have any individualName. If you have a data package with these issues, please contact [robert_baker@nps.gov](mailto:robert_baker@nps.gov).
 #'
 #' @return dataframe
 #' @export
@@ -20,11 +24,11 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
   title <- EMLeditor::get_title(metadata)
   pub_date <- metadata$dataset$pubDate
   
-  authors <- get_authors(metadata) #returns dataframe [x,2]
+  authors <- get_authors(metadata) #returns dataframe [x,3]
   authors$eml_element = "author"
   authors <- authors[,c(3,1,2)]
   
-  contacts <- get_contacts(metadata) # returns dataframe [x,2]
+  contacts <- get_contacts(metadata) # returns dataframe [x,3]
   contacts$eml_element = "contact"
   contacts <- contacts[,c(3,1,2)]
   
@@ -93,9 +97,12 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
   EML_metadata[nrow(EML_metadata) + 1,] <- list("license_name",
                                                 license_name,
                                                 license_name)
+  #not sure why the mapply didn't work here but for some reason it caused the 
+  #dataframe to have 57 columns (but the right number of rows). Could have
+  #spent a while longer trouble shooting, but I went for simple if inelegant
+  #and just renamed the columns and used rbind.
   colnames(file_names) <- colnames(EML_metadata)
   EML_metadata <- rbind(EML_metadata, file_names)
-  
   
   return(EML_metadata)
 }
