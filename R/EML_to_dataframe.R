@@ -1,4 +1,5 @@
 #' Gets common EML metadata elements and puts them in a dataframe
+#' #' `r lifecycle::badge('experimental')`
 #' 
 #' #' @details The returned dataframe has three columns, EML_element, EML_data and EML_data2. EML_element describes the EML element that was extracted. EML_data and EML_data2 contain the data from that element. In the case of EML_elements with only one piece of data (e.g. the data package title), the data is repeated in the EML_data and EML_data2 columns.  In cases where the element contains two related pieces of data (e.g. author), those items are held in EML_data (e.g. the author's name) and EML_data2 (e.g. the author's email address). 
 #' 
@@ -112,6 +113,8 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
 
 #' Extracts authors and contact email addresses from EML metadata
 #' 
+#' `r lifecycle::badge('experimental')`
+#'   
 #' @description `.get_authors()` extracts the "creators" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an author. Second, and column with the author's name (first last). Third, the author's email address.
 #' 
 #' @details There are some known issues with this function; unfortunately at this time we do not have example data packages to test them. These include: authors without a givenName, authors with more than two givenNames (e.g. multiple middle names), organizations as authors where there is no individualName.
@@ -123,7 +126,7 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
 #'
 #' @examples
 #' \dontrun{
-#' authors <- get_aauthors(metadata)
+#' authors <- get_authors(metadata)
 #' }
 .get_authors <- function(metadata){
   #get authors
@@ -177,6 +180,21 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
   return(individual)
 }
 
+#' Extracts contacts and email addresses from EML metadata
+#' 
+#' `r lifecycle::badge('experimental')`
+#' 
+#' @description `.get_contacts()` extracts the "contacts" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an contact. Second, and column with the contact's name (first last). Third, the contact's email address.
+#'
+#' @param metadata 
+#'
+#' @return dataframe
+#' @keywords private
+#'
+#' @examples
+#' \dontrun{
+#' contacts <- get_contacts(metadata)
+#' }
 .get_contacts <- function(metadata){
   contact <- metadata$dataset$contact
   individual <- NULL
