@@ -14,17 +14,17 @@ rm_local_packages(
 \arguments{
 \item{reference_id}{List. One or more data packages indicated by their 7-digit reference number.}
 
-\item{all}{Logical. Defaults to `FALSE`. When set to `TRUE` all files and directories within the "data" folder will be deleted. It does not matter whether they are data packages or other files: the "data" folder will be empty. When `all = TRUE`, you do not need to supply the data package reference IDs in the reference_id parameter. When set to TRUE,}
+\item{all}{Logical. Defaults to \code{FALSE}. When set to \code{TRUE} all files and directories within the "data" folder will be deleted. It does not matter whether they are data packages or other files: the "data" folder will be empty. When \code{all = TRUE}, you do not need to supply the data package reference IDs in the reference_id parameter. When set to TRUE,}
 
-\item{path}{String. Defaults to the current working directory. The assumption is that the "data" folder containing data packages is located in the working directory (in other words, it assumes you used the default path when downloading data packages using `get_data_packages()`). If you downloaded data packages to a custom directory, use `path` to specify the directory where the "data" folder containing the data packages is located. Do not include the "data" folder itself in the path you supply.}
+\item{path}{String. Defaults to the current working directory. The assumption is that the "data" folder containing data packages is located in the working directory (in other words, it assumes you used the default path when downloading data packages using \code{get_data_packages()}). If you downloaded data packages to a custom directory, use \code{path} to specify the directory where the "data" folder containing the data packages is located. Do not include the "data" folder itself in the path you supply.}
 
-\item{force}{Logical. Defaults to `FALSE`. If set to `TRUE` (for instance for scripting purposes) the output to the console is suppressed.}
+\item{force}{Logical. Defaults to \code{FALSE}. If set to \code{TRUE} (for instance for scripting purposes) the output to the console is suppressed.}
 }
 \value{
 invisible
 }
 \description{
-`rm_local_packages()` will delete one or more specified data packages from your local machine (not DataStore). The function assumes that all data packages are in a folder called "data" and will delete items within the folder "data" but will not remove the "data" folder itself. You could just delete the files using Windows explorer. But if you really hate your OS (or just don't like using a mouse) you can do it this way too.
+\code{rm_local_packages()} will delete one or more specified data packages from your local machine (not DataStore). The function assumes that all data packages are in a folder called "data" and will delete items within the folder "data" but will not remove the "data" folder itself. You could just delete the files using Windows explorer. But if you really hate your OS (or just don't like using a mouse) you can do it this way too.
 }
 \examples{
 \dontrun{

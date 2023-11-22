@@ -25,6 +25,12 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/dot-get_authors.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dot-get_contacts.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_data_packages.html</loc>
   </url>
   <url>
@@ -64,10 +70,16 @@
     <loc>/reference/load_domains.html</loc>
   </url>
   <url>
+    <loc>/reference/load_EML_df.html</loc>
+  </url>
+  <url>
     <loc>/reference/load_pkg_metadata.html</loc>
   </url>
   <url>
     <loc>/reference/map_wkt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/NPSutils-package.html</loc>
   </url>
   <url>
     <loc>/reference/rm_local_packages.html</loc>

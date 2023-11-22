@@ -12,19 +12,27 @@ map_wkt(
 )
 }
 \arguments{
-\item{df}{- The name of the data frame that contains WKT geometry.}
+\item{df}{\itemize{
+\item The name of the data frame that contains WKT geometry.
+}}
 
-\item{wellknowntext}{- The name of the specific column within the data frame that contains the WKT geometry. This parameter is currently not fully implemented and defaults to the Darwin Core 'footprintsWKT'.}
+\item{wellknowntext}{\itemize{
+\item The name of the specific column within the data frame that contains the WKT geometry. This parameter is currently not fully implemented and defaults to the Darwin Core 'footprintsWKT'.
+}}
 
-\item{type}{-  Pick one from "points", "polygons", or "all" to map specific geometry types.}
+\item{type}{\itemize{
+\item Pick one from "points", "polygons", or "all" to map specific geometry types.
+}}
 
-\item{remove.duplicates}{- Boolean (TRUE or FALSE). Whether or not to remove identical geometries before plotting.}
+\item{remove.duplicates}{\itemize{
+\item Boolean (TRUE or FALSE). Whether or not to remove identical geometries before plotting.
+}}
 }
 \value{
 The function returns a dynamic, zoomable leaflet map with the specific geometry plotted.
 }
 \description{
-`map_wkt()` takes a well-known text (WKT) geometry column and maps points and polygons onto a gray leaflet map. All NA geometry is dropped before mapping.
+\code{map_wkt()} takes a well-known text (WKT) geometry column and maps points and polygons onto a gray leaflet map. All NA geometry is dropped before mapping.
 }
 \details{
 Define your dataframe, the column that contains WKT, and an option to map specific geometry types.

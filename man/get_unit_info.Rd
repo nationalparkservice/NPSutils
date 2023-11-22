@@ -21,7 +21,9 @@ get_unit_info(
 \item{park}{defaults to NULL. Is a case-insensitive string. It will search for any subset of the FullName or parks or park units}
 
 \item{life_cycle}{is a case-insensitive string that will filter search results based on LifeCycle status. Currently acceptable values are:
-* "Active", "Inactive" or "Pending"}
+\itemize{
+\item "Active", "Inactive" or "Pending"
+}}
 
 \item{network_code}{defaults to NULL. Is a case-insensitive string for the network code (or some subset of it). Note: not all park units have Network designations.}
 
