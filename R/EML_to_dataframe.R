@@ -188,7 +188,7 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
 #' 
 #' @description `.get_contacts()` extracts the "contacts" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an contact. Second, and column with the contact's name (first last). Third, the contact's email address.
 #'
-#' @param metadata 
+#' @param metadata an EML formatted R object
 #'
 #' @return dataframe
 #' @keywords private
