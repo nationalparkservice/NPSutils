@@ -1,3 +1,7 @@
+# NPSutils 0.3.1 "Ooh Aah Point"
+  * added private functions `.get_authors()` and `.get_contacts()` to retrieve authors and contacts (and emails) from EML
+  * added `load_EML_df()`, which retrieves commonly available metadata items from an EML-formatted R object and returns them as a single dataframe (for loading into Power BI)
+
 # NPSutils 0.3.0
 
   * updated all datastore api requests from v4/v5 to v6 (units service remains at v2)

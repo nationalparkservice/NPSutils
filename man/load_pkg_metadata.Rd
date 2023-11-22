@@ -13,7 +13,7 @@ load_pkg_metadata(holding_id)
 one data frame to the global environment.
 }
 \description{
-`load_pkg_metadata()` reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
+\code{load_pkg_metadata()} reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
 }
 \examples{
 \dontrun{
