@@ -1,18 +1,21 @@
 #' Gets common EML metadata elements and puts them in a dataframe
 #' 
+#' #' @details The returned dataframe has three columns, EML_element, EML_data and EML_data2. EML_element describes the EML element that was extracted. EML_data and EML_data2 contain the data from that element. In the case of EML_elements with only one piece of data (e.g. the data package title), the data is repeated in the EML_data and EML_data2 columns.  In cases where the element contains two related pieces of data (e.g. author), those items are held in EML_data (e.g. the author's name) and EML_data2 (e.g. the author's email address). 
+#' 
+#' Currently this function is under development and may have issues if an author has more than two givenNames (it will only use the first givenName), an author has not givenNames (only a surName) or an author is an organization and does not have any individualName. If you have a data package with these issues, please contact [robert_baker@nps.gov](mailto:robert_baker@nps.gov).
+#' 
 #' @description `load_EML_df()` gets commonly used EML metadata items from a previously downloaded data package, extracts them, and returns them as single data frame. This is particularly useful when importing data packages into Power BI as Power BI will only import items in data frames. 
 #'
 #' @param ds_ref Integer. The DataStore reference number of a previously downloaded data package (if downloaded using `get_data_packages()`).
 #' @param directory String. The location of the data package. If you used the default settings for where data packages are downloaded by `get_data_packages()`, directory can also be left as the default.
-#' 
-#' @details The returned dataframe has three columns, EML_element, EML_data and EML_data2. EML_element describes the EML element that was extracted. EML_data and EML_data2 contain the data from that element. In the case of EML_elements with only one piece of data (e.g. the data package title), the data is repeated in the EML_data and EML_data2 columns.  In cases where the element contains two related pieces of data (e.g. author), those items are held in EML_data (e.g. the author's name) and EML_data2 (e.g. the author's email address). 
-#' 
-#' Currently this function is under development and may have issues if an author has more than two givenNames (it will only use the first givenName), an author has not givenNames (only a surName) or an author is an organization and does not have any individualName. If you have a data package with these issues, please contact [robert_baker@nps.gov](mailto:robert_baker@nps.gov).
 #'
 #' @return dataframe
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' df <- load_EML_df(1234567)
+#' }
 #' 
 load_EML_df <- function(ds_ref, directory = here::here("data")){
   #construct path to downloaded data package:
@@ -24,11 +27,11 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
   title <- EMLeditor::get_title(metadata)
   pub_date <- metadata$dataset$pubDate
   
-  authors <- get_authors(metadata) #returns dataframe [x,3]
+  authors <- .get_authors(metadata) #returns dataframe [x,3]
   authors$eml_element = "author"
   authors <- authors[,c(3,1,2)]
   
-  contacts <- get_contacts(metadata) # returns dataframe [x,3]
+  contacts <- .get_contacts(metadata) # returns dataframe [x,3]
   contacts$eml_element = "contact"
   contacts <- contacts[,c(3,1,2)]
   
@@ -107,7 +110,22 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
   return(EML_metadata)
 }
 
-get_authors <- function(metadata){
+#' Extracts authors and contact email addresses from EML metadata
+#' 
+#' @description `.get_authors()` extracts the "creators" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an author. Second, and column with the author's name (first last). Third, the author's email address.
+#' 
+#' @details There are some known issues with this function; unfortunately at this time we do not have example data packages to test them. These include: authors without a givenName, authors with more than two givenNames (e.g. multiple middle names), organizations as authors where there is no individualName.
+#'
+#' @param metadata an EML formatted R object
+#'
+#' @return dataframe
+#' @keywords private
+#'
+#' @examples
+#' \dontrun{
+#' authors <- get_aauthors(metadata)
+#' }
+.get_authors <- function(metadata){
   #get authors
   creators <- metadata$dataset$creator
   #set up empty dataframe to hold creator info:
@@ -159,7 +177,7 @@ get_authors <- function(metadata){
   return(individual)
 }
 
-get_contacts <- function(metadata){
+.get_contacts <- function(metadata){
   contact <- metadata$dataset$contact
   individual <- NULL
   email <- NULL
