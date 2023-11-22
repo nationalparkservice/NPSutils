@@ -11,8 +11,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 This package is a collection of functions to acquire metadata and data
 from the [National Park Service Data
-Store](https://irma.nps.gov/DataStore/). This is an early version of
-this package and many features will be added in 2023. Please request
+Store](https://irma.nps.gov/DataStore/). Please request
 enhancements and bug fixes through
 [Issues](https://github.com/nationalparkservice/NPSutils/issues).
 
