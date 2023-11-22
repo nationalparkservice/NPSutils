@@ -1,10 +1,12 @@
 #' Read contents of data package(s) and return a tibble with dataframe for each data file. 
+#' 
+#' `r lifecycle::badge("experimental")`
 #'
 #' @description `load_data_packages()` finds all the specified data packages in a /data directory (generated via `get_data_packages()`) and returns a tibble of tibbles where each data package is a tibble and within that each data file is it's own tibble. `load_data_packages()` also utilizes the metadata (only EML is currently supported) to correctly assign attributes to each data column.
 #' 
 #' @details currently `load_data_packages()` only supports EML metadata and .csv files in a very specific file structure, which is most easily set up using `get_data_packages()`. Archived (.zip) files must be extractecd for `load_data_packages()` to work properly. Again, `get_data_packages()` will accomplish this for you. 
 #' '
-#' @param dataStoreReference is a list of 6-7 digit numbers corresponding to the DataStore reference ID of the datapackage(s) to load. Alternatively, you can set `dataStoreReference` to "loadAll", which will load all the data packages in your /data folder.
+#' @param datastore_reference is a list of 6-7 digit numbers corresponding to the DataStore reference ID of the datapackage(s) to load. Alternatively, you can set `datastore_reference` to "loadAll", which will load all the data packages in your /data folder.
 #' @param path is the location of a folder, 'data' (created during `get_data_packages()`) which contains subdirectories where each subdirectory is the DataStore referenceId of the data package. Again, this file structure is all set up using `get_data_packages()`. Defaults to the current workign directory (which is the default location for `get_data_packages()`). 
 #' @param dataFormat is a character value indicating the format of the data set(s) within the data package. Currently the only supported option is: *.csv for comma separated value text files. Defaults to "csv".
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package. Currently the only supported format is Ecological Metadata (EML) and the parameter defaults to EML.
@@ -47,8 +49,6 @@ load_data_packages <- function(datastore_reference,
     #return a list of of tibbles, each tibble corresponds to a data files  
   }
   
-  
-
   for(i in 1:seq_along(datastore_reference)){
     dataPackageDirectory <- paste("data/", datastore_reference[i])
     filenames <- list.files(
@@ -64,10 +64,6 @@ load_data_packages <- function(datastore_reference,
       tibble_List[[i]] <- assign(j, readr::read_csv(filepath, show_col_types = FALSE))
     }
 
-    
-    
-    
-    
     
         
   }
