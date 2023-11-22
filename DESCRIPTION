@@ -31,7 +31,9 @@ Imports:
     crayon,
     stringr,
     leaflet,
-    lifecycle
+    lifecycle,
+    EMLeditor,
+    DPchecker
 RoxygenNote: 7.2.3
 Suggests: 
     knitr,
