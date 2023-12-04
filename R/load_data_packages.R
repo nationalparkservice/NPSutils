@@ -1,4 +1,4 @@
-#' Read contents of data package(s) and return a tibble with dataframe for each data file. 
+#' Read contents of data package(s) and return a tibble with a tibble for each data file. 
 #' 
 #' `r lifecycle::badge("experimental")`
 #'
@@ -12,13 +12,15 @@
 #' @param metadataFormat is a character value indicating the format of the metadata file within the data package. Currently the only supported format is Ecological Metadata (EML) and the parameter defaults to EML.
 #' @param simplify logical. Defaults to TRUE. If there is only a single data package loaded, the function will return a simple list of tibbles (where each tibble reflects a data file from within the data package). If set to FALSE, the function will return a list that contains a list of tibbles. This structure mirrors the object structure returned if multiple data packages are simultaneously loaded (a list of data packages with each data package containing a list of tibbles where each tibble corresponds to a data file in the given data package).
 #'
-#' @keywords private
-#'
 #' @return a list of (of lists of) tibbles. 
 #'
+#' @export
+#' 
 #' @examples
 #' \dontrun{
-#' load_data_packages(2272461, data_format = "csv", metadata_format = "eml")
+#' dat <- load_data_packages(2272461,
+#'                          data_format = "csv",
+#'                          metadata_format = "eml")
 #' }
 #'
 load_data_packages <- function(datastore_reference, 
@@ -32,7 +34,6 @@ load_data_packages <- function(datastore_reference,
   on.exit(setwd(orig_wd))
   #set wd to path; defaults to wd. 
   setwd(path)
-  
   
   if(length(
     seq_along(
