@@ -365,9 +365,9 @@ get_data_packages <- function(reference_id,
                                      reference_id[i], "/",
                                      download_filename)
           #independent tests show download.file is faster than httr::GET or curl
+          options(timeout = max(300, getOption("timeout")))
           download.file(rest_download_url, 
                       download_file_path,
-                      options(timeout=300),
                       quiet=TRUE, 
                       mode="wb")
           if(force == FALSE){
