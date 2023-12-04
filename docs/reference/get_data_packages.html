@@ -91,7 +91,7 @@
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>In the default mode (force = FALSE), <code>get_data_packages()</code> will inform a user if the directory for that data package already exists and give the user the option to overwrite it (or skip downloading). In the default mode (force = FALSE), <code>get_data_packages()</code> will also check to see if there are newer versions of the requested data package and if there are newer versions, <code>get_data_packages()</code> will inform the user of when the requested data package was issued, when the newest data package was issued, and will then ask the user if they would like to download the newest version instead of the requested version. In the default mode (force = FALSE), <code>get_data_packages()</code> will warn a user if the reference ID supplied was not found (does not exist or requires VPN) and if a reference ID refers to a product that is not a data package, <code>get_data_packages()</code> will ask if the user wants to attempt to download it anyway.</p>
+    <p>In the default mode (force = FALSE), <code>get_data_packages()</code> will inform a user if the directory for that data package already exists and give the user the option to overwrite it (or skip downloading). In the default mode (force = FALSE), <code>get_data_packages()</code> will also check to see if there are newer versions of the requested data package and if there are newer versions, <code>get_data_packages()</code> will inform the user of when the requested data package was issued, when the newest data package was issued, and will then ask the user if they would like to download the newest version instead of the requested version. In the default mode (force = FALSE), <code>get_data_packages()</code> will warn a user if the reference ID supplied was not found (does not exist or requires VPN) and if a reference ID refers to a product that is not a data package, <code>get_data_packages()</code> will ask if the user wants to attempt to download it anyway. <code>get_data_packages()</code> will automatically time out if any individual file download exceeds 300 seconds (5 minutes). Very large files or slow internet connections may hit this limit.</p>
 <p>Although <code>get_data_packages()</code> is designed to handle the data package reference type on DataStore, it should in theory work on any reference type and download all files associated with a reference (it ignores web links/web resources associated with a reference). If the reference includes a .zip file, the file will be downloaded and the contents extracted. The original .zip archive file will then be deleted. If the .zip contains files with the same name as files in the parent directory, the parent directory files will be over-written by the contents of the .zip archive.</p>
     </div>
 
@@ -125,7 +125,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

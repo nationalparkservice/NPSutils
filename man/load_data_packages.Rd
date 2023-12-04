@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_data_packages.R
 \name{load_data_packages}
 \alias{load_data_packages}
-\title{Read contents of data package(s) and return a tibble with dataframe for each data file.}
+\title{Read contents of data package(s) and return a tibble with a tibble for each data file.}
 \usage{
 load_data_packages(
   datastore_reference,
@@ -37,8 +37,9 @@ currently \code{load_data_packages()} only supports EML metadata and .csv files 
 }
 \examples{
 \dontrun{
-load_data_packages(2272461, data_format = "csv", metadata_format = "eml")
+dat <- load_data_packages(2272461,
+                         data_format = "csv",
+                         metadata_format = "eml")
 }
 
 }
-\keyword{private}

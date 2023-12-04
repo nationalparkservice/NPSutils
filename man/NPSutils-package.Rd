@@ -4,7 +4,7 @@
 \name{NPSutils-package}
 \alias{NPSutils}
 \alias{NPSutils-package}
-\title{NPSutils: Collection of Functions to read and manipulate information from the NPS Data Store}
+\title{NPSutils: Collection of Functions to read and manipulate information from the NPS DataStore}
 \description{
 NPSutils is a collection of functions for interacting with NPS DataStore repository.
 }
