@@ -56,8 +56,11 @@ load_data_package <- function(holding_id) {
     ### Load all files into tibbles
     tibble_List <- list()
     for (i in names) {
+      print(i)
       filepath <- file.path(DataPackageDirectory, paste(i, ".csv", sep = ""))
-      tibble_List[[i]] <- assign(i, readr::read_csv(filepath, show_col_types = FALSE))
+      suppressWarnings(tibble_List[[i]] <- assign(i,
+                                                  readr::read_csv(filepath,
+                                                  show_col_types = FALSE)))
     }
     return(tibble_List)
   }
