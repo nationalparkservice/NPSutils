@@ -179,7 +179,7 @@ get_data_packages <- function(reference_id,
           suppressMessages(httr::content(
             httr::GET(
               rest_download_url,
-              httr::timemout(300),
+              httr::timeout(300),
               httr::progress(),
               httr::write_disk(download_file_path,
                                overwrite = TRUE),
