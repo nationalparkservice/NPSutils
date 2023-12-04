@@ -179,7 +179,7 @@ get_data_packages <- function(reference_id,
           suppressMessages(httr::content(
             httr::GET(
               rest_download_url,
-              httr::tiemout(300),
+              httr::timemout(300),
               httr::progress(),
               httr::write_disk(download_file_path,
                                overwrite = TRUE),
@@ -366,7 +366,8 @@ get_data_packages <- function(reference_id,
                                      download_filename)
           #independent tests show download.file is faster than httr::GET or curl
           download.file(rest_download_url, 
-                      download_file_path, 
+                      download_file_path,
+                      options(timeout=300),
                       quiet=TRUE, 
                       mode="wb")
           if(force == FALSE){
