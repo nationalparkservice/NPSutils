@@ -20,12 +20,18 @@
 #' df <- load_EML_df(1234567)
 #' }
 #' 
-load_EML_df <- function(ds_ref, directory = here::here("data")){
+load_EML_df <- function(ds_ref, path = paste0(getwd(), "/data")){
   #construct path to downloaded data package:
-  path <- here::here(directory, ds_ref)
+  #capture current/original working directory:
+  origin_wd <- getwd()
+  #set directory back to original working directory on exit.
+  on.exit(setwd(origin_wd), add=TRUE)
+  
+  setwd(path)
+  directory <- paste0(path, "/", ds_ref)
   
   #load metadata
-  metadata <- DPchecker::load_metadata(directory = path)  
+  metadata <- DPchecker::load_metadata(directory = directory)  
   
   title <- EMLeditor::get_title(metadata)
   pub_date <- metadata$dataset$pubDate
@@ -65,7 +71,7 @@ load_EML_df <- function(ds_ref, directory = here::here("data")){
   license_name <- metadata$dataset$licensed$licenseName
   
   #get files lists:
-  files <- list.files(path=path, pattern = "*.csv")
+  files <- list.files(path=directory, pattern = "*.csv")
   file_names <- data.frame(files, files)
   file_names$eml_element <- "data_file"
   file_names <- file_names[,c(3,1,2)]
