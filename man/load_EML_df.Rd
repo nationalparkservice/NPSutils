@@ -5,7 +5,7 @@
 \title{Gets common EML metadata elements and puts them in a dataframe
 #' \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 \usage{
-load_EML_df(ds_ref, directory = here::here("data"))
+load_EML_df(ds_ref, path = paste0(getwd(), "/data"))
 }
 \arguments{
 \item{ds_ref}{Integer. The DataStore reference number of a previously downloaded data package (if downloaded using \code{get_data_packages()}).}
