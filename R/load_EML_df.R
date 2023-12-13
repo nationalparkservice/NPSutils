@@ -54,8 +54,9 @@ load_EML_df <- function(ds_ref, path = paste0(getwd(), "/data")){
   
   content_begin <- EMLeditor::get_begin_date(metadata)
   content_end <- EMLeditor::get_end_date(metadata)
-  abstract <- EMLeditor::get_abstract(metadata)
-  notes <- metadata$dataset$additionalInfo
+  abstract <- paste(unlist((metadata[["dataset"]][["abstract"]])),
+                    collapse = " ")
+  notes <- paste(unlist((metadata$dataset$additionalInfo)), collapse = " ")
   
   #get by or for NPS
   nps <- unlist(metadata$additionalMetadata, recursive = FALSE)
@@ -101,7 +102,7 @@ load_EML_df <- function(ds_ref, path = paste0(getwd(), "/data")){
   EML_metadata[nrow(EML_metadata) + 1,] <- list("content_end",
                                                 content_end,
                                                 content_end)
-  EML_metadata[nrow(EML_metadata) + 1,] <- list("absract", abstract, abstract)
+  EML_metadata[nrow(EML_metadata) + 1,] <- list("abstract", abstract, abstract)
   EML_metadata[nrow(EML_metadata) + 1,] <- list("notes", notes, notes)
   EML_metadata[nrow(EML_metadata) + 1,] <- list("origination",
                                                 origination,
