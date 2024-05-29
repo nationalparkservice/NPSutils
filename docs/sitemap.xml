@@ -25,13 +25,28 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/check_is_data_package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/check_new_version.html</loc>
+  </url>
+  <url>
+    <loc>/reference/check_ref_exists.html</loc>
+  </url>
+  <url>
     <loc>/reference/dot-get_authors.html</loc>
   </url>
   <url>
     <loc>/reference/dot-get_contacts.html</loc>
   </url>
   <url>
+    <loc>/reference/dot-get_user_input.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_data_packages.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_new_version_id.html</loc>
   </url>
   <url>
     <loc>/reference/get_park_code.html</loc>

@@ -8,7 +8,8 @@ get_data_packages(
   reference_id,
   secure = FALSE,
   path = here::here(),
-  force = FALSE
+  force = FALSE,
+  dev = TRUE
 )
 }
 \arguments{
