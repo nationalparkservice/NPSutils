@@ -34,7 +34,8 @@
 get_data_packages <- function(reference_id,
                               secure = FALSE,
                               path=here::here(),
-                              force = FALSE) {
+                              force = FALSE,
+                              dev = TRUE) {
   #capture original working directory
   orig_wd <- getwd()
   #set directory back to original working directory on exit.
@@ -52,14 +53,22 @@ get_data_packages <- function(reference_id,
       #check for newer version:
       if(force == FALSE){
         cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
-        url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id[i])
+        #url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id[i])
         #api call to see if ref exists
-        test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
-        status_code <- httr::stop_for_status(test_req)$status_code
+        rest_req <- check_refs_exist(reference_id[i])
+        
+#        test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
+#        status_code <- httr::stop_for_status(test_req)$status_code
         #if API call fails, alert user and remind them to log on to VPN:
-        if(!status_code == 200){
-          stop("DataStore connection failed. Are you logged in to the VPN?\n")
+#        if(!status_code == 200){
+#          stop("DataStore connection failed. Are you logged in to the VPN?\n")
+        if(rest_req == FALSE) {
+          cat("Invalid DataStore reference ID supplied(",
+              crayon::red$bold(reference_id[i]),
+              "). These data were not downloaded.\n\n",
+              sep = "")
         }
+        
         #get version info:
         ref_data <- jsonlite::fromJSON(
           httr::content(
@@ -228,96 +237,67 @@ get_data_packages <- function(reference_id,
       }
     }
   }
-  #public/non-secure route:
-  if (toupper(secure) == FALSE){
-    for(i in seq_along(reference_id)){
-      #check for newer version:
-      if(force == FALSE){
-        cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep="")
-        url <- paste0(.ds_api(),
-                      "ReferenceCodeSearch?q=",
-                      reference_id[i])
-        #api call to see if ref exists
-        test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
-        status_code <- httr::stop_for_status(test_req)$status_code
-        
-        #if API call fails, alert user and remind them to log on to VPN:
-        if(!status_code == 200){
-          stop("DataStore connection failed. 
-               Are you sure this reference is public?\n")
-        }
-        #get version info:
-        ref_data <- jsonlite::fromJSON(
-          httr::content(
-            test_req, "text"))
-        
-        #if an invalid reference number was supplied (no reference found):
-        if(length(ref_data) == 0){
-          cat("Reference ",
-              crayon::red$bold(reference_id[i]),
-              " not found.\n", sep = "")
-          cat("Invalid reference ID supplied or VPN required.\n")
-          cat("Please re-run ", crayon::green$bold("get_data_packages()"), 
-              " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
-          cat("Reference ", crayon::red$bold(reference_id[i]),
-              " Not downloaded.\n\n", sep = "")
+  
+  
+  for (i in seq_along(reference_id)) {
+    if(force == FALSE) {
+      cat("Working on: ", crayon::bold$green(reference_id[i]), ".\n", sep = "")
+    }
+    # does reference exist?
+    exists <- check_ref_exists()
+    if (exists == FALSE) {
+      stop("Reference ", reference_id[i],
+           " does not exist. Are you logged on to the VPN?\n",
+            sep = "")
+    }
+    #is ref a data package?
+    data_package <- check_is_data_package()
+    if (data_package == FALSE) {
+      if (force == FALSE) {
+        cat("Error: reference ", crayon::red$bold(reference_id[i]),
+            " is a ", crayon::red$bold(ref_type),
+            " not a data package.\n", sep ="")
+        cat("Would you like to attempt to download the resource anyway?\n\n")
+        cat("1: Yes\n 2: No\n")
+        var1 <- .get_user_input()
+        if (var1 == 2) {
           next
         }
-        #Alert to incorrect (not data package) reference type:
-        ref_type <- ref_data$referenceType
-        if(!identical(ref_type, "Data Package")){
-          cat("Error: reference ", crayon::red$bold(reference_id[i]),
-              " is a ", crayon::red$bold(ref_type),
-              " not a data package.\n", sep ="")
-          cat("Would you like to attempt to download the resource anyway?\n\n")
-          var1 <- readline(prompt = "1: Yes\n2: No\n")
-          if(var1 == 2){
-            cat("Reference ", reference_id[i], " was not downloaded.\n\n")
-            next
-          }
+      }
+      cat("Reference ", crayon::red$bold(reference_id[i]),
+          " is not a data package. Attempting to download anyway.\n", sep = "")
+    }
+    
+    #does a newer version exist?
+    new_version <- check_new_version()
+    #if interactive, ask whether to download newer version
+    if (force == FALSE) {
+      if (new_version == TRUE){
+        cat("For reference ", crayon::bold$blue(reference_id[i]), 
+            " a newer version exists.\n", sep ="")
+        cat("Do you want to download the newest version?\n\n")
+        cat("1: Yes\n 2: No\n")
+        var2 <- get.user_input()
+        if(var2 == 1){
+          reference_id <- get_new_version_id()
         }
-        #Look for a newer version:
-        version <-ref_data$mostRecentVersion
-        if(!is.na(version)){
-          newest_url <- paste0(.ds_api(),
-                               "ReferenceCodeSearch?q=",
-                               version)
-          new_req <- httr::GET(newest_url, httr::authenticate(":", ":", "ntlm"))
-          new_status <- httr::stop_for_status(new_req)$status_code
-          if(!new_status == 200){
-            stop("DataStore connection failed. 
-               Are you sure this reference is public?\n")
-          }
-          new_data <- jsonlite::fromJSON(
-            httr::content(
-              new_req, "text"))
-          ref_date <- stringr::str_sub(ref_data$dateOfIssue, 1, 10)
-          new_date <- stringr::str_sub(new_data$dateOfIssue, 1, 10)
-          cat("Reference ", crayon::blue$bold(reference_id[i]),
-              " was issued on ", crayon::blue$bold(ref_date), ".\n", sep = "")
-          cat("There is a newer version available.\n", sep = "")
-          cat("The newest version, ", crayon::bold$blue(version),
-              ", was issued on ", crayon::bold$blue(new_date),
-              ".\n", sep = "")
-          cat("Would you like to download the newest version instead?\n\n")
-          var1 <- readline(prompt = "1: Yes\n2: No\n")
-          if(var1 == 1){
-            #update to new reference and destination directory
-            reference_id[i] <- version
-          }
-        }
-      }     
-      #if necessary, create a package-specific directory within the /data:
-      destination_dir <- paste("data/", reference_id[i], sep = "")
-      #if the directory already exists, prompt user to overwrite:
+      }
+    }
+    # if force == TRUE don't check for updated versions
+    
+    #if necessary, create a package-specific directory within the /data:
+    destination_dir <- paste("data/", reference_id[i], sep = "")
+    #if the directory already exists, prompt user to overwrite:
+    if(force == FALSE) {
       if (file.exists(destination_dir) & force == FALSE){
         cat("The directory ",
             crayon::blue$bold(destination_dir),
             " already exists.\n",
             sep = "")
         cat("Write over the existing directory and its contents?\n\n")
-        var1 <- readline(prompt = "1: Yes\n2: No\n")
-        if(var1 == 2){
+        cat("1: Yes\n2: No\n")
+        var3 <- .get_user_input()
+        if(var3 == 2){
           cat("The original directory ",
               crayon::blue$bold(destination_dir),
               " was retained.\n",
@@ -329,69 +309,88 @@ get_data_packages <- function(reference_id,
           next #exit this iteration and go on to the next one
         }
       }
-      if (!file.exists(destination_dir)) {
-        dir.create(destination_dir)
-      }
-      # get the HoldingID from the ReferenceID
+    }
+    #if the directory doesn't exist, create it:
+    if (!file.exists(destination_dir)) {
+      dir.create(destination_dir)
+    }
+    
+    #get reference holding IDs:
+    #public references:
+    if (secure == FALSE && dev == FALSE) {
       rest_holding_info_url <- paste0(.ds_api(),
                                       "reference/",
                                       reference_id[i],
                                       "/DigitalFiles")
-      xml <- httr::content(httr::GET(rest_holding_info_url))
-      
-      #test whether requires secure=TRUE & VPN; alert user:
-      if(!is.null(xml$message)){
-        if(force == FALSE){
-          if(nchar(xml$message) <= 90){
-            cat("For ", crayon::blue$bold(reference_id[i]), " ", 
+    }
+    # restricted references:
+    if (secure == TRUE && dev == FALSE) {
+      rest_holding_info_url <- paste0(.ds_secure_api(),
+                                      "reference/",
+                                      reference_id[i],
+                                      "/DigitalFiles")
+    }
+    # references on dev server:
+    if (secure == TRUE && dev == TRUE) {
+      rest_holding_info_url <- paste0(.ds_dev_api(),
+                                      "reference/",
+                                      reference_id[i],
+                                      "/DigitalFiles")
+    }
+    xml <- httr::content(httr::GET(rest_holding_info_url))
+    
+    #test whether requires secure=TRUE & VPN; alert user:
+    if(!is.null(xml$message)){
+      if(force == FALSE){
+        if(nchar(xml$message) <= 90){
+          cat("For ", crayon::blue$bold(reference_id[i]), " ", 
               crayon::red$bold(xml$message), "\n", sep="")
-            cat("Please re-run ", crayon::green$bold("get_data_packages()"), 
+          cat("Please re-run ", crayon::green$bold("get_data_packages()"), 
               " and set ", crayon::bold$blue("secure=TRUE"), ".\n", sep="")
-            cat("Don't forget to log on to the VPN!\n")
-          }
-          else{
-            cat(crayon::red$bold("ERROR:"), xml$exceptionMessage)
-            cat("The resource was not downloaded.\n\n")
-          }
+          cat("Don't forget to log on to the VPN!\n")
         }
-        next
+        else{
+          cat(crayon::red$bold("ERROR:"), xml$exceptionMessage)
+          cat("The resource was not downloaded.\n\n")
+        }
       }
-      #download all files in reference:
-      if(is.null(xml$message)){
-        for(j in seq_along(xml)){
-          rest_download_url <- xml[[j]]$downloadLink
-          download_filename <- xml[[j]]$fileName
-          download_file_path <- paste0("data/",
+      next #move on to the next reference
+    }
+    
+    if(is.null(xml$message)){
+      for(j in seq_along(xml)){
+        rest_download_url <- xml[[j]]$downloadLink
+        download_filename <- xml[[j]]$fileName
+        download_file_path <- paste0("data/",
                                      reference_id[i], "/",
                                      download_filename)
-          #independent tests show download.file is faster than httr::GET or curl
-          options(timeout = max(300, getOption("timeout")))
-          download.file(rest_download_url, 
+        #independent tests show download.file is faster than httr::GET or curl
+        options(timeout = max(300, getOption("timeout"))) # 5 min timeout
+        download.file(rest_download_url, 
                       download_file_path,
                       quiet=TRUE, 
                       mode="wb")
-          if(force == FALSE){
-            cat("Writing: ",
-                crayon::blue$bold(download_file_path),
-                ".\n", sep="")
-          }        
-          # check to see if the downloaded file is a zip; unzip.
-          if (tools::file_ext(tolower(download_filename)) == "zip") {
-            utils::unzip(zipfile = paste0("data\\",
-                                    reference_id[i], "\\",
-                                    download_filename),
-                     exdir = paste0("data\\", reference_id[i]))
+        if(force == FALSE){
+          cat("Writing: ",
+              crayon::blue$bold(download_file_path),
+              ".\n", sep="")
+        }        
+        # check to see if the downloaded file is a zip; unzip.
+        if (tools::file_ext(tolower(download_filename)) == "zip") {
+          utils::unzip(zipfile = paste0("data\\",
+                                        reference_id[i], "\\",
+                                        download_filename),
+                       exdir = paste0("data\\", reference_id[i]))
           #delete .zip file
-            file.remove(paste0("data/",
-                               reference_id[i],
-                               "/",
-                               download_filename))
-            if(force == FALSE){
-              cat("Unzipping ",
-                  crayon::blue$bold(download_filename),
-                  ".\n", sep="")
-              cat("The original .zip file was removed.\n\n")
-            }
+          file.remove(paste0("data/",
+                             reference_id[i],
+                             "/",
+                             download_filename))
+          if(force == FALSE){
+            cat("Unzipping ",
+                crayon::blue$bold(download_filename),
+                ".\n", sep="")
+            cat("The original .zip file was removed.\n\n")
           }
         }
       }
