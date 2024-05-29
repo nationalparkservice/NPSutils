@@ -169,7 +169,7 @@ check_new_version <- function(reference_id, secure = TRUE, dev = FALSE) {
 #' get_new_version_id(1234567)
 #' get_new_version_id(1234567, secure = FALSE)
 #' }
-get_new_version <- function(reference_id, secure = TRUE, dev = FALSE) {
+get_new_version_id <- function(reference_id, secure = TRUE, dev = FALSE) {
   #gets a newer version (assuming a newer version exists)
   test_req <- NULL
   
