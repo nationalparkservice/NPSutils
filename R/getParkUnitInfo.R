@@ -124,7 +124,8 @@ get_unit_info <- function(code = NULL,
                           state = NULL) { # input must have quotes to indicate strings
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)) {
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) # access all park codes from NPS xml file
+    # access all park codes from NPS xml file
+    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) 
   }
   result <- XML::xmlParse(file = f)
   dat <- XML::xmlToDataFrame(result) # xml to dataframe
@@ -144,38 +145,40 @@ get_unit_info <- function(code = NULL,
   # check UnitCycle:
   if (!is.null(life_cycle)) {
     # LifeCycle<-tolower(LifeCycle)
-    # if( (LifeCycle == "active") + (LifeCycle == "inactive") + (LifeCycle=="pending") < 1)
+    # if( (LifeCycle == "active") + (LifeCycle == "inactive")\
+    #  (LifeCycle=="pending") < 1)
     #  stop("LifeCycle must be \"Active\", \"Inactive\", or \"Pending\"")
 
     names <- paste0("\\<", life_cycle, "\\>")
-    dat <- dat %>% dplyr::filter(grepl(names, UnitLifecycle, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(names, UnitLifecycle,
+                                      ignore.case = TRUE))
   }
-
   # check Park Name:
   if (!is.null(park)) {
-    dat <- dat %>% dplyr::filter(grepl(park, FullName, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(park, FullName,
+                                       ignore.case = TRUE))
   }
-
   # Network Code:
   if (!is.null(network_code)) {
-    dat <- dat %>% dplyr::filter(grepl(network_code, Network, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(network_code, Network,
+                                       ignore.case = TRUE))
   }
-
   # Network Name:
   if (!is.null(net_name)) {
-    dat <- dat %>% dplyr::filter(grepl(net_name, NetworkName, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(net_name, NetworkName,
+                                       ignore.case = TRUE))
   }
-
   if (!is.null(region_abb)) {
-    dat <- dat %>% dplyr::filter(grepl(region_abb, Region, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(region_abb, Region,
+                                       ignore.case = TRUE))
   }
-
   if (!is.null(region)) {
-    dat <- dat %>% dplyr::filter(grepl(region, RegionName, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(region, RegionName,
+                                       ignore.case = TRUE))
   }
-
   if (!is.null(state)) {
-    dat <- dat %>% dplyr::filter(grepl(state, StateCodes, ignore.case = TRUE))
+    dat <- dat %>% dplyr::filter(grepl(state, StateCodes,
+                                       ignore.case = TRUE))
   }
   return(dat) # return park info
 }
