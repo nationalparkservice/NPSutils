@@ -29,7 +29,7 @@ check_ref_exists <- function (reference_id, secure = TRUE, dev = FALSE) {
       url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id)
     }
     if (dev == TRUE) {
-      url <- paset0(.ds_dev_api(), "ReferenceCodeSearch?=", reference_id)
+      url <- paste0(.ds_dev_api(), "ReferenceCodeSearch?q=", reference_id)
     }
   }
   test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
@@ -77,7 +77,7 @@ check_is_data_package <- function(reference_id, secure = TRUE, dev = FALSE) {
       url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id)
     }
     if (dev == TRUE) {
-      url <- paset0(.ds_dev_api(), "ReferenceCodeSearch?=", reference_id)
+      url <- paste0(.ds_dev_api(), "ReferenceCodeSearch?q=", reference_id)
     }
   }
   
@@ -131,7 +131,7 @@ check_new_version <- function(reference_id, secure = TRUE, dev = FALSE) {
       url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id)
     }
     if (dev == TRUE) {
-      url <- paset0(.ds_dev_api(), "ReferenceCodeSearch?=", reference_id)
+      url <- paste0(.ds_dev_api(), "ReferenceCodeSearch?q=", reference_id)
     }
   }
   
@@ -183,7 +183,7 @@ get_new_version_id <- function(reference_id, secure = TRUE, dev = FALSE) {
       url <- paste0(.ds_secure_api(), "ReferenceCodeSearch?q=", reference_id)
     }
     if (dev == TRUE) {
-      url <- paset0(.ds_dev_api(), "ReferenceCodeSearch?=", reference_id)
+      url <- paste0(.ds_dev_api(), "ReferenceCodeSearch?q=", reference_id)
     }
   }
   test_req <- httr::GET(url, httr::authenticate(":", ":", "ntlm"))
