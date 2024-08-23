@@ -35,7 +35,9 @@ Imports:
     EMLeditor,
     DPchecker,
     here,
-    jsonlite
+    jsonlite,
+    cli,
+    stringr
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
