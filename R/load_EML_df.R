@@ -1,7 +1,7 @@
 #' Gets common EML metadata elements and puts them in a dataframe
 #' #' `r lifecycle::badge('experimental')`
 #' 
-#' #' @description `load_EML_df()` gets commonly used EML metadata items from a previously downloaded data package, extracts them, and returns them as single data frame. This is particularly useful when importing data packages into Power BI as Power BI will only import items in data frames. 
+#' #' @description `load_core_metadata()` gets commonly used EML metadata items from a previously downloaded data package, extracts them, and returns them as single data frame. This is particularly useful when importing data packages into Power BI as Power BI will only import items in data frames. 
 #' 
 #' #' @details The returned dataframe has three columns, EML_element, EML_data and EML_data2. EML_element describes the EML element that was extracted. EML_data and EML_data2 contain the data from that element. In the case of EML_elements with only one piece of data (e.g. the data package title), the data is repeated in the EML_data and EML_data2 columns.  In cases where the element contains two related pieces of data (e.g. author), those items are held in EML_data (e.g. the author's name) and EML_data2 (e.g. the author's email address). 
 #' 
@@ -10,17 +10,17 @@
 #' The fields that should be returned in the dataframe include: title, publication date, authors (and emails), contacts (and emails), publisher, DOI, publisher city, publisher state, content begin date, content end date, the abstract, notes, "for or by NPS", the license name (e.g. "Public Domain", "CC0"), and a list of each data file in the data package by name.
 #'
 #' @param ds_ref Integer. The DataStore reference number of a previously downloaded data package (if downloaded using `get_data_packages()`).
-#' @param directory String. The location of the data package. If you used the default settings for where data packages are downloaded by `get_data_packages()`, directory can also be left as the default.
+#' @param path String. The location of the data package. If you used the default settings for where data packages are downloaded by `get_data_packages()`, directory can also be left as the default.
 #'
 #' @return dataframe
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' df <- load_EML_df(1234567)
+#' df <- load_core_metadata(1234567)
 #' }
 #' 
-load_EML_df <- function(ds_ref, path = paste0(getwd(), "/data")){
+load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
   #construct path to downloaded data package:
   #capture current/original working directory:
   origin_wd <- getwd()
@@ -230,3 +230,5 @@ load_EML_df <- function(ds_ref, path = paste0(getwd(), "/data")){
   names(contact_df)[1] = "contact"
   return(contact_df)
 }
+
+
