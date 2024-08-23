@@ -21,7 +21,7 @@
 #' @examples
 #' \dontrun{
 #' #get a public data package
-#' get_data_packages(2272461, secure = FALSE)
+#' get_data_packages(2300498, secure = FALSE)
 #' 
 #' #get a list of data packages, some public some restricted
 #' get_data_packages(c(2272461, 1234567, 7654321), secure = TRUE)
@@ -37,7 +37,7 @@ get_data_packages <- function(reference_id,
                               secure = FALSE,
                               path=here::here(),
                               force = FALSE,
-                              dev = TRUE) {
+                              dev = FALSE) {
   #capture original working directory
   orig_wd <- getwd()
   #set directory back to original working directory on exit.
@@ -53,7 +53,6 @@ get_data_packages <- function(reference_id,
   secure <- toupper(secure)
   force <- toupper(force)
   dev <- toupper(dev)
-  
   
   for (i in seq_along(reference_id)) {
     if(force == FALSE) {
@@ -161,6 +160,7 @@ get_data_packages <- function(reference_id,
                                       reference_id[i],
                                       "/DigitalFiles")
     }
+  
     xml <- suppressMessages(httr::content
                             (httr::GET(
                               rest_holding_info_url,
