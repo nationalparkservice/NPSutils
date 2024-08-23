@@ -38,3 +38,23 @@ assign("ds_dev_api", "https://irmadevservices.nps.gov/datastore-secure/v7/rest/"
   var1 <- readline(prompt = "1: Yes\n2: No\n")
   return(var1)
 }
+
+#this gets rid of the "no visible binidnigs for global variable 'x'"
+#error during build checks:
+globalVariables(c("capture.output",
+                  "UnitDesignationName",
+                  "FullName",
+                  "UnitCode",
+                  "UnitLifecycle",
+                  "Network",
+                  "NetworkName",
+                  "Region",
+                  "RegionName",
+                  "StateCodes",
+                  "DataPackageDirectory",
+                  "holding_id",
+                  "Name",
+                  "load_pkg_metadata",
+                  "workingEMLfile",
+                  "metalocation",
+                  "map_wkt"))
