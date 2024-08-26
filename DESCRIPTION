@@ -29,7 +29,6 @@ Imports:
     readr,
     magrittr,
     crayon,
-    stringr,
     leaflet,
     lifecycle,
     EMLeditor,
