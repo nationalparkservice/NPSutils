@@ -39,7 +39,7 @@ assign("ds_dev_api", "https://irmadevservices.nps.gov/datastore-secure/v7/rest/"
   return(var1)
 }
 
-#this gets rid of the "no visible binidnigs for global variable 'x'"
+#this gets rid of the "no visible bindings for global variable 'x'"
 #error during build checks:
 globalVariables(c("capture.output",
                   "UnitDesignationName",
@@ -57,4 +57,10 @@ globalVariables(c("capture.output",
                   "load_pkg_metadata",
                   "workingEMLfile",
                   "metalocation",
-                  "map_wkt"))
+                  "map_wkt",
+                  "attributeFactors",
+                  "metaformat",
+                  "data_format",
+                  "metadata_format",
+                  "fileList"
+                  ))
