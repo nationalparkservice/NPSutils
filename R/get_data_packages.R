@@ -12,7 +12,7 @@
 #' @param force Logical. Defaults to FALSE. In the FALSE condition, the user is prompted if a directory already exists and asked whether to overwrite it or not. The user is also given information about which files are being downloaded, extracted, deleted, and where they are being written to. The user is also notified if there is a newer version of the requested data package and given the option to download the newest version instead of the requested version. It also provides information about what errors (if any) were encountered and give suggestions on how to address them. 
 #' 
 #' A user may choose to set `force = TRUE`, especially when scripting or batch processing to minimize print statements to the console.  When force is set to TRUE, all existing files are automatically overwritten without prompting. Feedback about which files are being downloaded and where is not reported. The user is not informed of newer versions of the requested data packages; only the exact reference specified is downloaded. If a reference ID corresponds to something that is not a data package, the contents will be downloaded anyway. Only critical errors that stop the function (such as failed API calls) generate warnings. Failed downloads (invalid reference ID, insufficient DataStore privileges) will result in an empty folder corresponding to that data package within the 'data' folder. 
-#' @param dev Logical. Defaults to FALSE. FALSE indicates all operations will be performed in DataStore's production environment. Setting dev = TRUE enables running functions against the DataStore development environment. To access the development environment, you must also set `secure = TRUE`. Working in the development environment will allow you to test functions and code without affecting the publicly accessible DataStore application. 
+#' @param dev Logical. Defaults to FALSE. FALSE indicates all operations will be performed in DataStore's production environment. Setting dev = TRUE enables running functions against the DataStore development environment. Working in the development environment will allow you to test functions and code without affecting the publicly accessible DataStore application. 
 #' 
 #'
 #' @export
@@ -154,7 +154,7 @@ get_data_packages <- function(reference_id,
                                       "/DigitalFiles")
     }
     # references on dev server:
-    if (secure == TRUE && dev == TRUE) {
+    if (dev == TRUE) {
       rest_holding_info_url <- paste0(.ds_dev_api(),
                                       "reference/",
                                       reference_id[i],
@@ -230,4 +230,21 @@ get_data_packages <- function(reference_id,
   data_path<-paste0(path, "/data")
   cat("Any downloaded data package(s) can be found at:\n")
   on.exit(return(data_path))
+}
+
+
+#' @export
+#' @rdname get_data_packages
+get_data_package <- function(reference_id,
+                            secure = FALSE,
+                            path=here::here(),
+                            force = FALSE,
+                            dev = FALSE) {
+  
+  x <- get_data_packages(reference_id,
+                         secure = FALSE,
+                         path=here::here(),
+                         force = FALSE,
+                         dev = FALSE)
+  return(x)
 }
