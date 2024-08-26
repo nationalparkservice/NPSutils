@@ -6,6 +6,7 @@
 #' dataframe.
 #'
 #' @param holding_id is a 6-7 digit number corresponding to the holding ID of the data package zip file.
+#' @param directory String. Path to the data package
 #'
 #' @return one data frame to the global environment.
 #'
