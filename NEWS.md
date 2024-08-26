@@ -1,3 +1,11 @@
+# NPSutils 0.3.2 (in development)
+  * Update readme to us pak for package installation instead of devtools.
+  * Update _pkgdown.yml to use bootstrap 5
+  * added helper functions for API requests and user input to facilitate unit testing.
+  * refactored `get_data_packages()` to take advantage of new helper functions.
+  * added `get_data_package()` which aliases `get_data_packages()` mostly because many people will want to load one data package and forget that the function is plural.
+  * renamed `load_EML_df()` to `load_core_metadata()`.
+
 # NPSutils 0.3.1 "Ooh Aah Point"
   * added private functions `.get_authors()` and `.get_contacts()` to retrieve authors and contacts (and emails) from EML
   * added `load_EML_df()`, which retrieves commonly available metadata items from an EML-formatted R object and returns them as a single dataframe (for loading into Power BI)
