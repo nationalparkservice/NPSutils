@@ -2,18 +2,23 @@
 % Please edit documentation in R/load_pgk_metadata.R
 \name{load_pkg_metadata}
 \alias{load_pkg_metadata}
-\title{Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.}
+\title{Read contents of data package file and construct a data frame based on the
+metadata file summarizing the fields and their types/definitions.}
 \usage{
-load_pkg_metadata(holding_id)
+load_pkg_metadata(holding_id, directory = here::here("data"))
 }
 \arguments{
 \item{holding_id}{is a 6-7 digit number corresponding to the holding ID of the data package zip file.}
+
+\item{directory}{String. Path to the data package}
 }
 \value{
 one data frame to the global environment.
 }
 \description{
-\code{load_pkg_metadata()} reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
+\code{load_pkg_metadata()} reads the metadata file from a previously
+downloaded package and loads a list of fields and their attributes into a
+dataframe.
 }
 \examples{
 \dontrun{

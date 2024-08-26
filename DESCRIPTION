@@ -29,18 +29,20 @@ Imports:
     readr,
     magrittr,
     crayon,
-    stringr,
     leaflet,
     lifecycle,
     EMLeditor,
     DPchecker,
     here,
-    jsonlite
-RoxygenNote: 7.2.3
+    jsonlite,
+    cli
+RoxygenNote: 7.3.2
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://github.com/nationalparkservice/NPSutils
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3

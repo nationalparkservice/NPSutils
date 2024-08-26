@@ -2,18 +2,18 @@
 % Please edit documentation in R/load_data_package.R
 \name{load_data_package}
 \alias{load_data_package}
-\title{Read contents of data package file and constructs a list of tibbles based on the data file(s)}
+\title{Read contents of data package and constructs a list of tibbles based on the data file(s)}
 \usage{
-load_data_package(holding_id)
+load_data_package(reference_id)
 }
 \arguments{
-\item{holding_id}{is a 6-7 digit number corresponding to the holding ID of the data package.}
+\item{reference_id}{is a 6-7 digit number corresponding to the reference ID of the data package.}
 }
 \value{
 a list of one or more tibbles contained within the data package to the global environment.
 }
 \description{
-\code{load_data_package} reads the data file(s) from a package and loads it into a list of tibbles. Current implementation only supports .csv data files. Planned future iterations will support .json and .xml data files.
+\code{load_data_package} reads the data file(s) from a package and loads it into a list of tibbles. Current implementation only supports .csv data files.
 }
 \examples{
 \dontrun{

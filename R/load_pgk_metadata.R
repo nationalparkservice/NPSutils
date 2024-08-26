@@ -1,8 +1,12 @@
-#' Read contents of data package file and construct a data frame based on the metadata file summarizing the fields and their types/definitions.
+#' Read contents of data package file and construct a data frame based on the
+#' metadata file summarizing the fields and their types/definitions.
 #'
-#' @description `load_pkg_metadata()` reads the metadata file from a previously downloaded package and loads a list of fields and their attributes into a data frame.
+#' @description `load_pkg_metadata()` reads the metadata file from a previously
+#' downloaded package and loads a list of fields and their attributes into a
+#' dataframe.
 #'
 #' @param holding_id is a 6-7 digit number corresponding to the holding ID of the data package zip file.
+#' @param directory String. Path to the data package
 #'
 #' @return one data frame to the global environment.
 #'
@@ -12,59 +16,41 @@
 #' \dontrun{
 #' load_pgk_metadata(2266200)
 #' }
-load_pkg_metadata <- function(holding_id) {
-  DataPackageDirectory <- paste("data/", holding_id, sep = "")
+load_pkg_metadata <- function(holding_id, directory = here::here("data")) {
+  data_package_directory <- paste(directory, "/", holding_id, sep = "")
 
-  metadatafile <- list.files(
-    path = DataPackageDirectory,
+  metadata_file <- list.files(
+    path = data_package_directory,
     pattern = "metadata.xml"
   )
-  metalocation <- paste0(DataPackageDirectory, "/", metadatafile)
 
   # Look for a metadatafile and let the user know about the results of the search.
-  if (length(metadatafile) == 0) {
-    cat("No metadata file found in: ~/", crayon::blue$bold(DataPackageDirectory),
-      ". The filename must end in _metadata.xml",
-      sep = ""
-    )
+  if (length(metadata_file) == 0) {
+    cli::cli_abort(c(
+      "No metadata file found in: {.path {data_package_directory}}.",
+      "i" = "The filename must end in _metadata.xml"))
+    return(invisible())
   }
-  if (length(metadatafile) > 1) {
-    cat("Multiple metadata files found.")
-    cat('Please insure there is only one metadata file ending in "metadata.xml".')
-    ##### some sort of 'graceful' stop/exit function TBD.
+  if (length(metadata_file) > 1) {
+    cli::cli_abort(c(
+      "Multiple metadata files found.",
+      "i" = "{.path {data_package_directory}} can contain only one 
+      {.file *_metadata.xml}."))
+    return(invisible())
   }
-  if (length(metadatafile) == 1) {
-    cat("Metadata file found:\n", crayon::bold$blue(metadatafile), sep = "")
-  }
-  if (!file.exists(metalocation)) {
-    cat("The zipped data package for:\n", crayon::blue$bold(holding_id))
-    cat("was not found. Check your working directory.")
-    cat("Or try using ", crayon::green$bold("get_data_package()"), ".", sep = "")
-  }
-
-  # open the metadatafile and determine what format it is. Tell the user what format was detected, and or if the format is unsupported (or incorrectly formatted)
-  if (
-    sum(grepl("<metstdv>FGDC-STD-001-1998", readLines(metalocation))) > 0) {
-    metaformat <- "fgdc"
-    cat("\nYou are working with ", crayon::bold$blue(metaformat), " metadata.", sep = "")
-  }
-  if (sum(grepl("<eml:eml", readLines(metalocation))) > 0) {
-    metaformat <- "eml"
-    cat("\nYou are working with ", crayon::bold$blue(metaformat), " metadata.", sep = "")
-  }
-  if (sum(grepl("ISO 19115", readLines(metalocation))) > 0) {
-    metaformat <- "ISO19915"
-    cat("\nYou are working with ", crayon::blue$bold(metaformat), " metadata.", sep = "")
-  }
-  if (!exists("metaformat")) {
-    print("your metadata file format is not supported.
-          Only correctly formatted eml, ISO 19115, or CSDGM (FGDC) metadata are supported.")
+  
+  meta_location <- paste0(data_package_directory, "/", metadata_file)
+  if (!file.exists(meta_location)) {
+    cli::cli_abort(c(
+      "The data package for: {.var {holding_id}} was not found.",
+      "i" = "Make sure {.path {data_package_directory}} is the correct location",
+      "i" = "Make sure you downloaded the correct data package using {.fn get_data_package}."
+    ))
+    return(invisible())
   }
 
-  # Construct attribute tables:
-  if (metaformat == "eml") {
-    # emlFilename <- metalocation
-    workingEMLfile <- EML::read_eml(metalocation, from = "xml")
+  #load metadata
+  eml_object <- EML::read_eml(meta_location, from = "xml")
     attributeList <- EML::get_attributes(workingEMLfile$dataset$dataTable$attributeList)
     attributes <- attributeList$attributes
     factors <- attributeList$factors
@@ -85,7 +71,8 @@ load_pkg_metadata <- function(holding_id) {
 
     # return the field table to the workspace.
     return(attributes)
-  } else if (metaformat == "fgdc") {
+
+if (metaformat == "fgdc") {
     # xmlFilename <- metalocation
     workingXMLfile <- EML::read_eml(metalocation, from = "xml")
 

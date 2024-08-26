@@ -21,14 +21,14 @@ that are borked.
 # Install from GitHub
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("nationalparkservice/NPSutils")
+# install.packages("pak")
+pak::pkg_install("nationalparkservice/NPSutils")
 ```
 
 NPSutils is also available as part of the
 [NPSdataverse](https://nationalparkservice.github.io/NPSdataverse/)
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("nationalparkservice/NPSdataverse")
+# install.packages("pak")
+pak::pkg_install("nationalparkservice/NPSdataverse")
 ```

@@ -5,41 +5,36 @@
 \title{Read contents of data package(s) and return a tibble with a tibble for each data file.}
 \usage{
 load_data_packages(
-  datastore_reference,
-  path = here::here(),
-  dataFormat = "*.csv",
-  metadataFormat = "EML",
+  reference_id,
+  directory = here::here(),
+  assign_attributes = FALSE,
   simplify = TRUE
 )
 }
 \arguments{
-\item{datastore_reference}{is a list of 6-7 digit numbers corresponding to the DataStore reference ID of the datapackage(s) to load. Alternatively, you can set \code{datastore_reference} to "loadAll", which will load all the data packages in your /data folder.}
+\item{reference_id}{is a list of 6-7 digit numbers corresponding to the DataStore reference ID of the datapackage(s) to load. Alternatively, you can set \code{reference_id} to "load_all", which will load all the data packages in your /data folder.}
 
-\item{path}{is the location of a folder, 'data' (created during \code{get_data_packages()}) which contains subdirectories where each subdirectory is the DataStore referenceId of the data package. Again, this file structure is all set up using \code{get_data_packages()}. Defaults to the current workign directory (which is the default location for \code{get_data_packages()}).}
+\item{directory}{is the location of a folder, 'data' (created during \code{get_data_packages()}) which contains sub-directories where each sub-directory is the DataStore referenceId of the data package. Again, this file structure is all set up using \code{get_data_packages()}. Defaults to the current working directory (which is the default location for \code{get_data_packages()}).}
 
-\item{dataFormat}{is a character value indicating the format of the data set(s) within the data package. Currently the only supported option is: *.csv for comma separated value text files. Defaults to "csv".}
+\item{assign_attributes}{Logical. Defaults to FALSE. Data will be loaded using \code{readr::read_csv()} guessing algorithm for calling column types. If set to TRUE, column types will be set using metadata attributes via the yet-to-be written \code{load_metadata()} function. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
-\item{metadataFormat}{is a character value indicating the format of the metadata file within the data package. Currently the only supported format is Ecological Metadata (EML) and the parameter defaults to EML.}
-
-\item{simplify}{logical. Defaults to TRUE. If there is only a single data package loaded, the function will return a simple list of tibbles (where each tibble reflects a data file from within the data package). If set to FALSE, the function will return a list that contains a list of tibbles. This structure mirrors the object structure returned if multiple data packages are simultaneously loaded (a list of data packages with each data package containing a list of tibbles where each tibble corresponds to a data file in the given data package).}
+\item{simplify}{Logical. Defaults to TRUE. If there is only a single data package loaded, the function will return a simple list of tibbles (where each tibble reflects a data file from within the data package). If set to FALSE, the function will return a list that contains a list of tibbles. This structure mirrors the object structure returned if multiple data packages are simultaneously loaded (a list of data packages with each data package containing a list of tibbles where each tibble corresponds to a data file in the given data package).}
 }
 \value{
 a list of (of lists of) tibbles.
 }
 \description{
-\code{load_data_packages()} finds all the specified data packages in a /data directory (generated via \code{get_data_packages()}) and returns a tibble of tibbles where each data package is a tibble and within that each data file is it's own tibble. \code{load_data_packages()} also utilizes the metadata (only EML is currently supported) to correctly assign attributes to each data column.
+\code{load_data_packages()} loads one to may data packages and returns a tibble of tibbles where each data package is a tibble and within that each data file is it's own tibble. \code{load_data_packages()} will only work with .csv data files and EML metadata. \code{load_data_packages()} can also utilize the metadata to assign attributes to each data column.
 }
 \details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-currently \code{load_data_packages()} only supports EML metadata and .csv files in a very specific file structure, which is most easily set up using \code{get_data_packages()}. Archived (.zip) files must be extractecd for \code{load_data_packages()} to work properly. Again, \code{get_data_packages()} will accomplish this for you.
+currently \code{load_data_packages()} only supports EML metadata and .csv files. To take advantage of the default settings in load_data_packages, use the default settings in \code{get_data_package()} or \code{get_data_packages()}. Archived (.zip) files must be extracted before \code{load_data_packages()} will work properly. Again, \code{get_data_package()} or \code{get_data_packages()} will accomplish this for you.
 '
 }
 \examples{
 \dontrun{
-dat <- load_data_packages(2272461,
-                         data_format = "csv",
-                         metadata_format = "eml")
+dat <- load_data_packages(2272461)
 }
 
 }
