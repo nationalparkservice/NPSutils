@@ -9,12 +9,10 @@
       $scope: $("main h2, main h3, main h4, main h5, main h6")
     });
 
-    if ($('#toc').length) {
-      $('body').scrollspy({
-        target: '#toc',
-        offset: $("nav.navbar").outerHeight() + 1
-      });
-    }
+    $('body').scrollspy({
+      target: '#toc',
+      offset: 56 // headroom height
+    });
 
     // Activate popovers
     $('[data-bs-toggle="popover"]').popover({
@@ -30,10 +28,10 @@
   /* Clipboard --------------------------*/
 
   function changeTooltipMessage(element, msg) {
-    var tooltipOriginalTitle=element.getAttribute('data-bs-original-title');
-    element.setAttribute('data-bs-original-title', msg);
+    var tooltipOriginalTitle=element.getAttribute('data-original-title');
+    element.setAttribute('data-original-title', msg);
     $(element).tooltip('show');
-    element.setAttribute('data-bs-original-title', tooltipOriginalTitle);
+    element.setAttribute('data-original-title', tooltipOriginalTitle);
   }
 
   if(ClipboardJS.isSupported()) {
@@ -60,7 +58,7 @@
         e.clearSelection();
       });
 
-      clipboard.on('error', function(e) {
+      clipboard.on('error', function() {
         changeTooltipMessage(e.trigger,'Press Ctrl+C or Command+C to copy');
       });
 
@@ -70,7 +68,7 @@
     /* Search marking --------------------------*/
     var url = new URL(window.location.href);
     var toMark = url.searchParams.get("q");
-    var mark = new Mark("main#main");
+    var mark = new Mark("div.col-md-9");
     if (toMark) {
       mark.mark(toMark, {
         accuracy: {
@@ -152,3 +150,5 @@ async function searchFuse(query, callback) {
   });
   });
 })(window.jQuery || window.$)
+
+
