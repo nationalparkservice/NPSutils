@@ -2,6 +2,7 @@
 % Please edit documentation in R/get_data_packages.R
 \name{get_data_packages}
 \alias{get_data_packages}
+\alias{get_data_package}
 \title{Retrieve digital data package holding(s) from DataStore.}
 \usage{
 get_data_packages(
@@ -9,7 +10,15 @@ get_data_packages(
   secure = FALSE,
   path = here::here(),
   force = FALSE,
-  dev = TRUE
+  dev = FALSE
+)
+
+get_data_package(
+  reference_id,
+  secure = FALSE,
+  path = here::here(),
+  force = FALSE,
+  dev = FALSE
 )
 }
 \arguments{
@@ -23,7 +32,7 @@ get_data_packages(
 
 A user may choose to set \code{force = TRUE}, especially when scripting or batch processing to minimize print statements to the console.  When force is set to TRUE, all existing files are automatically overwritten without prompting. Feedback about which files are being downloaded and where is not reported. The user is not informed of newer versions of the requested data packages; only the exact reference specified is downloaded. If a reference ID corresponds to something that is not a data package, the contents will be downloaded anyway. Only critical errors that stop the function (such as failed API calls) generate warnings. Failed downloads (invalid reference ID, insufficient DataStore privileges) will result in an empty folder corresponding to that data package within the 'data' folder.}
 
-\item{dev}{Logical. Defaults to FALSE. FALSE indicates all operations will be performed in DataStore's production environment. Setting dev = TRUE enables running functions against the DataStore development environment. To access the development environment, you must also set \code{secure = TRUE}. Working in the development environment will allow you to test functions and code without affecting the publicly accessible DataStore application.}
+\item{dev}{Logical. Defaults to FALSE. FALSE indicates all operations will be performed in DataStore's production environment. Setting dev = TRUE enables running functions against the DataStore development environment. Working in the development environment will allow you to test functions and code without affecting the publicly accessible DataStore application.}
 }
 \value{
 String. The path (including the /data folder) where all data package sub-directories and data files are contained.
@@ -39,7 +48,7 @@ Although \code{get_data_packages()} is designed to handle the data package refer
 \examples{
 \dontrun{
 #get a public data package
-get_data_packages(2272461, secure = FALSE)
+get_data_packages(2300498, secure = FALSE)
 
 #get a list of data packages, some public some restricted
 get_data_packages(c(2272461, 1234567, 7654321), secure = TRUE)
