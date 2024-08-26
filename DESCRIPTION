@@ -44,4 +44,3 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://nationalparkservice.github.io/NPSutils/
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
-Roxygen: list(markdown = TRUE)
