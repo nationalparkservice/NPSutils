@@ -1,5 +1,7 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+# fix linux build fails: 
+# https://forum.posit.co/t/libraptor2-dev-depends-libcurl4-gnutls-dev-but-it-is-not-installable-in-r-lib-actions-setup-r-dependencies-v2/181572/4
 on:
   push:
     branches: [main, master]
@@ -28,7 +30,8 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
+      R_KEEP_PKG_SOURCE: yes 
+      PKG_SYSREQS: false 
 
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +43,10 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
+          
+      - name: dependencies on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y make pandoc git libssl-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libicu-dev libudunits2-dev librdf0-dev libxml2-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfontconfig1-dev libfribidi-dev libharfbuzz-dev libcurl4-gnutls-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
