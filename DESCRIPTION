@@ -17,6 +17,9 @@ Description: NPSutils is a collection of functions for interacting with NPS Data
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Remotes: 
+    https://github.com/nationalparkservice/DPchecker,
+    https://github.com/nationalparkservice/EMLeditor
 Imports: 
     EML,
     sf,
