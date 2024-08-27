@@ -13,10 +13,10 @@
 dataframe
 }
 \description{
-\code{.get_contacts()} extracts the "contacts" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an contact. Second, and column with the contact's name (first last). Third, the contact's email address.
+`.get_contacts()` extracts the "contacts" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an contact. Second, and column with the contact's name (first last). Third, the contact's email address.
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+`r lifecycle::badge('experimental')`
 }
 \examples{
 \dontrun{

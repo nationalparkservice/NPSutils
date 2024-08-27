@@ -16,7 +16,7 @@ load_pkg_metadata(holding_id, directory = here::here("data"))
 one data frame to the global environment.
 }
 \description{
-\code{load_pkg_metadata()} reads the metadata file from a previously
+`load_pkg_metadata()` reads the metadata file from a previously
 downloaded package and loads a list of fields and their attributes into a
 dataframe.
 }

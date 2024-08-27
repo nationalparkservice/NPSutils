@@ -1,105 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/404.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/NPSutils.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/articles/NPSutils.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/index.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/check_is_data_package.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/check_is_data_package.html</loc>
   </url>
   <url>
-    <loc>/reference/check_new_version.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/check_new_version.html</loc>
   </url>
   <url>
-    <loc>/reference/check_ref_exists.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/check_ref_exists.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-get_authors.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/dot-get_authors.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-get_contacts.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/dot-get_contacts.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-get_user_input.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/dot-get_user_input.html</loc>
   </url>
   <url>
-    <loc>/reference/get_data_packages.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_data_packages.html</loc>
   </url>
   <url>
-    <loc>/reference/get_new_version_id.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_new_version_id.html</loc>
   </url>
   <url>
-    <loc>/reference/get_park_code.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_park_code.html</loc>
   </url>
   <url>
-    <loc>/reference/get_park_taxon_citations.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_park_taxon_citations.html</loc>
   </url>
   <url>
-    <loc>/reference/get_park_taxon_refs.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_park_taxon_refs.html</loc>
   </url>
   <url>
-    <loc>/reference/get_park_taxon_url.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_park_taxon_url.html</loc>
   </url>
   <url>
-    <loc>/reference/get_ref_info.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_ref_info.html</loc>
   </url>
   <url>
-    <loc>/reference/get_unit_code.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_unit_code.html</loc>
   </url>
   <url>
-    <loc>/reference/get_unit_code_info.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_unit_code_info.html</loc>
   </url>
   <url>
-    <loc>/reference/get_unit_info.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/get_unit_info.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/load_core_metadata.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/load_core_metadata.html</loc>
   </url>
   <url>
-    <loc>/reference/load_data_package.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/load_data_package.html</loc>
   </url>
   <url>
-    <loc>/reference/load_data_packages.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/load_data_packages.html</loc>
   </url>
   <url>
-    <loc>/reference/load_domains.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/load_domains.html</loc>
   </url>
   <url>
-    <loc>/reference/load_pkg_metadata.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/load_pkg_metadata.html</loc>
   </url>
   <url>
-    <loc>/reference/map_wkt.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/map_wkt.html</loc>
   </url>
   <url>
-    <loc>/reference/NPSutils-package.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/NPSutils-package.html</loc>
   </url>
   <url>
-    <loc>/reference/rm_local_packages.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/rm_local_packages.html</loc>
   </url>
   <url>
-    <loc>/reference/validate_data_package.html</loc>
+    <loc>https://nationalparkservice.github.io/NPSutils/reference/validate_data_package.html</loc>
   </url>
 </urlset>

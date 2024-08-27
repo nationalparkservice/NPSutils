@@ -9,7 +9,7 @@ check_ref_exists(reference_id, secure = TRUE, dev = FALSE)
 \arguments{
 \item{reference_id}{Integer. A 7-digit number indicating the datastore reference to be queried.}
 
-\item{secure}{Logical. Defaults to TRUE, indicating that the user is logged on to the NPS VPN (or is accessing the resource from an NPS office). Can be set to FALSE for non-NPS users. If \code{secure} is set to FALSE, \code{dev} is automatically set to FALSE.}
+\item{secure}{Logical. Defaults to TRUE, indicating that the user is logged on to the NPS VPN (or is accessing the resource from an NPS office). Can be set to FALSE for non-NPS users. If `secure` is set to FALSE, `dev` is automatically set to FALSE.}
 
 \item{dev}{Logical. Defaults to FALSE, indicating that the user wishes to work with the production version of DataStore. Can be set to TRUE if the user wants to work with the development environment on DataStore. Setting dev = TRUE will only work if the user has the appropriate permissions. Requires secure = TRUE.}
 }

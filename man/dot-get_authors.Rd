@@ -13,10 +13,10 @@
 dataframe
 }
 \description{
-\code{.get_authors()} extracts the "creators" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an author. Second, and column with the author's name (first last). Third, the author's email address.
+`.get_authors()` extracts the "creators" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an author. Second, and column with the author's name (first last). Third, the author's email address.
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+`r lifecycle::badge('experimental')`
 
 There are some known issues with this function; unfortunately at this time we do not have example data packages to test them. These include: authors without a givenName, authors with more than two givenNames (e.g. multiple middle names), organizations as authors where there is no individualName.
 }
