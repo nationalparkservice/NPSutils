@@ -5,15 +5,14 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CodeFactor](https://www.codefactor.io/repository/github/roblbaker/npsutils/badge)](https://www.codefactor.io/repository/github/roblbaker/npsutils)
+[![R-CMD-check](https://github.com/RobLBaker/NPSutils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobLBaker/NPSutils/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # NPS Data Store Utilities - NPSutils
 
 This package is a collection of functions to acquire metadata and data
-from the [National Park Service Data
-Store](https://irma.nps.gov/DataStore/). Please request
-enhancements and bug fixes through
-[Issues](https://github.com/nationalparkservice/NPSutils/issues).
+from the [National Park Service DataStore](https://irma.nps.gov/DataStore/).
+Please request enhancements and bug fixes through [Issues](https://github.com/nationalparkservice/NPSutils/issues).
 
 These functions are under active development and we apologize for any
 that are borked.

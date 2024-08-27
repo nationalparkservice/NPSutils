@@ -11,7 +11,7 @@ NPSutils is a collection of functions for interacting with NPS DataStore reposit
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/nationalparkservice/NPSutils}
+  \item \url{https://nationalparkservice.github.io/NPSutils/}
   \item Report bugs at \url{https://github.com/nationalparkservice/NPSutils/issues}
 }
 

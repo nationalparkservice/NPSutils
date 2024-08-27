@@ -17,6 +17,9 @@ Description: NPSutils is a collection of functions for interacting with NPS Data
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Remotes:  
+    nationalparkservice/EMLeditor,
+    nationalparkservice/DPchecker
 Imports: 
     EML,
     sf,
@@ -31,8 +34,8 @@ Imports:
     crayon,
     leaflet,
     lifecycle,
-    EMLeditor,
-    DPchecker,
+    EMLeditor (>= 0.1.5),
+    DPchecker (>= 0.3.4),
     here,
     jsonlite,
     cli
@@ -42,7 +45,5 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-URL: https://github.com/nationalparkservice/NPSutils
+URL: https://nationalparkservice.github.io/NPSutils/
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
-Roxygen: list(markdown = TRUE)
-Config/testthat/edition: 3
