@@ -29,7 +29,8 @@ assign("ds_dev_api", "https://irmadevservices.nps.gov/datastore-secure/v7/rest/"
 #' Prompts for, gets, and returns binary user input (1 or 2)
 #'
 #' @return Factor. 1 or 2.
-#'
+#' @keywords internal
+#' @noRd
 #' @examples
 #' \dontrun{
 #' var1 <- .get_user_input()
