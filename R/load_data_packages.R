@@ -21,15 +21,10 @@
 #' }
 #'
 load_data_packages <- function(reference_id, 
-                             directory = here::here(),
+                             directory = here::here("data"),
                              assign_attributes = FALSE,
                              simplify = TRUE){
-  #capture original working directory
-  orig_wd <- getwd()
-  #set directory back to original working directory on exit.
-  on.exit(setwd(orig_wd))
-  #set wd to path; defaults to wd. 
-  setwd(directory)
+
   
   #is user specifies "allData" get all directories from the data folder:
   if (reference_id == "all_data") {
@@ -38,44 +33,176 @@ load_data_packages <- function(reference_id,
                                      recursive = FALSE)
   }
   
+  ### if only one data package is specified:
   ### fix how single data packages are handled later:
-  if(length(
-    seq_along(
-      reference_id)) == 1 
-    & reference_id != "all_data" 
-    & simplify == TRUE) {
-  #return a tibble of data files  
-  }
-  
-  
-  for(i in 1:seq_along(reference_id)){
-    data_package_directory <- paste("data/", reference_id[i])
-    filenames <- list.files(
-      path = data_package_directory,
-      pattern = data_format)
-    ## Create list of data frame names without the ".csv" part
-    names <- gsub(pattern = "\\.csv$", "", filenames)
-    
-    ### Load all files into tibbles
-    reference_id[i] <- list()
-    for (j in names) {
-      filepath <- file.path(data_package_directory, paste(j, ".csv", sep = ""))
-      tibble_list[[i]] <- assign(j,
-                                 readr::read_csv(filepath,
-                                                 show_col_types = FALSE))
-    }
-  }
-  
-  data_package_filename <- paste0(data_package_directory, "/", reference_id,
-                               ".zip")
+  if (assign_attributes == TRUE) {
+    tibble_list <- list()
+    for (h in 1:length(seq_along(reference_id))) {
 
-  if (data_format == "csv" & metadata_format == "eml") {
-    filelist <- utils::unzip(data_package_filename, list = TRUE)
-    if (assign_attributes == TRUE) {
-      #assign attributes using metadata via a yet-to-be-built sub-function.
+      directory <- paste0(directory, "/", reference_id[h])
+      #get csv file names:
+      filenames <- list.files(path = directory,
+                              pattern = "*csv")
+      ## Create list of data frame names without the ".csv" part
+      names <- gsub(pattern = "\\.csv$", "", filenames)
+    
+      #load metadata:
+      metadata <- DPchecker::load_metadata(directory = directory)
+    
+      ### Load all files into tibbles
+      tibble <- list()
+      for (i in 1:length(seq_along(filenames))) {
+        file_path <- file.path(paste0(directory,"/", filenames[i]))
+      
+        #get attributes information from metadata:
+        # To do: specifically call dataTable by name, not position! #########
+        dataTable <- metadata[["dataset"]][["dataTable"]][[i]]
+        attribs <- purrr::map_dfr(dataTable[["attributeList"]][["attribute"]],
+                                  tibble::as_tibble)
+      
+        attribs <- attribs %>% dplyr::mutate(R_data_type = dplyr::case_when(
+          storageType == "string" ~ "collector_character",
+          storageType == "date" ~ "collector_date",
+          storageType == "float" ~ "collector_double"))
+      
+        #get column specification as R would guess:
+        csv_cols <- readr::spec_csv(file_path)
+      
+        #set data types based on EML, simple:
+        for(j in 1:nrow(attribs)) {
+          class(csv_cols$cols[[j]]) <- attribs$R_data_type[[j]]
+        }
+      
+        #set date/time col type format string:
+        for(j in 1:nrow(attribs)) {
+          if("dateTime" %in% names(attribs$measurementScale[j])) {
+            eml_date <- 
+              attribs$measurementScale[j][["dateTime"]][["formatString"]]
+            r_date <- QCkit::convert_datetime_format(eml_date)
+            csv_cols$cols[[j]]$format <- r_date
+          }
+        }
+        #set levels for factor call types:
+        for (j in 1:nrow(attribs)) {
+          if("nominal" %in% names(attribs$measurementScale[j])) {
+            nom <- attribs$measurementScale[j][["nominal"]]
+            if ("nonNumericDomain" %in% names(nom)) {
+              nom2 <- nom[["nonNumericDomain"]]
+              if ("enumeratedDomain" %in% names(nom2)) {
+                nom3 <- nom2[["enumeratedDomain"]]
+                if ("codeDefinition" %in% names(nom3)) {
+                  nom4 <- nom3[["codeDefinition"]]
+                  #get factors
+                  factors <- NULL
+                  #handle case where there is only one code definition
+                  if ("code" %in% names(nom4)) {
+                    nom4 <- list(nom4)
+                  }
+                  for (k in 1:length(seq_along(nom4))) {
+                    factors <- append(factors, nom4[[k]][["code"]])
+                  }
+                  #set column type:
+                  csv_cols$cols[[j]] <- readr::col_factor(factors,
+                                                          include_na = FALSE,
+                                                          ordered = FALSE)
+                }
+              }
+            }
+          }
+        }
+        suppressWarnings(tibble_list[[i]] <- 
+                           assign(names[i],
+                                  readr::read_csv(file_path,
+                                                  col_types = csv_cols,
+                                                  show_col_types = FALSE)
+                                  )
+        )
+        names(tibble_list)[i] <- names[i]
+      }
     }
-    return(fileList)
-  }  else {
-    print("data/metadata format combination not supported")
+  }
+  return(tibble_list)
+}      
+
+      
+
+
+
+get_attribute_type <- function(data_filename,
+                               reference_id,
+                               directory = here::here("data")
+                               ){
+  
+  metadata <- DPchecker::load_metadata(directory = paste0(directory,
+                                                         "/",
+                                                         reference_id))
+  #get dataTable(s):
+  #if there is only one dataTable, put it in a list for consitency:
+  if("physical" %in% names(metadata$dataset$dataTable)) {
+    dataTable <- list(metadata$dataset$dataTable)
+  } else {
+    dataTable <- metadata$dataset$dataTable
+  }
+  # create a place to put attributes and information
+  attribute_list <- list()
+  #find the right dataTable:
+  for (i in 1:length(seq_along(dataTable))) {
+    if (dataTable[[i]][["physical"]][["objectName"]] == filename) {
+      #get attribute names:
+      attr_names <- unlist(dataTable[[i]])[grepl('attributeName',
+                                                names(unlist(dataTable[[i]])),
+                                                fixed=T)]
+      names(attr_names) <- NULL
+      
+      #get attribute storage types
+      attr_type <- unlist(dataTable[[i]])[grepl('storageType',
+                                                    names(unlist(dataTable[[i]])),
+                                                    fixed=T)]
+      names(attr_type) <- NULL
+      
+      #turn these into a dataframe:
+      filename_data <- tibble::as_tibble(data.frame(attr_names, attr_type))
+      
+      
+      date_format <- unlist(dataTable[[i]])[grepl('formatString',
+                                                names(unlist(dataTable[[i]])),
+                                                fixed=T)]
+      names(date_format) <- NULL
+      
+      
+      filename_data2 <- filename_data %>% dplyr::mutate(date_format = dplyr::casewhen(attr_type == "date" ~ x))
+      
+      
+      
+      filename_data1 <- filename_data %>% dplyr::mutate(attr_type_abbr = dplyr::case_when(
+        attr_type == "float" ~ "d",
+        attr_type == "date" ~ "T",
+        attr_type == "string" ~ "c"
+      ))
+      
+      
+      
+      
+      
+      
+      #add date formats to the dataframe:
+      #get date formats:
+      date_format <- unlist(dataTable[[i]])[grepl('formatString',
+                                                  names(unlist(dataTable[[i]])),
+                                                  fixed=T)]
+      names(date_format) <- NULL
+      
+      transform(filename_data, format = ifelse( (attr_type == "date"), "Y", "unk"))
+      
+      
+      
+      
+      
+      attribute_list[i] <- assign(attributeNames,
+                                  readr::read_csv(file_path,
+                                                  show_col_types = FALSE))
+    }
+      
   }
 }
+
