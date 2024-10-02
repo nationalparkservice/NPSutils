@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NPSutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -51,8 +51,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.3.2" id="npsutils-032-in-development">NPSutils 0.3.2 (in development)<a class="anchor" aria-label="anchor" href="#npsutils-032-in-development"></a></h2>
-<ul><li>Update readme to us pak for package installation instead of devtools.</li>
+<h2 class="page-header" data-toc-text="0.3.2" id="npsutils-032-lost-coast">NPSutils 0.3.2 “Lost Coast”<a class="anchor" aria-label="anchor" href="#npsutils-032-lost-coast"></a></h2>
+<ul><li>Add new functions, <code><a href="../reference/load_data_packages.html">load_data_packages()</a></code> and <code><a href="../reference/load_data_packages.html">load_data_package()</a></code>, which can load data packages (EML in .xml and data in .csv) similarly to the deprecated <code><a href="../reference/load_data_package_deprecated.html">load_data_package_deprecated()</a></code> function but also allows the data types in the tibbles loaded to be specified based on the information in the metadata.</li>
+<li>Deprecate <code><a href="../reference/load_data_packages.html">load_data_package()</a></code> and rename it to <code><a href="../reference/load_data_package_deprecated.html">load_data_package_deprecated()</a></code>.</li>
+<li>Update readme to us pak for package installation instead of devtools.</li>
 <li>Update _pkgdown.yml to use bootstrap 5</li>
 <li>added helper functions for API requests and user input to facilitate unit testing.</li>
 <li>refactored <code><a href="../reference/get_data_packages.html">get_data_packages()</a></code> to take advantage of new helper functions.</li>
@@ -61,7 +63,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="npsutils-031-ooh-aah-point">NPSutils 0.3.1 “Ooh Aah Point”<a class="anchor" aria-label="anchor" href="#npsutils-031-ooh-aah-point"></a></h2>
-<ul><li>added private functions <code><a href="../reference/dot-get_authors.html">.get_authors()</a></code> and <code><a href="../reference/dot-get_contacts.html">.get_contacts()</a></code> to retrieve authors and contacts (and emails) from EML</li>
+<ul><li>added private functions <code>.get_authors()</code> and <code>.get_contacts()</code> to retrieve authors and contacts (and emails) from EML</li>
 <li>added <code>load_EML_df()</code>, which retrieves commonly available metadata items from an EML-formatted R object and returns them as a single dataframe (for loading into Power BI)</li>
 </ul></div>
     <div class="section level2">

@@ -132,6 +132,7 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
 #'
 #' @return dataframe
 #' @keywords private
+#' @noRd
 #'
 #' @examples
 #' \dontrun{
@@ -199,6 +200,7 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
 #'
 #' @return dataframe
 #' @keywords private
+#' @noRd
 #'
 #' @examples
 #' \dontrun{

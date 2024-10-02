@@ -112,7 +112,7 @@ get_data_packages <- function(reference_id,
     destination_dir <- paste("data/", reference_id[i], sep = "")
     #if the directory already exists, prompt user to overwrite:
     if(force == FALSE) {
-      if (file.exists(destination_dir) & force == FALSE){
+      if (file.exists(destination_dir)){
         cat("The directory ",
             crayon::blue$bold(destination_dir),
             " already exists.\n",

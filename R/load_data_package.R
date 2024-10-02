@@ -1,6 +1,7 @@
 #' Read contents of data package and constructs a list of tibbles based on the data file(s)
 #'
-#' @description \code{load_data_package} reads the data file(s) from a package and loads it into a list of tibbles. Current implementation only supports .csv data files.
+#' `r lifecycle::badge("deprecated")`
+#' @description `load_data_package_deprecated()` reads the data file(s) from a package and loads it into a list of tibbles. Current implementation only supports .csv data files.
 #'
 #' @param reference_id is a 6-7 digit number corresponding to the reference ID of the data package.
 #'
@@ -12,9 +13,13 @@
 #' \dontrun{
 #' load_data_package(2272461)
 #' }
-load_data_package <- function(reference_id) {
+load_data_package_deprecated <- function(reference_id) {
   data_package_directory <- paste("data/", reference_id, sep = "")
   data_package_filename <- paste(data_package_directory, ".zip", sep = "")
+  
+  lifecycle::deprecate_warn("0.3.2",
+                            "load_data_pacakge_deprecated()",
+                            "load_data_packages()")
 
   # Look for the zipped data package and attempt to unzip it. If the zipped file exists but cannot be unzipped, give the user a warning. If neither the unzipped nor zipped data packages exist, suggest the user check their working directory or use getDataPackage() to get the data package.
   if (!file.exists(data_package_directory)) {
