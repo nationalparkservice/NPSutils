@@ -22,8 +22,8 @@
 <url><loc>/reference/get_unit_info.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/load_core_metadata.html</loc></url>
-<url><loc>/reference/load_data_package.html</loc></url>
 <url><loc>/reference/load_data_packages.html</loc></url>
+<url><loc>/reference/load_data_package_deprecated.html</loc></url>
 <url><loc>/reference/load_domains.html</loc></url>
 <url><loc>/reference/load_pkg_metadata.html</loc></url>
 <url><loc>/reference/map_wkt.html</loc></url>
