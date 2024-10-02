@@ -182,7 +182,7 @@ load_data_package <- function(reference_id,
 #' z <- .extract_tbl(x)
 #' }
 extract_tbl <- function(x) {
-  if (is_tibble(x))
+  if (tibble::is_tibble(x))
     return(list(x))
   if (!is.list(x))
     return(NULL)
