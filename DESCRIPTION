@@ -1,7 +1,7 @@
 Package: NPSutils
 Type: Package
 Title: Collection of Functions to read and manipulate information from the NPS DataStore
-Version: 0.3.1
+Version: 0.3.2
 Authors@R: c(
     person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
            role = c("aut", "cre"),
@@ -17,9 +17,10 @@ Description: NPSutils is a collection of functions for interacting with NPS Data
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Remotes:  
+Remotes: 
     nationalparkservice/EMLeditor,
-    nationalparkservice/DPchecker
+    nationalparkservice/DPchecker,
+    nationalparkservice/QCkit
 Imports: 
     EML,
     sf,
@@ -36,9 +37,12 @@ Imports:
     lifecycle,
     EMLeditor (>= 0.1.5),
     DPchecker (>= 0.3.4),
+    QCkit (>= 0.1.4),
     here,
     jsonlite,
-    cli
+    cli,
+    purrr,
+    tibble
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
