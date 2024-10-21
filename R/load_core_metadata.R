@@ -5,7 +5,7 @@
 #' 
 #' #' @details The returned dataframe has three columns, EML_element, EML_data and EML_data2. EML_element describes the EML element that was extracted. EML_data and EML_data2 contain the data from that element. In the case of EML_elements with only one piece of data (e.g. the data package title), the data is repeated in the EML_data and EML_data2 columns.  In cases where the element contains two related pieces of data (e.g. author), those items are held in EML_data (e.g. the author's name) and EML_data2 (e.g. the author's email address). 
 #' 
-#' Currently this function is under development and may have issues if an author has more than two givenNames (it will only use the first givenName), an author has not givenNames (only a surName) or an author is an organization and does not have any individualName. If you have a data package with these issues, please contact [robert_baker@nps.gov](mailto:robert_baker@nps.gov).
+#' Currently this function is under development and may have issues if an author is an organization. If you have a data package with these issues, please contact [robert_baker@nps.gov](mailto:robert_baker@nps.gov).
 #' 
 #' The fields that should be returned in the dataframe include: title, publication date, authors (and emails), contacts (and emails), publisher, DOI, publisher city, publisher state, content begin date, content end date, the abstract, notes, "for or by NPS", the license name (e.g. "Public Domain", "CC0"), and a list of each data file in the data package by name.
 #'
