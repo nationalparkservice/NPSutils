@@ -5,6 +5,7 @@
   * Bug fixes to `.get_authors()`
   * `get_authors` now adds a period (.) after given names with a single character and can handle an unlimited number of given names.
   * Moved sf, leaflet, and stringr to from imports to suggests.
+  * Enable `.get_contacts()` to handle cases when there is only one contact.
   
 # NPSutils 0.3.2 "Lost Coast"
   * Add new functions, `load_data_packages()` and `load_data_package()`, which can load data packages (EML in .xml and data in .csv) similarly to the deprecated `load_data_package_deprecated()` function but also allows the data types in the tibbles loaded to be specified based on the information in the metadata.

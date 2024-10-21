@@ -205,7 +205,7 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
 #' 
 #' `r lifecycle::badge('experimental')`
 #' 
-#' @description `.get_contacts()` extracts the "contacts" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an contact. Second, and column with the contact's name (first last). Third, the contact's email address.
+#' @description `.get_contacts()` extracts the "contacts" element from EML metadata and returns it as a dataframe with two columns, first a column with the contact's name (first last) and second the contact's email address.
 #'
 #' @param metadata an EML formatted R object
 #'
@@ -221,8 +221,16 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
   contact <- metadata$dataset$contact
   individual <- NULL
   email <- NULL
+  
+  #if single contact, nest it so that it behaves the same as when there are
+  #multiple contacts:
+  if ("organizationName" %in% names(contact) |
+      "individualName" %in% names(contact)) {
+    contact <- list(contact)
+  }
+  
   for(i in 1:length(seq_along(contact))){
-    #get name as first-laste:
+    #get name as first-last:
     name_list <- unlist(contact[[i]]$individualName, recursive = FALSE)
     if(length(seq_along(name_list)) == 3){
       ind_name <- paste(name_list$givenName1,
