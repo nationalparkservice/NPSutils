@@ -126,7 +126,7 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
 #'   
 #' @description `.get_authors()` extracts the "creators" element from EML metadata and returns it as a dataframe with three columsn, first a column indicating that each row is an author. Second, and column with the author's name (first last). Third, the author's email address.
 #' 
-#' @details There are some known issues with this function; unfortunately at this time we do not have example data packages to test them. These include: authors without a givenName, authors with more than two givenNames (e.g. multiple middle names), organizations as authors where there is no individualName.
+#' @details There are some known issues with this function; unfortunately at this time we do not have example data packages to test them. These include: authors without a givenName and organizations as authors where there is no individualName.
 #'
 #' @param metadata an EML formatted R object
 #'
@@ -144,29 +144,40 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
   #set up empty dataframe to hold creator info:
   individual <- data.frame(author = as.character(),
                            contact = as.character())
-  for(i in 1:length(seq_along(creators))){
+  
+  #if single creator, nest it so that it behaves the same as when there are
+  #multiple creators:
+  if ("organizationName" %in% names(creators) |
+      "individualName" %in% names(creators)) {
+    creators <- list(creators)
+  }
+  
+  for (i in 1:length(seq_along(creators))) {
     creator <- unlist(creators[[i]], recursive = FALSE)
     #if there is an individual name:
-    if(!is.null(creator$individualName.surName)){
+    if (!is.null(creator$
+                 individualName.surName)) {
       #if there is a given name:
-      if(!is.null(creator$individualName.givenName)){
-        #if there are two given names (e.g. first and middle)
-        if(length(seq_along(creator$individualName.givenName)) == 2){
-          given <- paste(creator$individualName.givenName[[1]],
-                         creator$individualName.givenName[[2]],
-                         sep = " ")
-          #if there is only one given name (first)
-        } else if(length(seq_along(creator$individualNAme.givenName)) == 1){
-          given <- creator$individualName.givenName
-        } else {
-          #More than 2 given names (e.g. first, middle, middle), use only the first given name:
-          given <- creator$individualName.givenName[[1]]
+      if (!is.null(creator$individualName.givenName)) {
+        given <- NULL
+        for (i in 1:length(seq_along(creator$individualName.givenName))) {
+          if (nchar(creator$individualName.givenName[[i]]) == 1) {
+            given <- paste0(given,
+                            paste0(creator$individualName.givenName[[i]],
+                            ". "))
+          } else {
+              given <- paste0(given,
+                              paste0(creator$individualName.given[[i]],
+                                     " "))
+          }
         }
-        
       } else {
         #if there is no given name:
         given <- NA
       }
+      #get rid of extra whitespaces and trailing whitespaces:
+      given <- stringr::str_squish(given)
+      
       #get last name
       sur <- creator$individualName.surName
       #generate full name as first (first) last
