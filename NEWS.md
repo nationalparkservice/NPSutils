@@ -1,3 +1,11 @@
+# NPSutils 0.3.3 (under development)
+
+## 2024-10-21
+  * Bug fixes to `load_data_package()`
+  * Bug fixes to `.get_authors()`
+  * `get_authors` now adds a period (.) after given names with a single character and can handle an unlimited number of given names.
+  * Moved sf, leaflet, and stringr to from imports to suggests.
+  
 # NPSutils 0.3.2 "Lost Coast"
   * Add new functions, `load_data_packages()` and `load_data_package()`, which can load data packages (EML in .xml and data in .csv) similarly to the deprecated `load_data_package_deprecated()` function but also allows the data types in the tibbles loaded to be specified based on the information in the metadata.
   * Deprecate `load_data_package()` and rename it to `load_data_package_deprecated()`.

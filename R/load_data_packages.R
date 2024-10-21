@@ -105,11 +105,21 @@ load_data_packages <- function(reference_id,
                     nom4 <- nom3[["codeDefinition"]]
                     #get factors
                     factors <- NULL
+                    #if (length(seq_along(nom4)) > 1) {
+                      #nom4 <- unlist(nom4, recursive = FALSE)
+                    #}
                     #handle case where there is only one code definition
                     if ("code" %in% names(nom4)) {
                       nom4 <- list(nom4)
                     }
+                    # for(k in 1:length(seq_along(nom4))) {
+                    #  if("code" %in% names(nom4[k])) {
+                    #    factors <- append(factors, nom5[[k]])
+                    #  }
+                    #}
+                    
                     for (k in 1:length(seq_along(nom4))) {
+                      #print(paste0("i=",i, ", j=", j, " k=, ", k, "."))
                       factors <- append(factors, nom4[[k]][["code"]])
                     }
                     #set column type:
@@ -159,9 +169,9 @@ load_data_package <- function(reference_id,
                               simplify = TRUE) {
   
   x <- load_data_packages(reference_id, 
-                          directory = here::here("data"),
-                          assign_attributes = FALSE,
-                          simplify = TRUE)
+                          directory,
+                          assign_attributes,
+                          simplify)
   return(x)
 }
 

@@ -51,9 +51,10 @@ load_pkg_metadata <- function(holding_id, directory = here::here("data")) {
 
   #load metadata
   eml_object <- EML::read_eml(meta_location, from = "xml")
-    attributeList <- EML::get_attributes(workingEMLfile$dataset$dataTable$attributeList)
-    attributes <- attributeList$attributes
-    factors <- attributeList$factors
+    #attributeList <- EML::get_attributes(eml_object)
+    attribute_list <- eml_object$dataset$dataTable$attributeList
+    attributes <- attribute_list$attributes
+    factors <- attribute_list$factors
 
     # Figure out column classes based on attribute table (character, numeric, integer, logical, or complex)
     attributes$columnclass <- "character"
