@@ -23,7 +23,6 @@ Remotes:
     nationalparkservice/QCkit
 Imports: 
     EML,
-    sf,
     dplyr,
     httr,
     XML,
@@ -33,8 +32,6 @@ Imports:
     readr,
     magrittr,
     crayon,
-    leaflet,
-    lifecycle,
     EMLeditor (>= 0.1.5),
     DPchecker (>= 0.3.4),
     QCkit (>= 0.1.4),
@@ -42,12 +39,16 @@ Imports:
     jsonlite,
     cli,
     purrr,
-    tibble
+    tibble,
+    lifecycle
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    sf,
+    leaflet,
+    stringr
 VignetteBuilder: knitr
 URL: https://nationalparkservice.github.io/NPSutils/
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
