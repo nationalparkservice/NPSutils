@@ -1,5 +1,7 @@
 # NPSutils 0.3.3 (under development)
 
+## 2024-10-24
+  * fix how `get_data_package` aliases `get_data_packages`, specifically now allows users to adjust parameters to non-default settings.
 ## 2024-10-21
   * Bug fixes to `load_data_package()`
   * Bug fixes to `.get_authors()`
