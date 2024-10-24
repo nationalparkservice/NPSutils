@@ -227,8 +227,10 @@ get_data_packages <- function(reference_id,
       }
     }
   }
-  data_path<-paste0(path, "/data")
-  cat("Any downloaded data package(s) can be found at:\n")
+  data_path <- paste0(path, "/data")
+  if (force == FALSE) {
+    cat("Any downloaded data package(s) can be found at:\n")
+  }
   on.exit(return(data_path))
 }
 
@@ -242,9 +244,9 @@ get_data_package <- function(reference_id,
                             dev = FALSE) {
   
   x <- get_data_packages(reference_id,
-                         secure = FALSE,
-                         path=here::here(),
-                         force = FALSE,
-                         dev = FALSE)
+                         secure = secure,
+                         path = path,
+                         force = force,
+                         dev = dev)
   return(x)
 }
