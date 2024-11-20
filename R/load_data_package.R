@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' load_data_package(2272461)
+#' load_data_package_deprecated(2272461)
 #' }
 load_data_package_deprecated <- function(reference_id) {
   data_package_directory <- paste("data/", reference_id, sep = "")
