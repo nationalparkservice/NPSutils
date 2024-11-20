@@ -1,6 +1,6 @@
 #' Get a list of reference codes from DataStore
 #' 
-#' `get_reference_list` will return a list of the DataStore reference codes associated with a given reference type. Where "All" might be a bit generous: I would not expect more than the number given by "no_of_entries" as that is technically the number of entries per page and the function defaults to returning just one page (not entirely sure what a "page" is in this context).
+#' `get_ref_list` will return a list of the DataStore reference codes associated with a given reference type. Where "All" might be a bit generous: I would not expect more than the number given by "no_of_entries" as that is technically the number of entries per page and the function defaults to returning just one page (not entirely sure what a "page" is in this context).
 #' 
 #'
 #' @param reference_type String. The reference type to to query data store for. Defaults to data package ("dataPackage"). 
@@ -46,7 +46,7 @@ get_references_list <- function (reference_type = "dataPackage",
 #' 
 #' The function will return a data frame containing information about a given number of references within a reference type. The data returned includes the reference ID (referenceId), the date the references was activated on DataStore (dateOfIssue), the references visibility (visibility), the number of files associated with the reference (fileCount), the access level of the files (fileAccess), the reference title (title), the abbreviated citation (citation), the URL for the DataStore reference (referenceUrl), the group-type for the reference (referenceGroupType), the type of reference (typeName), whether the reference has a DOI associated with it (isDOI), whether their is a newer version of the reference (newVersion) and what the most recent version of the reference is (mostRecentReerence).
 #' 
-#' @inheritParams get_reference_list
+#' @inheritParams get_ref_list
 #''
 #' @return a data frame
 #' @export
