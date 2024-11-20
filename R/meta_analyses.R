@@ -12,9 +12,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' get_reference_list()
+#' get_ref_list()
 #' }
-get_references_list <- function (reference_type = "dataPackage",
+get_ref_list <- function (reference_type = "dataPackage",
                                  no_of_entries = 500,
                                  secure = FALSE) {
   server <- NULL
@@ -47,7 +47,7 @@ get_references_list <- function (reference_type = "dataPackage",
 #' The function will return a data frame containing information about a given number of references within a reference type. The data returned includes the reference ID (referenceId), the date the references was activated on DataStore (dateOfIssue), the references visibility (visibility), the number of files associated with the reference (fileCount), the access level of the files (fileAccess), the reference title (title), the abbreviated citation (citation), the URL for the DataStore reference (referenceUrl), the group-type for the reference (referenceGroupType), the type of reference (typeName), whether the reference has a DOI associated with it (isDOI), whether their is a newer version of the reference (newVersion) and what the most recent version of the reference is (mostRecentReerence).
 #' 
 #' @inheritParams get_ref_list
-#''
+#'
 #' @return a data frame
 #' @export
 #'
@@ -150,6 +150,10 @@ get_ref_info <- function (reference_type = "dataPackage",
 #' @export
 #'
 #' @examples
+#' #' \dontrun{
+#' x <- get_ref_list()
+#' get_ref_info(x[[1]])
+#' }
 summarize_packages <- function(ref_list,
                                secure = TRUE,
                                check_metadata = FALSE) {
