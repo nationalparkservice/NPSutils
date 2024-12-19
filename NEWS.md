@@ -1,5 +1,8 @@
 # NPSutils 0.3.3 (under development)
 
+## 2024-12-19
+  * updated `load_pkg_metadata` to be simpler and essentially call `DPchecker::load_metadata` but with a preset default directory structure that works well with the default settings for `get_data_package`.
+  * Add meta-analysis functions for finding and producing summary statistics multiple data packages including `get_ref_list`, `get_ref_info()`, and `summarize_packages`.
 ## 2024-10-24
   * fix how `get_data_package` aliases `get_data_packages`, specifically now allows users to adjust parameters to non-default settings.
 ## 2024-10-21
