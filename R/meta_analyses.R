@@ -150,7 +150,7 @@ get_ref_info <- function (reference_type = "dataPackage",
 #' @export
 #'
 #' @examples
-#' #' \dontrun{
+#' \dontrun{
 #' x <- get_ref_list()
 #' get_ref_info(x[[1]])
 #' }
