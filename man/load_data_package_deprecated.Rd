@@ -20,6 +20,6 @@ a list of one or more tibbles contained within the data package to the global en
 }
 \examples{
 \dontrun{
-load_data_package(2272461)
+load_data_package_deprecated(2272461)
 }
 }

@@ -2,23 +2,20 @@
 % Please edit documentation in R/load_pgk_metadata.R
 \name{load_pkg_metadata}
 \alias{load_pkg_metadata}
-\title{Read contents of data package file and construct a data frame based on the
-metadata file summarizing the fields and their types/definitions.}
+\title{Loads EML-formatted metadata into R for inspection and/or editing}
 \usage{
-load_pkg_metadata(holding_id, directory = here::here("data"))
+load_pkg_metadata(holding_id, directory = "data")
 }
 \arguments{
-\item{holding_id}{is a 6-7 digit number corresponding to the holding ID of the data package zip file.}
+\item{holding_id}{is a 6-7 digit number corresponding to the holding ID of the data package zip file. Your data should be in a directory that that has the holding ID as its name.}
 
-\item{directory}{String. Path to the data package}
+\item{directory}{String. Path to the data package directory, defaults to "data".}
 }
 \value{
 one data frame to the global environment.
 }
 \description{
-`load_pkg_metadata()` reads the metadata file from a previously
-downloaded package and loads a list of fields and their attributes into a
-dataframe.
+`load_pkg_metadata()` is essentially a wrapper around `DPchecker::load_metadata` with the directory structure pre-set to work well the  default location that `get_data_package` stores downloaded data packages. If you did not use the default settings for `get_data_package` (or downloaded a data package manually) you may find it easier to adjust the directory structure pointing to your data package and load the metadata using `DPchecker::load_metadata()`. Much like `load_metadata`, `load_pkg_metadata` requires that there be a single .xml file in the data package directory, that the metadata file name end in *_metadata.xml, and that the file contain schema-valid EML metadata.
 }
 \examples{
 \dontrun{
