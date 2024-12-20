@@ -17,11 +17,11 @@ get_ref_info(
 )
 }
 \arguments{
-\item{reference_type}{String. The reference type to to query data store for. Defaults to data package ("dataPackage").}
+\item{reference_type}{String. Defaults to "dataPackage". The reference type to query DataStore for.}
 
-\item{no_of_entries}{Integer. The number of entries to return per page (where only one "page" of results is returned by default). Defaults to 500.}
+\item{no_of_entries}{Integer. Defaults to 500. The number of entries to return.}
 
-\item{secure}{Logical. Defaults to FALSE for external users. Setting secure = TRUE will, with the proper credentials, return DataStore references with visibility set to both Public and Restricted.}
+\item{secure}{Logical. Defaults to FALSE. Should the function use a secure API or the pubic API?}
 
 \item{holding_id}{The six-seven digit reference / holding ID number unique to the data store record.}
 
