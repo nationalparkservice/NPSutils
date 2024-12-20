@@ -16,7 +16,9 @@
 <url><loc>/reference/get_park_taxon_citations.html</loc></url>
 <url><loc>/reference/get_park_taxon_refs.html</loc></url>
 <url><loc>/reference/get_park_taxon_url.html</loc></url>
+<url><loc>/reference/get_refs_info.html</loc></url>
 <url><loc>/reference/get_ref_info.html</loc></url>
+<url><loc>/reference/get_ref_list.html</loc></url>
 <url><loc>/reference/get_unit_code.html</loc></url>
 <url><loc>/reference/get_unit_code_info.html</loc></url>
 <url><loc>/reference/get_unit_info.html</loc></url>
@@ -29,6 +31,7 @@
 <url><loc>/reference/map_wkt.html</loc></url>
 <url><loc>/reference/NPSutils-package.html</loc></url>
 <url><loc>/reference/rm_local_packages.html</loc></url>
+<url><loc>/reference/summarize_packages.html</loc></url>
 <url><loc>/reference/validate_data_package.html</loc></url>
 </urlset>
 
