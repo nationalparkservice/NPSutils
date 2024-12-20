@@ -46,7 +46,9 @@ get_ref_list <- function (reference_type = "dataPackage",
 #' 
 #' The function will return a data frame containing information about a given number of references within a reference type. The data returned includes the reference ID (referenceId), the date the references was activated on DataStore (dateOfIssue), the references visibility (visibility), the number of files associated with the reference (fileCount), the access level of the files (fileAccess), the reference title (title), the abbreviated citation (citation), the URL for the DataStore reference (referenceUrl), the group-type for the reference (referenceGroupType), the type of reference (typeName), whether the reference has a DOI associated with it (isDOI), whether their is a newer version of the reference (newVersion) and what the most recent version of the reference is (mostRecentReerence).
 #' 
-#' @inheritParams get_ref_list
+#' @param reference_type String. Defaults to "dataPackage". The reference type to query DataStore for.
+#' @param no_of_entries Integer. Defaults to 500. The number of entries to return.
+#' @param secure Logical. Defaults to FALSE. Should the function use a secure API or the pubic API?
 #'
 #' @return a data frame
 #' @export
