@@ -11,6 +11,7 @@
 #'
 #' @return The function returns a dynamic, zoomable leaflet map with the specific geometry plotted.
 #' @importFrom magrittr %>%
+#' @importFrom stats na.omit
 #' @export
 #'
 #' @examples
