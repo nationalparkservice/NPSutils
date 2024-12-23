@@ -1,5 +1,8 @@
 # NPSutils 0.3.3 (under development)
 
+##2024-12-19
+  * remove `validate_data_package()` as this function was listed as "still under construction" is mostly obsolete given other functions and functions in the DPchecker package.
+  * remove `load_domains()` as this function was not working properly and was conceived of before the data package specifications were properly set.
 ## 2024-12-19
   * updated `load_pkg_metadata` to be simpler and essentially call `DPchecker::load_metadata` but with a preset default directory structure that works well with the default settings for `get_data_package`.
   * Add meta-analysis functions for finding and producing summary statistics multiple data packages including `get_ref_list`, `get_refs_info()`, and `summarize_packages`.

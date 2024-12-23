@@ -63,5 +63,6 @@ globalVariables(c("capture.output",
                   "metaformat",
                   "data_format",
                   "metadata_format",
-                  "fileList"
+                  "fileList",
+                  "attributeName"
                   ))

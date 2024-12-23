@@ -52,20 +52,7 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="npsutils-033-under-development">NPSutils 0.3.3 (under development)<a class="anchor" aria-label="anchor" href="#npsutils-033-under-development"></a></h2>
-<div class="section level3">
-<h3 id="id_2024-0-3-3">2024-12-19<a class="anchor" aria-label="anchor" href="#id_2024-0-3-3"></a></h3>
-<ul><li>updated <code>load_pkg_metadata</code> to be simpler and essentially call <code><a href="https://nationalparkservice.github.io/DPchecker/reference/load_metadata.html" class="external-link">DPchecker::load_metadata</a></code> but with a preset default directory structure that works well with the default settings for <code>get_data_package</code>.</li>
-<li>Add meta-analysis functions for finding and producing summary statistics multiple data packages including <code>get_ref_list</code>, <code><a href="../reference/get_refs_info.html">get_refs_info()</a></code>, and <code>summarize_packages</code>. ## 2024-10-24</li>
-<li>fix how <code>get_data_package</code> aliases <code>get_data_packages</code>, specifically now allows users to adjust parameters to non-default settings. ## 2024-10-21</li>
-<li>Bug fixes to <code><a href="../reference/load_data_packages.html">load_data_package()</a></code>
-</li>
-<li>Bug fixes to <code>.get_authors()</code>
-</li>
-<li>
-<code>get_authors</code> now adds a period (.) after given names with a single character and can handle an unlimited number of given names.</li>
-<li>Moved sf, leaflet, and stringr to from imports to suggests.</li>
-<li>Enable <code>.get_contacts()</code> to handle cases when there is only one contact.</li>
-</ul></div>
+<p>##2024-12-19 * remove <code>validate_data_package()</code> as this function was listed as “still under construction” is mostly obsolete given other functions and functions in the DPchecker package. * remove <code>load_domains()</code> as this function was not working properly and was conceived of before the data package specifications were properly set. ## 2024-12-19 * updated <code>load_pkg_metadata</code> to be simpler and essentially call <code><a href="https://nationalparkservice.github.io/DPchecker/reference/load_metadata.html" class="external-link">DPchecker::load_metadata</a></code> but with a preset default directory structure that works well with the default settings for <code>get_data_package</code>. * Add meta-analysis functions for finding and producing summary statistics multiple data packages including <code>get_ref_list</code>, <code><a href="../reference/get_refs_info.html">get_refs_info()</a></code>, and <code>summarize_packages</code>. ## 2024-10-24 * fix how <code>get_data_package</code> aliases <code>get_data_packages</code>, specifically now allows users to adjust parameters to non-default settings. ## 2024-10-21 * Bug fixes to <code><a href="../reference/load_data_packages.html">load_data_package()</a></code> * Bug fixes to <code>.get_authors()</code> * <code>get_authors</code> now adds a period (.) after given names with a single character and can handle an unlimited number of given names. * Moved sf, leaflet, and stringr to from imports to suggests. * Enable <code>.get_contacts()</code> to handle cases when there is only one contact.</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.2" id="npsutils-032-lost-coast">NPSutils 0.3.2 “Lost Coast”<a class="anchor" aria-label="anchor" href="#npsutils-032-lost-coast"></a></h2>
