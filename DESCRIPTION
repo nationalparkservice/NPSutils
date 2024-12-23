@@ -22,13 +22,11 @@ Remotes:
     nationalparkservice/DPchecker,
     nationalparkservice/QCkit
 Imports: 
-    EML,
     dplyr,
     httr,
     XML,
     curl,
     tools,
-    rlang,
     readr,
     magrittr,
     crayon,
@@ -37,7 +35,6 @@ Imports:
     QCkit (>= 0.1.4),
     here,
     jsonlite,
-    cli,
     purrr,
     tibble,
     lifecycle
