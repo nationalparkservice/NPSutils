@@ -37,7 +37,7 @@ get_unit_info(
 one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to determine the intended  Park Unit's name.
 }
 \description{
-\code{get_unit_info} accesses info from irmaservices.nps.gov and allows you to search a Park Unit based on any number or combination of parameters. Not all parameters need to be specified, but it is probably worth specifying which parameters ARE specified, e.g. get.unitInfo(LifeCycle="Inactive"). If the arguments are not specified, they will default to the order supplied in the function.
+`get_unit_info` accesses info from irmaservices.nps.gov and allows you to search a Park Unit based on any number or combination of parameters. Not all parameters need to be specified, but it is probably worth specifying which parameters ARE specified, e.g. get.unitInfo(LifeCycle="Inactive"). If the arguments are not specified, they will default to the order supplied in the function.
 }
 \examples{
 \dontrun{

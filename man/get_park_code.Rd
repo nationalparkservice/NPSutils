@@ -10,10 +10,10 @@ get_park_code(park)
 \item{park}{is a case-insensitive string containing some part of the unit's FullName, e.g "Yellow".}
 }
 \value{
-one data frame to the global environment. May contain multiple matches. Sufficient detail should be provided to choose the appropriate UnitCode for use with other NPSutils functions such as get.parkTaxonReferences (in ReferenceInfo.R). Dataframe contains UnitCode, FullName, UnitLifeCycle, Network, Region, and StateCodes.
+one data frame to the global environment. May contain multiple matches.
 }
 \description{
-\code{get_park_code} is identical to \code{get_unit_code} except output is restricted to just National Parks (as opposed to including networks, etc.).Accesses info from irmaservices.nps.gov. Search for park or park unit with any string and return all applicable national park unitCodes. Handy for use with get.dataPackage if you don't know a Park's UnitCode.
+`get_park_code` is identical to `get_unit_code` except the output is restricted to just National Parks (as opposed to including networks, etc.). Accesses info from irmaservices.nps.gov. Search for park or park unit with any string and return all applicable national park unitCodes.
 }
 \examples{
 \dontrun{
