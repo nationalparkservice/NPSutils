@@ -1,6 +1,9 @@
-# NPSutils 0.3.3 (under development)
+# NPSutils 1.0.0 
+## 2025-12-19
+  * remove `get_data_packages_deprecated()` is a breaking change resulting in release of v.1.0.0.  
+  * update documentation for `get_unit_code()`, `get_park_code()`, and `get_unit_code_info()`
 
-##2024-12-19
+## 2024-12-19
   * remove `validate_data_package()` as this function was listed as "still under construction" is mostly obsolete given other functions and functions in the DPchecker package.
   * remove `load_domains()` as this function was not working properly and was conceived of before the data package specifications were properly set.
 ## 2024-12-19
