@@ -1,5 +1,7 @@
 # NPSutils 1.0.0 
-## 2025-12-19
+## 2025-01-22
+  * Update license to CC0.
+## 2025-01-19
   * remove `get_data_packages_deprecated()` is a breaking change resulting in release of v.1.0.0.  
   * update documentation for `get_unit_code()`, `get_park_code()`, and `get_unit_code_info()`
 
