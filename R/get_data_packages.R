@@ -165,6 +165,10 @@ get_data_packages <- function(reference_id,
         reference_id[i],
         "/DigitalFiles"
       )
+      rest_file_download_base <- paste0(
+        .ds_api(),
+        "DownloadFile/"
+      )
     }
     # restricted references:
     if (secure == TRUE && dev == FALSE) {
@@ -174,6 +178,10 @@ get_data_packages <- function(reference_id,
         reference_id[i],
         "/DigitalFiles"
       )
+      rest_file_download_base <- paste0(
+        .ds_secure_api(),
+        "DownloadFile/"
+      )
     }
     # references on dev server:
     if (dev == TRUE) {
@@ -182,6 +190,10 @@ get_data_packages <- function(reference_id,
         "reference/",
         reference_id[i],
         "/DigitalFiles"
+      )
+      rest_file_download_base <- paste0(
+        .ds_dev_api(),
+        "DownloadFile/"
       )
     }
 
@@ -214,27 +226,27 @@ get_data_packages <- function(reference_id,
 
     if (is.null(xml$message)) {
       for (j in seq_along(xml)) {
-        rest_download_url <- xml[[j]]$downloadLink
         download_filename <- xml[[j]]$fileName
+        file_id <- xml[[j]]$resourceId
+        rest_file_download_url <- paste0(rest_file_download_base, file_id)
+        
         download_file_path <- paste0(
           "data/",
           reference_id[i], "/",
           download_filename
         )
         # download the file:
-        invisible(capture.output(
-          suppressMessages(httr::content(
-            httr::GET(
-              rest_download_url,
-              httr::timeout(300),
-              httr::progress(),
-              httr::write_disk(download_file_path,
-                overwrite = TRUE
-              ),
-              httr::authenticate(":", ":", "ntlm")
-            )
-          ))
+        suppressMessages(
+          download_resp <- httr::GET(
+          rest_file_download_url,
+          httr::timeout(300),
+          httr::progress(),
+          httr::write_disk(download_file_path,
+                           overwrite = TRUE
+          ),
+          httr::authenticate(":", ":", "ntlm")
         ))
+        
         if (force == FALSE) {
           cat("Writing: ",
             crayon::blue$bold(download_file_path),
