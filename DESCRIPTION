@@ -10,7 +10,10 @@ Authors@R: c(
            role = c("aut")),
     person(given="Judd", family="Patterson", email="Judd_Patterson@nps.gov",
            role= "aut",
-           comment = c(ORCID = "0000-0002-0951-7917"))
+           comment = c(ORCID = "0000-0002-0951-7917")),
+    person(given = c("Sarah", "E."), family = "Wright", email = "sarah_wright@nps.gov", 
+           role = "aut",
+           comment = c(ORCID = "0009-0004-5060-2189"))
            )
 Maintainer: Rob Baker <robert_baker@nps.gov>
 Description: NPSutils is a collection of functions for interacting with NPS DataStore repository.
