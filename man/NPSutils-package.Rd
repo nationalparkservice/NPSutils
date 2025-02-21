@@ -23,6 +23,7 @@ Authors:
 \itemize{
   \item Joe DeVivo
   \item Judd Patterson \email{Judd_Patterson@nps.gov} (\href{https://orcid.org/0000-0002-0951-7917}{ORCID})
+  \item Sarah E. Wright \email{sarah_wright@nps.gov} (\href{https://orcid.org/0009-0004-5060-2189}{ORCID})
 }
 
 }
