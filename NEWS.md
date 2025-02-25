@@ -1,3 +1,11 @@
+# NPSutils 1.0.1 (development version)
+## 2025-02-25
+  * Update `CONTRIBUTING.md`
+  * Update readme to remove mention of "borked" functions
+  
+## 2025-02-22
+  * Add `CONTRIBUTING.md` file.
+
 # NPSutils 1.0.0 
 ## 2025-01-22
   * Update license to CC0.
