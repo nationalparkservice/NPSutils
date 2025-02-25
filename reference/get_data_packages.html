@@ -95,17 +95,17 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co">#get a public data package</span></span></span>
+<span class="r-in"><span><span class="co"># get a public data package</span></span></span>
 <span class="r-in"><span><span class="fu">get_data_packages</span><span class="op">(</span><span class="fl">2300498</span>, secure <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#get a list of data packages, some public some restricted</span></span></span>
+<span class="r-in"><span><span class="co"># get a list of data packages, some public some restricted</span></span></span>
 <span class="r-in"><span><span class="fu">get_data_packages</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2272461</span>, <span class="fl">1234567</span>, <span class="fl">7654321</span><span class="op">)</span>, secure <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#pass a list of data packages to retrieve to the function:</span></span></span>
-<span class="r-in"><span><span class="va">data_packages</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2272461</span>, <span class="fl">1234567</span>, <span class="fl">7654321</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">get_data_packages</span><span class="op">(</span><span class="va">data_packages</span>, secure <span class="op">=</span> <span class="cn">TRUE</span>, path<span class="op">=</span><span class="st">"../../my_custom_directory"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># pass a list of data packages to retrieve to the function:</span></span></span>
+<span class="r-in"><span><span class="va">data_packages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2272461</span>, <span class="fl">1234567</span>, <span class="fl">7654321</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_data_packages</span><span class="op">(</span><span class="va">data_packages</span>, secure <span class="op">=</span> <span class="cn">TRUE</span>, path <span class="op">=</span> <span class="st">"../../my_custom_directory"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#get a data package and return the path the data package is saved to</span></span></span>
+<span class="r-in"><span><span class="co"># get a data package and return the path the data package is saved to</span></span></span>
 <span class="r-in"><span><span class="va">pathToDataForPiping</span> <span class="op">&lt;-</span> <span class="fu">get_data_packages</span><span class="op">(</span><span class="fl">2272461</span>, secure <span class="op">=</span> <span class="cn">TRUE</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
