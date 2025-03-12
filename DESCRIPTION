@@ -17,7 +17,7 @@ Authors@R: c(
            )
 Maintainer: Rob Baker <robert_baker@nps.gov>
 Description: NPSutils is a collection of functions for interacting with NPS DataStore repository.
-License: CC0
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Remotes: 

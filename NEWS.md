@@ -1,4 +1,6 @@
 # NPSutils 1.0.1 (development version)
+## 2025-03-12
+  * Update to MIT license
 ## 2025-02-25
   * Update `CONTRIBUTING.md`
   * Update readme to remove mention of "borked" functions
