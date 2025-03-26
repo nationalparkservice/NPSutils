@@ -37,9 +37,10 @@ load_data_packages <- function(reference_id,
     directory1 <- paste0(directory, "/", reference_id[h])
     #get csv file names:
     filenames <- list.files(path = directory1,
-                            pattern = "*csv")
+                            pattern = "*\\.csv",
+                            ignore.case = TRUE)
     ## Create list of data frame names without the ".csv" part
-    names <- gsub(pattern = "\\.csv$", "", filenames)
+    names <- gsub(pattern = "\\.csv$", "", filenames, ignore.case = TRUE)
     
     ### Load all files into tibbles
     package_data <- list()

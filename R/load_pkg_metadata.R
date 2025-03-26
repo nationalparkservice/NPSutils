@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' load_pgk_metadata(2266200)
+#' load_pkg_metadata(2266200)
 #' }
 load_pkg_metadata <- function(holding_id, directory = "data") {
   

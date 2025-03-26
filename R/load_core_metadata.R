@@ -72,7 +72,7 @@ load_core_metadata <- function(ds_ref, path = paste0(getwd(), "/data")){
   license_name <- metadata$dataset$licensed$licenseName
   
   #get files lists:
-  files <- list.files(path=directory, pattern = "*.csv")
+  files <- list.files(path=directory, pattern = "*\\.csv", ignore.case = TRUE)
   file_names <- data.frame(files, files)
   file_names$eml_element <- "data_file"
   file_names <- file_names[,c(3,1,2)]
