@@ -1,4 +1,8 @@
 # NPSutils 1.0.1 (development version)
+
+## 2025-03-25
+  * fix bug that caused some functions to fail to detect certain .csv files
+  
 ## 2025-03-12
   * Update to MIT license
 ## 2025-02-25
