@@ -38,15 +38,10 @@ get_data_packages <- function(reference_id,
                               path = here::here(),
                               force = FALSE,
                               dev = FALSE) {
-  # capture original working directory
-  orig_wd <- getwd()
-  # set directory back to original working directory on exit.
-  on.exit(setwd(orig_wd), add = TRUE)
-  # set wd to path; defaults to wd.
-  setwd(path)
+  
   # create "data" directory, if necessary:
-  if (!file.exists("data")) {
-    dir.create("data")
+  if (!file.exists(file.path(path, "data"))) {
+    dir.create(file.path(path, "data"))
   }
 
   # enforce proper specification of TRUE/FALSE parameters:
@@ -124,7 +119,7 @@ get_data_packages <- function(reference_id,
     }
 
     # if necessary, create a package-specific directory within the /data:
-    destination_dir <- paste("data/", reference_id[i], sep = "")
+    destination_dir <- file.path(path, "data", reference_id[i])
     # if the directory already exists, prompt user to overwrite:
     if (force == FALSE) {
       if (file.exists(destination_dir)) {
@@ -230,9 +225,10 @@ get_data_packages <- function(reference_id,
         file_id <- xml[[j]]$resourceId
         rest_file_download_url <- paste0(rest_file_download_base, file_id)
         
-        download_file_path <- paste0(
-          "data/",
-          reference_id[i], "/",
+        download_file_path <- file.path(
+          path,
+          "data",
+          reference_id[i],
           download_filename
         )
         # download the file:
@@ -257,20 +253,11 @@ get_data_packages <- function(reference_id,
         # check to see if the downloaded file is a zip; unzip.
         if (tools::file_ext(tolower(download_filename)) == "zip") {
           utils::unzip(
-            zipfile = paste0(
-              "data\\",
-              reference_id[i], "\\",
-              download_filename
-            ),
-            exdir = paste0("data\\", reference_id[i])
+            zipfile = download_file_path,
+            exdir = dirname(download_file_path) 
           )
           # delete .zip file
-          file.remove(paste0(
-            "data/",
-            reference_id[i],
-            "/",
-            download_filename
-          ))
+          file.remove(download_file_path)
           if (force == FALSE) {
             cat("Unzipping ",
               crayon::blue$bold(download_filename),
