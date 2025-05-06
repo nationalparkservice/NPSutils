@@ -43,12 +43,15 @@ Imports:
     lifecycle
 RoxygenNote: 7.3.2
 Suggests: 
+    httptest,
+    httptest2,
     knitr,
-    rmarkdown,
-    testthat (>= 3.0.0),
-    sf,
     leaflet,
-    stringr
+    rmarkdown,
+    sf,
+    stringr,
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: knitr
 URL: https://nationalparkservice.github.io/NPSutils/
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
