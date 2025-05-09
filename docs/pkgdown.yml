@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   NPSutils: NPSutils.html
-last_built: 2025-03-12T21:26Z
+last_built: 2025-05-09T03:02Z
 urls:
   reference: https://nationalparkservice.github.io/NPSutils/reference
   article: https://nationalparkservice.github.io/NPSutils/articles

@@ -22,6 +22,6 @@ Regions do NOT use the region numbering system because the underlying data this 
 }
 \examples{
 \dontrun{
-get_unit_code("ROMO")
+get_unit_code("Rocky")
 }
 }

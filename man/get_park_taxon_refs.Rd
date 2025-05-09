@@ -12,7 +12,7 @@ get_park_taxon_refs(park_code, taxon_code)
 \item{taxon_code}{The IRMA taxon code.}
 }
 \description{
-\code{get_park_taxon_refs} returns a data frame of metadata for references in Data Store corresponding to a particular taxon at a park.
+\code{get_park_taxon_refs} returns a tibble of metadata for references in Data Store corresponding to a particular taxon at a park.
 The resultant data frame is then usable by other functions to extract metadata from the records.
 
 Because `get_park_taxon_refs()` accesses restricted data on the secure DataStore server, results of these queries need to be considered for potential park-specific data protection protocols. 
