@@ -44,14 +44,14 @@ Imports:
 RoxygenNote: 7.3.2
 Suggests: 
     httptest,
-    httptest2,
     knitr,
     leaflet,
     rmarkdown,
     sf,
     stringr,
     testthat (>= 3.0.0),
-    withr
+    withr,
+    randgeo
 VignetteBuilder: knitr
 URL: https://nationalparkservice.github.io/NPSutils/
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
