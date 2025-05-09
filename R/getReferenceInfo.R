@@ -79,13 +79,13 @@ get_park_taxon_url <- function(park_code, taxon_code) {
   return(URLs)
 }
 
-#' Get citation for Data Store holding info by HoldingID
+#' Get citation for Data Store holding info by reference ID
 #'
-#' @description \code{get_ref_info} returns a character string or a vector with information from one of the
+#' @description `get_ref_info` returns a character string or a vector with information from one of the
 #' metadata fields in a Data Store reference's associated xml file.
 #'
 #'
-#' @param holding_id The six-seven digit reference / holding ID number unique to the data store record.
+#' @param reference_id The six-seven digit reference ID number unique to the data store record.
 #' @param field is one of the following: "Title" returns the title of the data store reference as a string value;
 #' "Abstract" returns the abstract as a string value; "Citation" returns the citation as a string value, and "Keywords" returns a vector containing
 #' all keywords as character values.
@@ -96,10 +96,10 @@ get_park_taxon_url <- function(park_code, taxon_code) {
 #' \dontrun{
 #' get_ref_info(2266196, "Title")
 #' }
-get_ref_info <- function(holding_id, field) {
+get_ref_info <- function(reference_id, field) {
   url <- paste0(.ds_api(),
                 "Profile/",
-                holding_id)
+                reference_id)
   DSReference <- httr::content(httr::GET(
     url, httr::authenticate(":", ":", "ntlm")
   ))
