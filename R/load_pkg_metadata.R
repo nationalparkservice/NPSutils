@@ -15,7 +15,8 @@
 #' }
 load_pkg_metadata <- function(reference_id, directory = "data") {
   
-  meta <- DPchecker::load_metadata(directory = here::here("data", reference_id))
+  meta <- DPchecker::load_metadata(directory = here::here(directory,
+                                                          reference_id))
   
   return(invisible(meta))
 }  
