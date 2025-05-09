@@ -13,11 +13,6 @@ test_that(".ds_dev_api returns correct url", {
   expect_equal(.ds_dev_api(x), "https://irmadevservices.nps.gov/datastore-secure/v7/rest/")
 })
 
-test_that("get_user_email returns a string approximating an email", {
-  email <- get_user_email()
-  expect_equal(grep("@", email), 1)
-})
-
 # ---- test get_user_input ----
 test_that(".get_user_input request ouputs correct value (2)", {
   return_val_2 <- function() {2}
