@@ -51,7 +51,9 @@ Suggests:
     stringr,
     testthat (>= 3.0.0),
     withr,
-    randgeo
+    randgeo,
+    mockr,
+    EML
 VignetteBuilder: knitr
 URL: https://nationalparkservice.github.io/NPSutils/
 BugReports: https://github.com/nationalparkservice/NPSutils/issues
