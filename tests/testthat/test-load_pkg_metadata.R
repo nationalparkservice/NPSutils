@@ -11,7 +11,7 @@ httptest::with_mock_dir("load_pkg_metadata_dir", {
                       dev = FALSE)
     
     meta <- load_pkg_metadata(2295255,
-                              directory = "data")
+                              directory = file.path(local, "data"))
     
     expect_true(EML::eml_validate(meta))
   })
