@@ -58,22 +58,24 @@ httptest::with_mock_dir("get_data_packages_not_dp", {
   test_that("get_data_package downloads even if not a data package", {
     #return_val_1 <- function() {1}
     local({mockr::local_mock(.get_user_input = return_val_1)
-      temp_path <- withr::local_tempdir()
+      
+      local_path <- test_path()
+      #temp_path <- withr::local_tempdir()
       get_data_packages(2306391, #not a data package
-                           path = temp_path,
+                           path = local_path,
                            force = TRUE,
                            dev = FALSE)
       
       #expected directory structure is created:
-      expect_true(dir.exists(file.path(temp_path, "data", "2306391")))
+      expect_true(dir.exists(file.path(local_path, "data", "2306391")))
     
       #expected file number are in the correct directory
-      expect_equal(length(list.files(file.path(temp_path,
+      expect_equal(length(list.files(file.path(local_path,
                                                "data",
                                                "2306391"))), 1)
       
       #expected data file is present
-      expect_true(file.exists(file.path(temp_path,
+      expect_true(file.exists(file.path(local_path,
                                         "data",
                                         "2306391",
                                         "Checklist_for_data_package_review2024_10_07.docx")))
