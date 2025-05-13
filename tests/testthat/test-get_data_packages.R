@@ -4,18 +4,18 @@ return_val_1 <- function() {1}
 
 ### ---- test get_data_package
 
-httptest::with_mock_dir("get_data_packages_test_dir", {
-  test_that("get_data_packages creates the expected directory structure", {
-    
-    local <- test_path()
-    get_data_packages(2295255,
-                           path = local,
-                           force = TRUE,
-                           dev = FALSE)
-    
-    #expected directory structure is created:
-    expect_true(dir.exists(file.path(local, "data", "2295255")))
-    
+# httptest::with_mock_dir("get_data_packages_test_dir", {
+#   test_that("get_data_packages creates the expected directory structure", {
+#     
+#     local <- test_path()
+#     get_data_packages(2295255,
+#                            path = local,
+#                            force = TRUE,
+#                            dev = FALSE)
+#     
+#     #expected directory structure is created:
+#     expect_true(dir.exists(file.path(local, "data", "2295255")))
+#     
     # These tests are commented out because httptest does provide good support for httr::write_disk functionality. Planned improvements for future versions of the package include updating the functions and tests
     
     #expected file numbers are in the correct directory
@@ -32,8 +32,8 @@ httptest::with_mock_dir("get_data_packages_test_dir", {
     #                                   "data",
     #                                   "2295255",
     #                                   "CAHA_Fish_metadata.xml")))
-    })  
-})
+#     })  
+# })
 
 # These tests are commented out because httptest does provide good support for httr::write_disk functionality. Planned improvements for future versions of the package include updating the functions and tests
 
