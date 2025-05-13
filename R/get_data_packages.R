@@ -237,6 +237,7 @@ get_data_packages <- function(reference_id,
           rest_file_download_url,
           httr::timeout(300),
           httr::progress(),
+          # during re-write use content not write_disk as write_disk is not well supported by httptest.
           httr::write_disk(download_file_path,
                            overwrite = TRUE
           ),
