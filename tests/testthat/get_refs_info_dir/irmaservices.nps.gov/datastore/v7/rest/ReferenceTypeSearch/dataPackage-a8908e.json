@@ -103,13 +103,13 @@
     ],
     "pageDetail": {
         "responseCount": 5,
-        "totalCount": 208,
+        "totalCount": 212,
         "pageNumber": 1,
-        "totalPages": 42,
+        "totalPages": 43,
         "pageSize": 5,
         "first": "https://irmaservices.nps.gov/datastore/v7/rest/ReferenceTypeSearch/dataPackage?top=5&page=1",
         "previous": null,
         "next": "https://irmaservices.nps.gov/datastore/v7/rest/ReferenceTypeSearch/dataPackage?top=5&page=2",
-        "last": "https://irmaservices.nps.gov/datastore/v7/rest/ReferenceTypeSearch/dataPackage?top=5&page=42"
+        "last": "https://irmaservices.nps.gov/datastore/v7/rest/ReferenceTypeSearch/dataPackage?top=5&page=43"
     }
 }
