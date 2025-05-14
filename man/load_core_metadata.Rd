@@ -5,7 +5,7 @@
 \title{Gets common EML metadata elements and puts them in a dataframe
 #' `r lifecycle::badge('experimental')`}
 \usage{
-load_core_metadata(ds_ref, path = paste0(getwd(), "/data"))
+load_core_metadata(ds_ref, path = here::here("data"))
 }
 \arguments{
 \item{ds_ref}{Integer. The DataStore reference number of a previously downloaded data package (if downloaded using `get_data_packages()`).}

@@ -1,0 +1,22 @@
+[
+    {
+        "referenceId": 2306391,
+        "referenceType": "Generic Document",
+        "dateOfIssue": "2024-10-07T12:00:00Z",
+        "lifecycle": "Active",
+        "visibility": "Public",
+        "fileCount": 1,
+        "fileAccess": "Public",
+        "title": "Data Package Review Checklist v1.0.0",
+        "citation": "Baker R  <a target=\"_blank\" href=\"https://orcid.org/0000-0001-7591-5035\"><img src=\"/DataStore/Resources/Images/Icons/ORCID.png\" class=\"orcidContact\" alt=\"orcid.org click-able icon\"><\/a>   and Others. 2024. Data Package Review Checklist v1.0.0. National Park Service. Fort Collins, CO",
+        "allContactsDisplayCitation": "Baker R  <a target=\"_blank\" href=\"https://orcid.org/0000-0001-7591-5035\"><img src=\"/DataStore/Resources/Images/Icons/ORCID.png\" class=\"orcidContact\" alt=\"orcid.org click-able icon\"><\/a>  , Wright S  <a target=\"_blank\" href=\"https://orcid.org/0009-0004-5060-2189\"><img src=\"/DataStore/Resources/Images/Icons/ORCID.png\" class=\"orcidContact\" alt=\"orcid.org click-able icon\"><\/a>  , Bonebrake K  <a target=\"_blank\" href=\"https://orcid.org/0009-0000-1935-7665\"><img src=\"/DataStore/Resources/Images/Icons/ORCID.png\" class=\"orcidContact\" alt=\"orcid.org click-able icon\"><\/a>  , Patterson J  <a target=\"_blank\" href=\"https://orcid.org/0000-0002-0951-7917\"><img src=\"/DataStore/Resources/Images/Icons/ORCID.png\" class=\"orcidContact\" alt=\"orcid.org click-able icon\"><\/a>  . 2024. Data Package Review Checklist v1.0.0. National Park Service. Fort Collins, CO",
+        "referenceUrl": " https://irma.nps.gov/DataStore/Reference/Profile/2306391",
+        "contacts": null,
+        "referenceGroupType": "Documents",
+        "typeName": "Generic Document",
+        "isDOI": "False",
+        "newVersion": null,
+        "mostRecentVersion": null,
+        "productCount": 0
+    }
+]

@@ -1,4 +1,6 @@
 # NPSutils 1.0.1 (development version)
+## 2025-05-08
+  * add unit tests for all functions. Add packages necessary for unit tests to Suggests in DESCRIPTION file.
 
 ## 2025-03-25
   * fix bug that caused some functions to fail to detect certain .csv files

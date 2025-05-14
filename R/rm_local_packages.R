@@ -25,7 +25,10 @@
 #' #delete data packages from a "data" directory in a custom location:
 #' rm_local_packages(1234567, path = "C:/Users/username/Documents")
 #' }
-rm_local_packages <- function (reference_id, all = FALSE, path = here::here(), force = FALSE){
+rm_local_packages <- function (reference_id,
+                               all = FALSE,
+                               path = here::here(),
+                               force = FALSE){
   if(all == FALSE){
     for(i in seq_along(reference_id)){
       d_path <- paste0(path, "/data/", reference_id[i])

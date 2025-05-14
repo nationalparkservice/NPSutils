@@ -2,19 +2,19 @@
 % Please edit documentation in R/getReferenceInfo.R
 \name{get_ref_info}
 \alias{get_ref_info}
-\title{Get citation for Data Store holding info by HoldingID}
+\title{Get citation for Data Store holding info by reference ID}
 \usage{
-get_ref_info(holding_id, field)
+get_ref_info(reference_id, field)
 }
 \arguments{
-\item{holding_id}{The six-seven digit reference / holding ID number unique to the data store record.}
+\item{reference_id}{The six-seven digit reference ID number unique to the data store record.}
 
 \item{field}{is one of the following: "Title" returns the title of the data store reference as a string value;
 "Abstract" returns the abstract as a string value; "Citation" returns the citation as a string value, and "Keywords" returns a vector containing
 all keywords as character values.}
 }
 \description{
-\code{get_ref_info} returns a character string or a vector with information from one of the
+`get_ref_info` returns a character string or a vector with information from one of the
 metadata fields in a Data Store reference's associated xml file.
 }
 \examples{

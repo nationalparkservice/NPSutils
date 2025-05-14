@@ -16,7 +16,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' get_unit_code("ROMO")
+#' get_unit_code("Rocky")
 #' }
 get_unit_code <- function(unit) { # input must have quotes to indicate strings
   # To do:

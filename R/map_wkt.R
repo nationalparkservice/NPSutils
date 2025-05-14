@@ -22,7 +22,10 @@
 #' #map species observations - points only
 #' map_wkt(my_NPS_species_obs, wellknowntext = "footprintWKT", type = "points")
 #' }
-map_wkt <- function(df, wellknowntext = "footprintWKT", type = "all", remove.duplicates = TRUE) {
+map_wkt <- function(df,
+                    wellknowntext = "footprintWKT",
+                    type = "all",
+                    remove.duplicates = TRUE) {
   #filter to just wellknowntext column:
   wkt_grepl <- paste0('\\b', wellknowntext, '\\b')
   df <- df[grepl(wkt_grepl, colnames(df))]
