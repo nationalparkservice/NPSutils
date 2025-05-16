@@ -4,8 +4,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CodeFactor](https://www.codefactor.io/repository/github/roblbaker/npsutils/badge)](https://www.codefactor.io/repository/github/roblbaker/npsutils)
-[![R-CMD-check](https://github.com/RobLBaker/NPSutils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobLBaker/NPSutils/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/nationalparkservice/NPSutils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nationalparkservice/NPSutils/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # NPS Data Store Utilities - NPSutils
@@ -28,3 +27,7 @@ NPSutils is also available as part of the
 # install.packages("pak")
 pak::pkg_install("nationalparkservice/NPSdataverse")
 ```
+
+# Using NPSutils
+
+## finding data
