@@ -1,4 +1,6 @@
 # NPSutils 1.0.1 (development version)
+## 2025-05-16
+  * Add a vignette going over basic functions and how to use NPSutils
 ## 2025-05-08
   * add unit tests for all functions. Add packages necessary for unit tests to Suggests in DESCRIPTION file.
 
