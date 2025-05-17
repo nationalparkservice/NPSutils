@@ -97,7 +97,7 @@ machine-readable metadata file in <a href="https://eml.ecoinformatics.org/" clas
 to supply the 7-digit reference ID for the data package. You can find
 this on the DataStore web interface. On the landing page for the data
 package, the reference ID is listed under “Reference Type data package
-(Code: xxxxxxx).</p>
+(Code: xxxxxxx)”.</p>
 <p>You can also use the NPSutils function <code>get_ref_list</code> to
 retrieve a list of (all) data packages.</p>
 <p>Using the default settings for <code>get_data_package</code> will
@@ -112,14 +112,15 @@ corresponding to the package reference ID (e.g. ../data/xxxxxxx).</p>
 appropriate permissions) you can set the parameter
 <code>secure = TRUE</code>. Please note that while NPS strives to make
 all data publicly accessible according to the <a href="https://irma.nps.gov/DataStore/DownloadFile/717695" class="external-link">NPS Public
-Access Plan</a> in a timely fashion some data are considered
-confidential unclassified information (e.g. location of vulnerable or
-exploitable species). Each park Superintendent has the authority and is
-tasked with determining what information is considered confidential and
-how it should be handled (redacted, fuzzed locations, etc).</p>
-<p>Please be aware that if you download restricted data you should not
-share it with persons who do not have access to it unless you have
-explicit permission to do so (preferably in writing).</p>
+Access Plan</a>. Some data are considered confidential unclassified
+information (e.g. location of vulnerable or exploitable species). Park
+superintendents make the final decision on which data are considered
+confidential and how they should be handled (redacted, fuzzed locations,
+etc).</p>
+<p>Please be aware that if you download restricted data, you may not
+share it outside of the authorized persons or groups specified in the
+DataStore reference unless you have explicit permission to do so
+(preferably in writing).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># download a restricted data package:</span></span>
 <span><span class="fu"><a href="../reference/get_data_packages.html">get_data_package</a></span><span class="op">(</span><span class="fl">2305242</span>, secure <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -191,7 +192,7 @@ want to turn off the interactive features for functions within NPSutils.
 Each NPSutils function has a parameter <code>force</code>. Setting
 <code>force = TRUE</code> will turn off the interactive components of
 the function. You should be careful setting <code>force = TRUE</code> as
-this turns off a lot of the protections and suggestiosn within functions
+this turns off a lot of the protections and suggestions within functions
 (for instance, you will not be warned if you are attempting to download
 something that is not a data package; you will not be warned that there
 is a more recent version of the data package you are requesting
