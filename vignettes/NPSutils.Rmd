@@ -13,26 +13,90 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-```{r setup}
-library(NPSutils)
-```
-
 # NPS Data Store Utilities
+This package is a collection of functions to acquire metadata and data from the [National Park Service Data Store](https://irma.nps.gov/DataStore/). Please request enhancements and bug fixes through [Issues](https://github.com/nationalparkservice/NPSutils/issues).
 
-This package is a collection of functions to acquire metadata and data from the [National Park Service Data Store](https://irma.nps.gov/DataStore/). This is an early version of this package and many features will be added in 2023. Please request enhancements and bug fixes through [Issues](https://github.com/nationalparkservice/NPSutils/issues).
-
-These functions are under active development and we apologize for any that are borked. 
 
 # Install from GitHub
 ``` r
-# install.packages("devtools")
-devtools::install_github("nationalparkservice/NPSutils")
+# install.packages("pak")
+pak::pkg_install("nationalparkservice/NPSutils")
 ```
 
 NPSutils is also available as part of the [NPSdataverse](https://nationalparkservice.github.io/NPSdataverse/)
 ``` r
-# install.packages("devtools")
-devtools::install_github("nationalparkservice/NPSdataverse")
+# install.packages("pak")
+pak::pkg_install("nationalparkservice/NPSdataverse")
 ```
 
+# Using NPSutils
+
+## What is a data package?
+A data package on the National Park Service's science repository, [DataStore](https://irma.nps.gov/DataStore/) consists of one or more tabular data files in .csv file format and a single machine-readable metadata file in [Ecological Metadata Format](https://eml.ecoinformatics.org/) (EML) with a filename ending in "_metadata.xml"
+
+## Downloading data packages
+To download a data package (or multiple data packages) you will need to supply the 7-digit reference ID for the data package. You can find this on the DataStore web interface. On the landing page for the data package, the reference ID is listed under "Reference Type data package (Code: xxxxxxx)".  
+
+You can also use the NPSutils function `get_ref_list` to retrieve a list of (all) data packages.
+
+Using the default settings for `get_data_package` will create a sub-directory within your working directory called "data".  Each data package will be downloaded to a separate direct within "data" corresponding to the package reference ID (e.g. ../data/xxxxxxx).
+
+```r
+# downloads the Mojave Desert Network Desert Springs data package 
+# This package can be found at: https://doi.org/10.57830/2300498
+get_data_package(2300498)
+```
+
+If you would like to access restricted data (and you have the appropriate permissions) you can set the parameter `secure = TRUE`. Please note that while NPS strives to make all data publicly accessible according to the [NPS Public Access Plan](https://irma.nps.gov/DataStore/DownloadFile/717695). Some data are considered confidential unclassified information (e.g. location of vulnerable or exploitable species). Park superintendents make the final decision on which data are considered confidential and how they should be handled (redacted, fuzzed locations, etc).
+
+Please be aware that if you download restricted data, you may not share it outside of the authorized persons or groups specified in the DataStore reference unless you have explicit permission to do so (preferably in writing).
+
+```r
+# download a restricted data package:
+get_data_package(2305242, secure = TRUE)
+```
+
+## Loading data packages into R
+To work with a data package, you may want to load it into R using `load_data_package`. If you used the default settings for `get_data_package` to download the data package, you can use the default settings in `load_data_package` to access the data. The default settings for `load_data_package` will use R's built-in algorithms to determine whether variables are characters, factorals, integers, dates, ets:
+
+```r
+# load a data package into R:
+MOJN <- load_data_package(2300498)
+```
+
+Alternatively, you can use the information provided in the data package metadata to specifically set the attribute definitions when loading the data:
+
+```r
+# load a data package; use metadata to assign attribute types:
+MOJN <- load_data_package(2300498, assign_attributes = TRUE)
+```
+
+Note R functions can only return a single object.  Therefore, the object returned is a list of tibbles where each data file (.csv) is a separate item within the list. You can use the following code to split that tibble into separate dataframes:
+
+```r
+# split a list of tibbles into individual dataframes
+list2env(MOJN, envir = .GlobalEnv)
+```
+
+## Loading metadata
+You may want to access the metadata directly in it's entirety, which you can do using `load_pkg_metadata()`. If you used the default directory settings in `get_data_package`, you can use the default settings in `load_pkg_metadata` as well. This will return a very complicated list that consists of everything in the *_metadata.xml file within the data package:
+
+```r
+metadata <- load_pkg_metadata(2300498)
+```
+
+You might want to have a subset of the metadata available in a dataframe if, for instance, you wanted to import it into something like Power BI. You can get the metadata necessary for citations and background infomation (everything on the "Core" tab on the DataStore reference landing page) using the following code. Again, if you've used the default directory settings for `get_data_package` you can use the default settings for `load_core_metadata`.
+
+```r
+core_metadata <- load_core_metadata(2300498)
+```
+
+## Removing local data packages
+When you are done working with a data package, you may want to free up hard drive space. You can delete your local copy of a data package using `rm_local_packages`. Again, if you used the default directory structure set up by `get_data_package` you can also use the default settings for `rm_local_packages`:
+
+```r
+rm_local_packages(2300498)
+```
+
+## Advanced scripting options
+If you are setting up a scripted solution for your workflow, you may want to turn off the interactive features for functions within NPSutils. Each NPSutils function has a parameter `force`.  Setting `force = TRUE` will turn off the interactive components of the function. You should be careful setting `force = TRUE` as this turns off a lot of the protections and suggestions within functions (for instance, you will not be warned if you are attempting to download something that is not a data package; you will not be warned that there is a more recent version of the data package you are requesting available, etc).
