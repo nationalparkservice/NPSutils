@@ -60,29 +60,144 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nationalparkservice.github.io/NPSutils/">NPSutils</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="nps-data-store-utilities">NPS Data Store Utilities<a class="anchor" aria-label="anchor" href="#nps-data-store-utilities"></a>
 </h2>
 <p>This package is a collection of functions to acquire metadata and
 data from the <a href="https://irma.nps.gov/DataStore/" class="external-link">National Park
-Service Data Store</a>. This is an early version of this package and
-many features will be added in 2023. Please request enhancements and bug
-fixes through <a href="https://github.com/nationalparkservice/NPSutils/issues" class="external-link">Issues</a>.</p>
-<p>These functions are under active development and we apologize for any
-that are borked.</p>
+Service Data Store</a>. Please request enhancements and bug fixes
+through <a href="https://github.com/nationalparkservice/NPSutils/issues" class="external-link">Issues</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="install-from-github">Install from GitHub<a class="anchor" aria-label="anchor" href="#install-from-github"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nationalparkservice/NPSutils"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"nationalparkservice/NPSutils"</span><span class="op">)</span></span></code></pre></div>
 <p>NPSutils is also available as part of the <a href="https://nationalparkservice.github.io/NPSdataverse/" class="external-link">NPSdataverse</a></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"nationalparkservice/NPSdataverse"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="using-npsutils">Using NPSutils<a class="anchor" aria-label="anchor" href="#using-npsutils"></a>
+</h2>
+<div class="section level3">
+<h3 id="what-is-a-data-package">What is a data package?<a class="anchor" aria-label="anchor" href="#what-is-a-data-package"></a>
+</h3>
+<p>A data package on the National Park Service’s science repository, <a href="https://irma.nps.gov/DataStore/" class="external-link">DataStore</a> consists of one or
+more tabular data files in .csv file format and a single
+machine-readable metadata file in <a href="https://eml.ecoinformatics.org/" class="external-link">Ecological Metadata Format</a>
+(EML) with a filename ending in “_metadata.xml”</p>
+</div>
+<div class="section level3">
+<h3 id="downloading-data-packages">Downloading data packages<a class="anchor" aria-label="anchor" href="#downloading-data-packages"></a>
+</h3>
+<p>To download a data package (or multiple data packages) you will need
+to supply the 7-digit reference ID for the data package. You can find
+this on the DataStore web interface. On the landing page for the data
+package, the reference ID is listed under “Reference Type data package
+(Code: xxxxxxx)”.</p>
+<p>You can also use the NPSutils function <code>get_ref_list</code> to
+retrieve a list of (all) data packages.</p>
+<p>Using the default settings for <code>get_data_package</code> will
+create a sub-directory within your working directory called “data”. Each
+data package will be downloaded to a separate direct within “data”
+corresponding to the package reference ID (e.g. ../data/xxxxxxx).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nationalparkservice/NPSdataverse"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># downloads the Mojave Desert Network Desert Springs data package </span></span>
+<span><span class="co"># This package can be found at: https://doi.org/10.57830/2300498</span></span>
+<span><span class="fu"><a href="../reference/get_data_packages.html">get_data_package</a></span><span class="op">(</span><span class="fl">2300498</span><span class="op">)</span></span></code></pre></div>
+<p>If you would like to access restricted data (and you have the
+appropriate permissions) you can set the parameter
+<code>secure = TRUE</code>. Please note that while NPS strives to make
+all data publicly accessible according to the <a href="https://irma.nps.gov/DataStore/DownloadFile/717695" class="external-link">NPS Public
+Access Plan</a>. Some data are considered confidential unclassified
+information (e.g. location of vulnerable or exploitable species). Park
+superintendents make the final decision on which data are considered
+confidential and how they should be handled (redacted, fuzzed locations,
+etc).</p>
+<p>Please be aware that if you download restricted data, you may not
+share it outside of the authorized persons or groups specified in the
+DataStore reference unless you have explicit permission to do so
+(preferably in writing).</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># download a restricted data package:</span></span>
+<span><span class="fu"><a href="../reference/get_data_packages.html">get_data_package</a></span><span class="op">(</span><span class="fl">2305242</span>, secure <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="loading-data-packages-into-r">Loading data packages into R<a class="anchor" aria-label="anchor" href="#loading-data-packages-into-r"></a>
+</h3>
+<p>To work with a data package, you may want to load it into R using
+<code>load_data_package</code>. If you used the default settings for
+<code>get_data_package</code> to download the data package, you can use
+the default settings in <code>load_data_package</code> to access the
+data. The default settings for <code>load_data_package</code> will use
+R’s built-in algorithms to determine whether variables are characters,
+factorals, integers, dates, ets:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># load a data package into R:</span></span>
+<span><span class="va">MOJN</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_data_packages.html">load_data_package</a></span><span class="op">(</span><span class="fl">2300498</span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, you can use the information provided in the data
+package metadata to specifically set the attribute definitions when
+loading the data:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># load a data package; use metadata to assign attribute types:</span></span>
+<span><span class="va">MOJN</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_data_packages.html">load_data_package</a></span><span class="op">(</span><span class="fl">2300498</span>, assign_attributes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Note R functions can only return a single object. Therefore, the
+object returned is a list of tibbles where each data file (.csv) is a
+separate item within the list. You can use the following code to split
+that tibble into separate dataframes:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># split a list of tibbles into individual dataframes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env</a></span><span class="op">(</span><span class="va">MOJN</span>, envir <span class="op">=</span> <span class="va">.GlobalEnv</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="loading-metadata">Loading metadata<a class="anchor" aria-label="anchor" href="#loading-metadata"></a>
+</h3>
+<p>You may want to access the metadata directly in it’s entirety, which
+you can do using <code><a href="../reference/load_pkg_metadata.html">load_pkg_metadata()</a></code>. If you used the
+default directory settings in <code>get_data_package</code>, you can use
+the default settings in <code>load_pkg_metadata</code> as well. This
+will return a very complicated list that consists of everything in the
+*_metadata.xml file within the data package:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pkg_metadata.html">load_pkg_metadata</a></span><span class="op">(</span><span class="fl">2300498</span><span class="op">)</span></span></code></pre></div>
+<p>You might want to have a subset of the metadata available in a
+dataframe if, for instance, you wanted to import it into something like
+Power BI. You can get the metadata necessary for citations and
+background infomation (everything on the “Core” tab on the DataStore
+reference landing page) using the following code. Again, if you’ve used
+the default directory settings for <code>get_data_package</code> you can
+use the default settings for <code>load_core_metadata</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">core_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_core_metadata.html">load_core_metadata</a></span><span class="op">(</span><span class="fl">2300498</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="removing-local-data-packages">Removing local data packages<a class="anchor" aria-label="anchor" href="#removing-local-data-packages"></a>
+</h3>
+<p>When you are done working with a data package, you may want to free
+up hard drive space. You can delete your local copy of a data package
+using <code>rm_local_packages</code>. Again, if you used the default
+directory structure set up by <code>get_data_package</code> you can also
+use the default settings for <code>rm_local_packages</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rm_local_packages.html">rm_local_packages</a></span><span class="op">(</span><span class="fl">2300498</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="advanced-scripting-options">Advanced scripting options<a class="anchor" aria-label="anchor" href="#advanced-scripting-options"></a>
+</h3>
+<p>If you are setting up a scripted solution for your workflow, you may
+want to turn off the interactive features for functions within NPSutils.
+Each NPSutils function has a parameter <code>force</code>. Setting
+<code>force = TRUE</code> will turn off the interactive components of
+the function. You should be careful setting <code>force = TRUE</code> as
+this turns off a lot of the protections and suggestions within functions
+(for instance, you will not be warned if you are attempting to download
+something that is not a data package; you will not be warned that there
+is a more recent version of the data package you are requesting
+available, etc).</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
