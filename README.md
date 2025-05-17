@@ -27,7 +27,3 @@ NPSutils is also available as part of the
 # install.packages("pak")
 pak::pkg_install("nationalparkservice/NPSdataverse")
 ```
-
-# Using NPSutils
-
-## finding data
