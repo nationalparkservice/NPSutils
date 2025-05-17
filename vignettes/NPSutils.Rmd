@@ -35,7 +35,7 @@ pak::pkg_install("nationalparkservice/NPSdataverse")
 A data package on the National Park Service's science repository, [DataStore](https://irma.nps.gov/DataStore/) consists of one or more tabular data files in .csv file format and a single machine-readable metadata file in [Ecological Metadata Format](https://eml.ecoinformatics.org/) (EML) with a filename ending in "_metadata.xml"
 
 ## Downloading data packages
-To download a data package (or multiple data packages) you will need to supply the 7-digit reference ID for the data package. You can find this on the DataStore web interface. On the landing page for the data package, the reference ID is listed under "Reference Type data package (Code: xxxxxxx).  
+To download a data package (or multiple data packages) you will need to supply the 7-digit reference ID for the data package. You can find this on the DataStore web interface. On the landing page for the data package, the reference ID is listed under "Reference Type data package (Code: xxxxxxx)".  
 
 You can also use the NPSutils function `get_ref_list` to retrieve a list of (all) data packages.
 
@@ -47,9 +47,9 @@ Using the default settings for `get_data_package` will create a sub-directory wi
 get_data_package(2300498)
 ```
 
-If you would like to access restricted data (and you have the appropriate permissions) you can set the parameter `secure = TRUE`. Please note that while NPS strives to make all data publicly accessible according to the [NPS Public Access Plan](https://irma.nps.gov/DataStore/DownloadFile/717695) in a timely fashion some data are considered confidential unclassified information (e.g. location of vulnerable or exploitable species). Each park Superintendent has the authority and is tasked with determining what information is considered confidential and how it should be handled (redacted, fuzzed locations, etc).
+If you would like to access restricted data (and you have the appropriate permissions) you can set the parameter `secure = TRUE`. Please note that while NPS strives to make all data publicly accessible according to the [NPS Public Access Plan](https://irma.nps.gov/DataStore/DownloadFile/717695). Some data are considered confidential unclassified information (e.g. location of vulnerable or exploitable species). Park superintendents make the final decision on which data are considered confidential and how they should be handled (redacted, fuzzed locations, etc).
 
-Please be aware that if you download restricted data you should not share it with persons who do not have access to it unless you have explicit permission to do so (preferably in writing).
+Please be aware that if you download restricted data, you may not share it outside of the authorized persons or groups specified in the DataStore reference unless you have explicit permission to do so (preferably in writing).
 
 ```r
 # download a restricted data package:
@@ -99,4 +99,4 @@ rm_local_packages(2300498)
 ```
 
 ## Advanced scripting options
-If you are setting up a scripted solution for your workflow, you may want to turn off the interactive features for functions within NPSutils. Each NPSutils function has a parameter `force`.  Setting `force = TRUE` will turn off the interactive components of the function. You should be careful setting `force = TRUE` as this turns off a lot of the protections and suggestiosn within functions (for instance, you will not be warned if you are attempting to download something that is not a data package; you will not be warned that there is a more recent version of the data package you are requesting available, etc).
+If you are setting up a scripted solution for your workflow, you may want to turn off the interactive features for functions within NPSutils. Each NPSutils function has a parameter `force`.  Setting `force = TRUE` will turn off the interactive components of the function. You should be careful setting `force = TRUE` as this turns off a lot of the protections and suggestions within functions (for instance, you will not be warned if you are attempting to download something that is not a data package; you will not be warned that there is a more recent version of the data package you are requesting available, etc).
