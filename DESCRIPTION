@@ -1,7 +1,7 @@
 Package: NPSutils
 Type: Package
 Title: Collection of Functions to read and manipulate information from the NPS DataStore
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: c(
     person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
            role = c("aut", "cre"),
