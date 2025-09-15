@@ -1,4 +1,6 @@
 # NPSutils 1.1.0
+## 2025-09-15
+  * Update Unit service API to use current version (instead of discontinued legacy endpoint)
 ## 2025-05-16
   * Add a vignette going over basic functions and how to use NPSutils
 ## 2025-05-08
