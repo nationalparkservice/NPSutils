@@ -26,7 +26,7 @@ get_unit_code <- function(unit) { # input must have quotes to indicate strings
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)) {
     # access all park codes from NPS xml file
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) 
+    curl::curl_download("https://irmaservices.nps.gov/unit/v2/api/", f) 
   }
   result <- XML::xmlParse(file = f) # parse xml
   dat <- XML::xmlToDataFrame(result) 
@@ -55,7 +55,7 @@ get_park_code <- function(park) {
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)) {
     # access all park codes from NPS xml file
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) 
+    curl::curl_download("https://irmaservices.nps.gov/unit/v2/api/", f) 
   }
   result <- XML::xmlParse(file = f)
   dat <- XML::xmlToDataFrame(result)
@@ -85,7 +85,7 @@ get_unit_code_info <- function(code) {
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)) {
     # access all park codes from NPS xml file
-    curl::curl_download(paste0("https://irmaservices.nps.gov/v2/rest/unit/", f))
+    curl::curl_download(paste0("https://irmaservices.nps.gov/unit/v2/api/", f))
   }
   result <- XML::xmlParse(file = f)
   dat <- XML::xmlToDataFrame(result)
@@ -131,7 +131,7 @@ get_unit_info <- function(code = NULL,
   f <- file.path(tempdir(), "irmadownload.xml")
   if (!file.exists(f)) {
     # access all park codes from NPS xml file
-    curl::curl_download("https://irmaservices.nps.gov/v2/rest/unit/", f) 
+    curl::curl_download("https://irmaservices.nps.gov/unit/v2/api/", f) 
   }
   result <- XML::xmlParse(file = f)
   dat <- XML::xmlToDataFrame(result)
