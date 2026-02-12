@@ -41,7 +41,7 @@ Imports:
     purrr,
     tibble,
     lifecycle
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests: 
     httptest,
     knitr,
