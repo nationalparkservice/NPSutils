@@ -1,10 +1,15 @@
-# NPSutils 1.1.0
+# NPSutils 1.2.0 (development version)
+## 2026-02-12
+  * Fix bug in `get_data_packages` that was causing an error when simultaneously attempting to download multiple data packages.
+  
 ## 2026-01-02
   * DataStore API calls now use v8 endpoints (v7 was deprecated with DataStore 4.0 release)
   
 ## 2025-09-15
   * Update Unit service API to use current version (instead of discontinued legacy endpoint)
-  
+
+# NPSutils 1.1.0
+
 ## 2025-05-16
   * Add a vignette going over basic functions and how to use NPSutils
 
