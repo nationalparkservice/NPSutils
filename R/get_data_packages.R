@@ -55,7 +55,7 @@ get_data_packages <- function(reference_id,
     }
     # does reference exist?
     exists <- NPSutils::check_ref_exists(
-      reference_id = reference_id,
+      reference_id = reference_id[i],
       secure = secure,
       dev = dev
     )
@@ -68,7 +68,7 @@ get_data_packages <- function(reference_id,
     }
     # is ref a data package?
     data_package <- check_is_data_package(
-      reference_id = reference_id,
+      reference_id = reference_id[i],
       secure = secure,
       dev = dev
     )
@@ -96,7 +96,7 @@ get_data_packages <- function(reference_id,
     # if interactive, ask whether to download newer version
     if (force == FALSE) {
       new_version <- check_new_version(
-        reference_id = reference_id,
+        reference_id = reference_id[i],
         secure = secure,
         dev = dev
       )
@@ -110,7 +110,7 @@ get_data_packages <- function(reference_id,
         var2 <- .get_user_input()
         if (var2 == 1) {
           reference_id <- get_new_version_id(
-            reference_id = reference_id,
+            reference_id = reference_id[i],
             secure = secure,
             dev = dev
           )
