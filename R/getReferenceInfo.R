@@ -23,8 +23,8 @@ get_park_taxon_refs <- function(park_code, taxon_code) {
                park_code,
                "/",
                taxon_code)
-  DSReference <- httr::content(httr::GET(
-    url, httr::authenticate(":", ":", "ntlm")
+  DSReference <- httr::content(httr::GET(url,
+                                         httr::authenticate(":", ":", "ntlm")
   )) %>%
     dplyr::bind_rows()
   return(DSReference)
