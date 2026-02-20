@@ -1,4 +1,8 @@
 # NPSutils 1.2.0 (development version)
+## 2026-02-20
+  * Fix unit tests that were failing when switched from v7 to v8 DataStore API
+  * Update to version 1.2.0 in DESCRIPTION files in anticipation of a new release
+  
 ## 2026-02-12
   * Fix bug in `get_data_packages` that was causing an error when simultaneously attempting to download multiple data packages.
   
