@@ -1,4 +1,4 @@
-# NPSutils 1.2.0 (development version)
+# NPSutils 1.2.0 ("Apostle Islands Ice Caves")
 ## 2026-02-20
   * Fix unit tests that were failing when switched from v7 to v8 DataStore API
   * Update to version 1.2.0 in DESCRIPTION files in anticipation of a new release
