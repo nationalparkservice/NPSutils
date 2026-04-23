@@ -1,0 +1,47 @@
+[
+  {
+    "name": "NPSutils",
+    "organization": "NATIONAL PARK SERVICE",
+    "description": "NPSutils is a collection of functions for interacting with NPS DataStore repository.",
+    "version": "1.2.0",
+    "status": "ongoing development",
+    "permissions": {
+      "usageType": "openSource",
+      "licenses": [
+        {
+          "name": "Public Domain, CC0-1.0",
+          "URL": "https://github.com/DOI-NPS/NPSutils"
+        }
+      ]
+    },
+    "homepageURL": "https://github.com/DOI-NPS/NPSutils",
+    "downloadURL": "https://github.com/DOI-NPS/NPSutils",
+    "disclaimerURL": "hhtps://github.com/DOI-NPS/NPSutils/blob/main/LICENSE",
+    "repositoryURL": "https://github.com/DOI-NPS/NPSutils",
+    "vcs": "git",
+    "laborHours": 1,
+    "tags": [
+      "NRSS",
+      "IMD",
+      "metadata",
+      "downloader",
+      "r",
+      "nps",
+      "r-package",
+      "ecological-metadata-language",
+      "data-packages",
+      "national-park-service",
+      "nps-datastore"
+    ],
+    "languages": [
+      "R"
+    ],
+    "contact": {
+      "name": "Robert Baker",
+      "email": "robert_baker@nps.gov"
+    },
+    "date": {
+      "metadataLastUpdated": "2026-04-22"
+    }
+  }
+]

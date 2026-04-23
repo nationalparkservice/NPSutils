@@ -11,8 +11,8 @@ NPSutils is a collection of functions for interacting with NPS DataStore reposit
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://nationalparkservice.github.io/NPSutils/}
-  \item Report bugs at \url{https://github.com/nationalparkservice/NPSutils/issues}
+  \item \url{https://doi-nps.github.io/NPSutils/}
+  \item Report bugs at \url{https://github.com/doi-nps/NPSutils/issues}
 }
 
 }
@@ -21,7 +21,6 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Joe DeVivo
   \item Judd Patterson \email{Judd_Patterson@nps.gov} (\href{https://orcid.org/0000-0002-0951-7917}{ORCID})
   \item Sarah E. Wright \email{sarah_wright@nps.gov} (\href{https://orcid.org/0009-0004-5060-2189}{ORCID})
 }

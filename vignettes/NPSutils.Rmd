@@ -14,19 +14,25 @@ knitr::opts_chunk$set(
 )
 ```
 # NPS Data Store Utilities
-This package is a collection of functions to acquire metadata and data from the [National Park Service Data Store](https://irma.nps.gov/DataStore/). Please request enhancements and bug fixes through [Issues](https://github.com/nationalparkservice/NPSutils/issues).
+This package is a collection of functions to acquire metadata and data from the [National Park Service Data Store](https://irma.nps.gov/DataStore/). Please request enhancements and bug fixes through [Issues](https://github.com/doi-nps/NPSutils/issues).
 
 
 # Install from GitHub
 ``` r
 # install.packages("pak")
-pak::pkg_install("nationalparkservice/NPSutils")
+pak::pkg_install("doi-nps/NPSutils")
+
+#alternatively
+# install.pacakges("remotes")
+remotes::install_github("doi-nps/NPSutils")
 ```
 
-NPSutils is also available as part of the [NPSdataverse](https://nationalparkservice.github.io/NPSdataverse/)
+NPSutils is also available as part of the [NPSdataverse](https://doi-nps.github.io/NPSdataverse/)
 ``` r
 # install.packages("pak")
-pak::pkg_install("nationalparkservice/NPSdataverse")
+pak::pkg_install("doi-nps/NPSdataverse")
+# alternatively:
+remotes::install_github("doi-nps/NPSdataverse")
 ```
 
 # Using NPSutils

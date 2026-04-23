@@ -37,7 +37,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/nationalparkservice/NPSutils/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/doi-nps/NPSutils/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -54,7 +54,7 @@
       <h1>NPSutils</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/nationalparkservice/NPSutils/blob/HEAD/vignettes/NPSutils.Rmd" class="external-link"><code>vignettes/NPSutils.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/doi-nps/NPSutils/blob/HEAD/vignettes/NPSutils.Rmd" class="external-link"><code>vignettes/NPSutils.Rmd</code></a></small>
       <div class="d-none name"><code>NPSutils.Rmd</code></div>
     </div>
 
@@ -66,18 +66,24 @@
 <p>This package is a collection of functions to acquire metadata and
 data from the <a href="https://irma.nps.gov/DataStore/" class="external-link">National Park
 Service Data Store</a>. Please request enhancements and bug fixes
-through <a href="https://github.com/nationalparkservice/NPSutils/issues" class="external-link">Issues</a>.</p>
+through <a href="https://github.com/doi-nps/NPSutils/issues" class="external-link">Issues</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="install-from-github">Install from GitHub<a class="anchor" aria-label="anchor" href="#install-from-github"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pak/man/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"nationalparkservice/NPSutils"</span><span class="op">)</span></span></code></pre></div>
-<p>NPSutils is also available as part of the <a href="https://nationalparkservice.github.io/NPSdataverse/" class="external-link">NPSdataverse</a></p>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pak/man/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"doi-nps/NPSutils"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#alternatively</span></span>
+<span><span class="co"># install.pacakges("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"doi-nps/NPSutils"</span><span class="op">)</span></span></code></pre></div>
+<p>NPSutils is also available as part of the <a href="https://doi-nps.github.io/NPSdataverse/" class="external-link">NPSdataverse</a></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pak/man/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"nationalparkservice/NPSdataverse"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pak/man/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"doi-nps/NPSdataverse"</span><span class="op">)</span></span>
+<span><span class="co"># alternatively:</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"doi-nps/NPSdataverse"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-npsutils">Using NPSutils<a class="anchor" aria-label="anchor" href="#using-npsutils"></a>
@@ -206,7 +212,7 @@ available, etc).</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Robert Baker, Joe DeVivo, Judd Patterson, Sarah E. Wright.</p>
+  <p>Developed by Robert Baker, Judd Patterson, Sarah E. Wright.</p>
 </div>
 
 <div class="pkgdown-footer-right">

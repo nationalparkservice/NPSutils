@@ -6,8 +6,6 @@ Authors@R: c(
     person(given = "Robert", family = "Baker", email = "robert_baker@nps.gov",
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7591-5035")),
-    person(given = "Joe", family = "DeVivo",
-           role = c("aut")),
     person(given="Judd", family="Patterson", email="Judd_Patterson@nps.gov",
            role= "aut",
            comment = c(ORCID = "0000-0002-0951-7917")),
@@ -21,9 +19,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Remotes: 
-    nationalparkservice/EMLeditor,
-    nationalparkservice/DPchecker,
-    nationalparkservice/QCkit
+    doi-nps/EMLeditor,
+    doi-nps/DPchecker,
+    doi-nps/QCkit
 Imports: 
     dplyr,
     httr,
@@ -55,5 +53,5 @@ Suggests:
     mockr,
     EML
 VignetteBuilder: knitr
-URL: https://nationalparkservice.github.io/NPSutils/
-BugReports: https://github.com/nationalparkservice/NPSutils/issues
+URL: https://doi-nps.github.io/NPSutils/
+BugReports: https://github.com/doi-nps/NPSutils/issues

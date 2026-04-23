@@ -20,7 +20,7 @@
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/nationalparkservice/NPSutils/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/doi-nps/NPSutils/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -30,22 +30,26 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/nationalparkservice/NPSutils/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/doi-nps/NPSutils/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="npsutils-120-apostle-islands-ice-caves">NPSutils 1.2.0 (“Apostle Islands Ice Caves”)<a class="anchor" aria-label="anchor" href="#npsutils-120-apostle-islands-ice-caves"></a></h2>
 <div class="section level3">
-<h3 id="id_2026-1-2-0">2026-02-20<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0"></a></h3>
+<h3 id="id_2026-1-2-0">2026-04-22<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0"></a></h3>
+<ul><li>Update documentation (mostly URLs) and metadata (e.g. add code.json file) in preparation for migration to DGEC</li>
+</ul></div>
+<div class="section level3">
+<h3 id="id_2026-1-2-0-1">2026-02-20<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0-1"></a></h3>
 <ul><li>Fix unit tests that were failing when switched from v7 to v8 DataStore API</li>
 <li>Update to version 1.2.0 in DESCRIPTION files in anticipation of a new release</li>
 </ul></div>
 <div class="section level3">
-<h3 id="id_2026-1-2-0-1">2026-02-12<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0-1"></a></h3>
+<h3 id="id_2026-1-2-0-2">2026-02-12<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0-2"></a></h3>
 <ul><li>Fix bug in <code>get_data_packages</code> that was causing an error when simultaneously attempting to download multiple data packages.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="id_2026-1-2-0-2">2026-01-02<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0-2"></a></h3>
+<h3 id="id_2026-1-2-0-3">2026-01-02<a class="anchor" aria-label="anchor" href="#id_2026-1-2-0-3"></a></h3>
 <ul><li>DataStore API calls now use v8 endpoints (v7 was deprecated with DataStore 4.0 release)</li>
 </ul></div>
 <div class="section level3">
@@ -101,7 +105,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="id_2024-1-0-0-1">2024-12-19<a class="anchor" aria-label="anchor" href="#id_2024-1-0-0-1"></a></h3>
-<ul><li>updated <code>load_pkg_metadata</code> to be simpler and essentially call <code><a href="https://nationalparkservice.github.io/DPchecker/reference/load_metadata.html" class="external-link">DPchecker::load_metadata</a></code> but with a preset default directory structure that works well with the default settings for <code>get_data_package</code>.</li>
+<ul><li>updated <code>load_pkg_metadata</code> to be simpler and essentially call <code><a href="https://rdrr.io/pkg/DPchecker/man/load_metadata.html" class="external-link">DPchecker::load_metadata</a></code> but with a preset default directory structure that works well with the default settings for <code>get_data_package</code>.</li>
 <li>Add meta-analysis functions for finding and producing summary statistics multiple data packages including <code>get_ref_list</code>, <code><a href="../reference/get_refs_info.html">get_refs_info()</a></code>, and <code>summarize_packages</code>.</li>
 </ul></div>
 <div class="section level3">
@@ -142,7 +146,7 @@
 <li>add global variables for base datastore api urls and helper functions to access them in utils.R</li>
 <li>added new functionality to <code><a href="../reference/get_data_packages.html">get_data_packages()</a></code>: it will now check to see if a DataStore reference ID is invalid or not. It will also check whether the reference is a data package or not. Substantial feedback is reported to the user if the flag force is set to FALSE.</li>
 <li>added a new function <code><a href="../reference/rm_local_packages.html">rm_local_packages()</a></code> which can delete one or more (or all) packages within a folder called “data” (where your packages should be if you downloaded them with <code><a href="../reference/get_data_packages.html">get_data_packages()</a></code>). This only deletes local copies and does not delete any data from DataStore.</li>
-<li>changed function name <code>load_metadata()</code> is now <code><a href="../reference/load_pkg_metadata.html">load_pkg_metadata()</a></code> so as not to conflict with <code><a href="https://nationalparkservice.github.io/DPchecker/reference/load_metadata.html" class="external-link">DPchecker::load_metadata()</a></code>
+<li>changed function name <code>load_metadata()</code> is now <code><a href="../reference/load_pkg_metadata.html">load_pkg_metadata()</a></code> so as not to conflict with <code><a href="https://rdrr.io/pkg/DPchecker/man/load_metadata.html" class="external-link">DPchecker::load_metadata()</a></code>
 </li>
 <li>updated all function names to be snake_case</li>
 <li>updated all file names to match function names</li>
@@ -183,7 +187,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Robert Baker, Joe DeVivo, Judd Patterson, Sarah E. Wright.</p>
+  <p>Developed by Robert Baker, Judd Patterson, Sarah E. Wright.</p>
 </div>
 
 <div class="pkgdown-footer-right">
