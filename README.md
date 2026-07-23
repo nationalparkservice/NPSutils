@@ -21,7 +21,7 @@ pak::pkg_install("doi-nps/NPSutils")
 
 # alternatively:
 # install.packages("remotes")
-remotes::install_github("doi-nps/NPSutils)
+remotes::install_github("doi-nps/NPSutils")
 ```
 
 NPSutils is also available as part of the
@@ -32,5 +32,5 @@ NPSutils is also available as part of the
 pak::pkg_install("doi-nps/NPSdataverse")
 
 # alternatiely:
-remotes::install_github("doi-nps/NPSdataverse)
+remotes::install_github("doi-nps/NPSdataverse")
 ```
