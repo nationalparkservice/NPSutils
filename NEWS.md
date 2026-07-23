@@ -1,4 +1,7 @@
 # NPSutils 1.2.0 ("Apostle Islands Ice Caves")
+## 2026-07-23
+  * Fix typo in readme.md
+  
 ## 2026-04-22
   * Update documentation (mostly URLs) and metadata (e.g. add code.json file) in preparation for migration to DGEC
 
