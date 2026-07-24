@@ -4,7 +4,7 @@
 # https://forum.posit.co/t/libraptor2-dev-depends-libcurl4-gnutls-dev-but-it-is-not-installable-in-r-lib-actions-setup-r-dependencies-v2/181572/4
 on:
   push:
-    branches: [main, master, fix-cmdcheck-action]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
 
