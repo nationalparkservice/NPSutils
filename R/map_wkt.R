@@ -24,8 +24,10 @@
 #' }
 map_wkt <- function(df,
                     wellknowntext = "footprintWKT",
-                    type = "all",
+                    type = c("all", "points", "polygons"),
                     remove.duplicates = TRUE) {
+  type <- tolower(type)
+  type <- match.arg(type)
   #filter to just wellknowntext column:
   wkt_grepl <- paste0('\\b', wellknowntext, '\\b')
   df <- df[grepl(wkt_grepl, colnames(df))]
@@ -69,15 +71,20 @@ map_wkt <- function(df,
                                           updateWhenIdle = TRUE)) %>%
               leaflet::addPolygons(data = df_polys, color = "red",) #odd stray ,
   } else if(type == "all") {
-    map <- leaflet::leaflet(df, 
-              options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
-      #addTiles(group = "OSM (default)") %>%; prevent unwanted map updates:
-              leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas,
-                                        options = leaflet::providerTileOptions(
-                                          updateWhenZooming = FALSE,
-                                          updateWhenIdle = TRUE)) %>%
-              leaflet::addCircles(data = df_pts, color = "blue",) %>%
-              leaflet::addPolygons(data = df_polys, color = "red",)  #odd stray ,
+    map <- leaflet::leaflet(df,
+                            options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
+      leaflet::addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas,
+                                options = leaflet::providerTileOptions(
+                                  updateWhenZooming = FALSE,
+                                  updateWhenIdle = TRUE))
+    
+    if (nrow(df_pts) > 0) {
+      map <- map %>% leaflet::addCircles(data = df_pts, color = "blue")
+    }
+    if (nrow(df_polys) > 0) {
+      map <- map %>% leaflet::addPolygons(data = df_polys, color = "red")
+    }
+
   }
   return(map)
 }
