@@ -2,7 +2,7 @@
 #'
 #' @description `load_data_packages()` loads one to many data packages and returns a list. If only one data package is loaded, the list will be a list of tibbles where each tibble is a data (.csv) file from the data package. If multiple data packages are loaded, the list will be a list of lists where each nested list contains a list of tibble and each tibble is a data file (.csv). See `simplify` below for details on handling these lists.
 #' 
-#' @details currently `load_data_packages()` only supports EML metadata and .csv files. The reference_id 
+#' @details currently `load_data_packages()` only supports EML metadata and .csv files. 
 #' '
 #' @param reference_id the immediate directory/directories where your data packages reside. For data packages downloaded from DataStore using `get_data_package()` or `get_data_packages()` default settings, this is the DataStore reference ID for your data package(s). Alternatively, you can set `reference_id` to "`load_all`", which will load all the data packages in the directory specified in via `directory` (typically ./data).
 #' @param directory is the location of a folder that contains all of the data packages (where data packages are a folder containing .csv data files and a single .xml EML metadata file). If these data packages were downloaded from DataStore using the default settings for `get_data_packages`, this folder is "./data" and you can use the default settings for `directory`.

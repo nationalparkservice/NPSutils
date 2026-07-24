@@ -7,7 +7,7 @@
 map_wkt(
   df,
   wellknowntext = "footprintWKT",
-  type = "all",
+  type = c("all", "points", "polygons"),
   remove.duplicates = TRUE
 )
 }

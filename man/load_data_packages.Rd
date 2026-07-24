@@ -35,7 +35,7 @@ a list of (of lists of) tibbles.
 `load_data_packages()` loads one to many data packages and returns a list. If only one data package is loaded, the list will be a list of tibbles where each tibble is a data (.csv) file from the data package. If multiple data packages are loaded, the list will be a list of lists where each nested list contains a list of tibble and each tibble is a data file (.csv). See `simplify` below for details on handling these lists.
 }
 \details{
-currently `load_data_packages()` only supports EML metadata and .csv files. The reference_id 
+currently `load_data_packages()` only supports EML metadata and .csv files. 
 '
 }
 \examples{
