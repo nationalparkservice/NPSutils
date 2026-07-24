@@ -1,5 +1,9 @@
 # NPSutils 1.2.0 ("Apostle Islands Ice Caves")
 ## 2026-07-23
+  * Fix error in `map_wkt` that was causing the function to fail when type = "all" but either points or polygons were absent.
+  * Update `mak_wkt` unit tests.
+  
+## 2026-07-23
   * Fix typo in readme.md
   * remove pkgdown github action (unapproved for DGEC)
   * Fix typo in `load_data_packages` details documentation
